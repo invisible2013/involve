@@ -14,7 +14,6 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
-import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -34,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FileType extends TableImpl<FileTypeRecord> {
 
-	private static final long serialVersionUID = 758026822;
+	private static final long serialVersionUID = -1941639629;
 
 	/**
 	 * The reference instance of <code>public.file_type</code>
@@ -52,7 +51,7 @@ public class FileType extends TableImpl<FileTypeRecord> {
 	/**
 	 * The column <code>public.file_type.id</code>.
 	 */
-	public final TableField<FileTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+	public final TableField<FileTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.file_type.name</code>.
@@ -79,14 +78,6 @@ public class FileType extends TableImpl<FileTypeRecord> {
 
 	private FileType(String alias, Table<FileTypeRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Identity<FileTypeRecord, Integer> getIdentity() {
-		return Keys.IDENTITY_FILE_TYPE;
 	}
 
 	/**

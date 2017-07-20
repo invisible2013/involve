@@ -4,51 +4,28 @@
 package ge.economy.involve.database.database;
 
 
-import ge.economy.involve.database.database.tables.Award;
-import ge.economy.involve.database.database.tables.Championship;
-import ge.economy.involve.database.database.tables.ChampionshipSubType;
-import ge.economy.involve.database.database.tables.ChampionshipType;
-import ge.economy.involve.database.database.tables.ChampionshipTypeRelation;
-import ge.economy.involve.database.database.tables.City;
-import ge.economy.involve.database.database.tables.Condition;
-import ge.economy.involve.database.database.tables.Event;
-import ge.economy.involve.database.database.tables.EventSubscription;
-import ge.economy.involve.database.database.tables.EventType;
 import ge.economy.involve.database.database.tables.FileType;
-import ge.economy.involve.database.database.tables.Gender;
-import ge.economy.involve.database.database.tables.News;
-import ge.economy.involve.database.database.tables.NewsFile;
-import ge.economy.involve.database.database.tables.NewsType;
-import ge.economy.involve.database.database.tables.ObjectType;
-import ge.economy.involve.database.database.tables.Organisation;
-import ge.economy.involve.database.database.tables.Ownership;
-import ge.economy.involve.database.database.tables.Purpose;
-import ge.economy.involve.database.database.tables.Referee;
-import ge.economy.involve.database.database.tables.RefereeCategory;
-import ge.economy.involve.database.database.tables.RefereeSportType;
-import ge.economy.involve.database.database.tables.Region;
-import ge.economy.involve.database.database.tables.Result;
-import ge.economy.involve.database.database.tables.Section;
-import ge.economy.involve.database.database.tables.SportObject;
-import ge.economy.involve.database.database.tables.SportType;
-import ge.economy.involve.database.database.tables.SportTypeFile;
-import ge.economy.involve.database.database.tables.Sportsman;
-import ge.economy.involve.database.database.tables.SportsmanFile;
-import ge.economy.involve.database.database.tables.SportsmanRank;
-import ge.economy.involve.database.database.tables.SportsmanSportType;
-import ge.economy.involve.database.database.tables.SportsmanTrainer;
-import ge.economy.involve.database.database.tables.Statistic;
-import ge.economy.involve.database.database.tables.StatisticCategory;
-import ge.economy.involve.database.database.tables.StatisticRangeType;
-import ge.economy.involve.database.database.tables.StatisticSportType;
-import ge.economy.involve.database.database.tables.StatisticType;
-import ge.economy.involve.database.database.tables.SystemProperties;
-import ge.economy.involve.database.database.tables.SystemPropertiesGroup;
-import ge.economy.involve.database.database.tables.Trainer;
-import ge.economy.involve.database.database.tables.TrainerQualification;
-import ge.economy.involve.database.database.tables.TrainerSportType;
-import ge.economy.involve.database.database.tables.User;
-import ge.economy.involve.database.database.tables.UserStatus;
+import ge.economy.involve.database.database.tables.Initiate;
+import ge.economy.involve.database.database.tables.InitiatedIssue;
+import ge.economy.involve.database.database.tables.InitiativeVote;
+import ge.economy.involve.database.database.tables.PollAnswer;
+import ge.economy.involve.database.database.tables.Priority;
+import ge.economy.involve.database.database.tables.PriorityAnswer;
+import ge.economy.involve.database.database.tables.PriorityItem;
+import ge.economy.involve.database.database.tables.PriorityVote;
+import ge.economy.involve.database.database.tables.Reform;
+import ge.economy.involve.database.database.tables.ReformDetail;
+import ge.economy.involve.database.database.tables.ReformFile;
+import ge.economy.involve.database.database.tables.ReformType;
+import ge.economy.involve.database.database.tables.Session;
+import ge.economy.involve.database.database.tables.SessionPoll;
+import ge.economy.involve.database.database.tables.SessionPollVote;
+import ge.economy.involve.database.database.tables.SessionVote;
+import ge.economy.involve.database.database.tables.Sphere;
+import ge.economy.involve.database.database.tables.UserApprove;
+import ge.economy.involve.database.database.tables.UserGroup;
+import ge.economy.involve.database.database.tables.UserType;
+import ge.economy.involve.database.database.tables.Users;
 
 import javax.annotation.Generated;
 
@@ -67,227 +44,112 @@ import javax.annotation.Generated;
 public class Tables {
 
 	/**
-	 * The table public.award
-	 */
-	public static final Award AWARD = Award.AWARD;
-
-	/**
-	 * The table public.championship
-	 */
-	public static final Championship CHAMPIONSHIP = Championship.CHAMPIONSHIP;
-
-	/**
-	 * The table public.championship_sub_type
-	 */
-	public static final ChampionshipSubType CHAMPIONSHIP_SUB_TYPE = ChampionshipSubType.CHAMPIONSHIP_SUB_TYPE;
-
-	/**
-	 * The table public.championship_type
-	 */
-	public static final ChampionshipType CHAMPIONSHIP_TYPE = ChampionshipType.CHAMPIONSHIP_TYPE;
-
-	/**
-	 * The table public.championship_type_relation
-	 */
-	public static final ChampionshipTypeRelation CHAMPIONSHIP_TYPE_RELATION = ChampionshipTypeRelation.CHAMPIONSHIP_TYPE_RELATION;
-
-	/**
-	 * The table public.city
-	 */
-	public static final City CITY = City.CITY;
-
-	/**
-	 * The table public.condition
-	 */
-	public static final Condition CONDITION = Condition.CONDITION;
-
-	/**
-	 * The table public.event
-	 */
-	public static final Event EVENT = Event.EVENT;
-
-	/**
-	 * The table public.event_subscription
-	 */
-	public static final EventSubscription EVENT_SUBSCRIPTION = EventSubscription.EVENT_SUBSCRIPTION;
-
-	/**
-	 * The table public.event_type
-	 */
-	public static final EventType EVENT_TYPE = EventType.EVENT_TYPE;
-
-	/**
 	 * The table public.file_type
 	 */
-	public static final FileType FILE_TYPE = FileType.FILE_TYPE;
+	public static final FileType FILE_TYPE = ge.economy.involve.database.database.tables.FileType.FILE_TYPE;
 
 	/**
-	 * The table public.gender
+	 * The table public.initiate
 	 */
-	public static final Gender GENDER = Gender.GENDER;
+	public static final Initiate INITIATE = ge.economy.involve.database.database.tables.Initiate.INITIATE;
 
 	/**
-	 * The table public.news
+	 * The table public.initiated_issue
 	 */
-	public static final News NEWS = News.NEWS;
+	public static final InitiatedIssue INITIATED_ISSUE = ge.economy.involve.database.database.tables.InitiatedIssue.INITIATED_ISSUE;
 
 	/**
-	 * The table public.news_file
+	 * The table public.initiative_vote
 	 */
-	public static final NewsFile NEWS_FILE = NewsFile.NEWS_FILE;
+	public static final InitiativeVote INITIATIVE_VOTE = ge.economy.involve.database.database.tables.InitiativeVote.INITIATIVE_VOTE;
 
 	/**
-	 * The table public.news_type
+	 * The table public.poll_answer
 	 */
-	public static final NewsType NEWS_TYPE = NewsType.NEWS_TYPE;
+	public static final PollAnswer POLL_ANSWER = ge.economy.involve.database.database.tables.PollAnswer.POLL_ANSWER;
 
 	/**
-	 * The table public.object_type
+	 * The table public.priority
 	 */
-	public static final ObjectType OBJECT_TYPE = ObjectType.OBJECT_TYPE;
+	public static final Priority PRIORITY = ge.economy.involve.database.database.tables.Priority.PRIORITY;
 
 	/**
-	 * The table public.organisation
+	 * The table public.priority_answer
 	 */
-	public static final Organisation ORGANISATION = Organisation.ORGANISATION;
+	public static final PriorityAnswer PRIORITY_ANSWER = ge.economy.involve.database.database.tables.PriorityAnswer.PRIORITY_ANSWER;
 
 	/**
-	 * The table public.ownership
+	 * The table public.priority_item
 	 */
-	public static final Ownership OWNERSHIP = Ownership.OWNERSHIP;
+	public static final PriorityItem PRIORITY_ITEM = ge.economy.involve.database.database.tables.PriorityItem.PRIORITY_ITEM;
 
 	/**
-	 * The table public.purpose
+	 * The table public.priority_vote
 	 */
-	public static final Purpose PURPOSE = Purpose.PURPOSE;
+	public static final PriorityVote PRIORITY_VOTE = ge.economy.involve.database.database.tables.PriorityVote.PRIORITY_VOTE;
 
 	/**
-	 * The table public.referee
+	 * The table public.reform
 	 */
-	public static final Referee REFEREE = Referee.REFEREE;
+	public static final Reform REFORM = ge.economy.involve.database.database.tables.Reform.REFORM;
 
 	/**
-	 * The table public.referee_category
+	 * The table public.reform_detail
 	 */
-	public static final RefereeCategory REFEREE_CATEGORY = RefereeCategory.REFEREE_CATEGORY;
+	public static final ReformDetail REFORM_DETAIL = ge.economy.involve.database.database.tables.ReformDetail.REFORM_DETAIL;
 
 	/**
-	 * The table public.referee_sport_type
+	 * The table public.reform_file
 	 */
-	public static final RefereeSportType REFEREE_SPORT_TYPE = RefereeSportType.REFEREE_SPORT_TYPE;
+	public static final ReformFile REFORM_FILE = ge.economy.involve.database.database.tables.ReformFile.REFORM_FILE;
 
 	/**
-	 * The table public.region
+	 * The table public.reform_type
 	 */
-	public static final Region REGION = Region.REGION;
+	public static final ReformType REFORM_TYPE = ge.economy.involve.database.database.tables.ReformType.REFORM_TYPE;
 
 	/**
-	 * The table public.result
+	 * The table public.session
 	 */
-	public static final Result RESULT = Result.RESULT;
+	public static final Session SESSION = ge.economy.involve.database.database.tables.Session.SESSION;
 
 	/**
-	 * The table public.section
+	 * The table public.session_poll
 	 */
-	public static final Section SECTION = Section.SECTION;
+	public static final SessionPoll SESSION_POLL = ge.economy.involve.database.database.tables.SessionPoll.SESSION_POLL;
 
 	/**
-	 * The table public.sport_object
+	 * The table public.session_poll_vote
 	 */
-	public static final SportObject SPORT_OBJECT = SportObject.SPORT_OBJECT;
+	public static final SessionPollVote SESSION_POLL_VOTE = ge.economy.involve.database.database.tables.SessionPollVote.SESSION_POLL_VOTE;
 
 	/**
-	 * The table public.sport_type
+	 * The table public.session_vote
 	 */
-	public static final SportType SPORT_TYPE = SportType.SPORT_TYPE;
+	public static final SessionVote SESSION_VOTE = ge.economy.involve.database.database.tables.SessionVote.SESSION_VOTE;
 
 	/**
-	 * The table public.sport_type_file
+	 * The table public.sphere
 	 */
-	public static final SportTypeFile SPORT_TYPE_FILE = SportTypeFile.SPORT_TYPE_FILE;
+	public static final Sphere SPHERE = ge.economy.involve.database.database.tables.Sphere.SPHERE;
 
 	/**
-	 * The table public.sportsman
+	 * The table public.user_approve
 	 */
-	public static final Sportsman SPORTSMAN = Sportsman.SPORTSMAN;
+	public static final UserApprove USER_APPROVE = ge.economy.involve.database.database.tables.UserApprove.USER_APPROVE;
 
 	/**
-	 * The table public.sportsman_file
+	 * The table public.user_group
 	 */
-	public static final SportsmanFile SPORTSMAN_FILE = SportsmanFile.SPORTSMAN_FILE;
+	public static final UserGroup USER_GROUP = ge.economy.involve.database.database.tables.UserGroup.USER_GROUP;
 
 	/**
-	 * The table public.sportsman_rank
+	 * The table public.user_type
 	 */
-	public static final SportsmanRank SPORTSMAN_RANK = SportsmanRank.SPORTSMAN_RANK;
+	public static final UserType USER_TYPE = ge.economy.involve.database.database.tables.UserType.USER_TYPE;
 
 	/**
-	 * The table public.sportsman_sport_type
+	 * The table public.users
 	 */
-	public static final SportsmanSportType SPORTSMAN_SPORT_TYPE = SportsmanSportType.SPORTSMAN_SPORT_TYPE;
-
-	/**
-	 * The table public.sportsman_trainer
-	 */
-	public static final SportsmanTrainer SPORTSMAN_TRAINER = SportsmanTrainer.SPORTSMAN_TRAINER;
-
-	/**
-	 * The table public.statistic
-	 */
-	public static final Statistic STATISTIC = Statistic.STATISTIC;
-
-	/**
-	 * The table public.statistic_category
-	 */
-	public static final StatisticCategory STATISTIC_CATEGORY = StatisticCategory.STATISTIC_CATEGORY;
-
-	/**
-	 * The table public.statistic_range_type
-	 */
-	public static final StatisticRangeType STATISTIC_RANGE_TYPE = StatisticRangeType.STATISTIC_RANGE_TYPE;
-
-	/**
-	 * The table public.statistic_sport_type
-	 */
-	public static final StatisticSportType STATISTIC_SPORT_TYPE = StatisticSportType.STATISTIC_SPORT_TYPE;
-
-	/**
-	 * The table public.statistic_type
-	 */
-	public static final StatisticType STATISTIC_TYPE = StatisticType.STATISTIC_TYPE;
-
-	/**
-	 * The table public.system_properties
-	 */
-	public static final SystemProperties SYSTEM_PROPERTIES = SystemProperties.SYSTEM_PROPERTIES;
-
-	/**
-	 * The table public.system_properties_group
-	 */
-	public static final SystemPropertiesGroup SYSTEM_PROPERTIES_GROUP = SystemPropertiesGroup.SYSTEM_PROPERTIES_GROUP;
-
-	/**
-	 * The table public.trainer
-	 */
-	public static final Trainer TRAINER = Trainer.TRAINER;
-
-	/**
-	 * The table public.trainer_qualification
-	 */
-	public static final TrainerQualification TRAINER_QUALIFICATION = TrainerQualification.TRAINER_QUALIFICATION;
-
-	/**
-	 * The table public.trainer_sport_type
-	 */
-	public static final TrainerSportType TRAINER_SPORT_TYPE = TrainerSportType.TRAINER_SPORT_TYPE;
-
-	/**
-	 * The table public.user
-	 */
-	public static final User USER = User.USER;
-
-	/**
-	 * The table public.user_status
-	 */
-	public static final UserStatus USER_STATUS = UserStatus.USER_STATUS;
+	public static final Users USERS = ge.economy.involve.database.database.tables.Users.USERS;
 }

@@ -4,51 +4,28 @@
 package ge.economy.involve.database.database;
 
 
-import ge.economy.involve.database.database.tables.Award;
-import ge.economy.involve.database.database.tables.Championship;
-import ge.economy.involve.database.database.tables.ChampionshipSubType;
-import ge.economy.involve.database.database.tables.ChampionshipType;
-import ge.economy.involve.database.database.tables.ChampionshipTypeRelation;
-import ge.economy.involve.database.database.tables.City;
-import ge.economy.involve.database.database.tables.Condition;
-import ge.economy.involve.database.database.tables.Event;
-import ge.economy.involve.database.database.tables.EventSubscription;
-import ge.economy.involve.database.database.tables.EventType;
 import ge.economy.involve.database.database.tables.FileType;
-import ge.economy.involve.database.database.tables.Gender;
-import ge.economy.involve.database.database.tables.News;
-import ge.economy.involve.database.database.tables.NewsFile;
-import ge.economy.involve.database.database.tables.NewsType;
-import ge.economy.involve.database.database.tables.ObjectType;
-import ge.economy.involve.database.database.tables.Organisation;
-import ge.economy.involve.database.database.tables.Ownership;
-import ge.economy.involve.database.database.tables.Purpose;
-import ge.economy.involve.database.database.tables.Referee;
-import ge.economy.involve.database.database.tables.RefereeCategory;
-import ge.economy.involve.database.database.tables.RefereeSportType;
-import ge.economy.involve.database.database.tables.Region;
-import ge.economy.involve.database.database.tables.Result;
-import ge.economy.involve.database.database.tables.Section;
-import ge.economy.involve.database.database.tables.SportObject;
-import ge.economy.involve.database.database.tables.SportType;
-import ge.economy.involve.database.database.tables.SportTypeFile;
-import ge.economy.involve.database.database.tables.Sportsman;
-import ge.economy.involve.database.database.tables.SportsmanFile;
-import ge.economy.involve.database.database.tables.SportsmanRank;
-import ge.economy.involve.database.database.tables.SportsmanSportType;
-import ge.economy.involve.database.database.tables.SportsmanTrainer;
-import ge.economy.involve.database.database.tables.Statistic;
-import ge.economy.involve.database.database.tables.StatisticCategory;
-import ge.economy.involve.database.database.tables.StatisticRangeType;
-import ge.economy.involve.database.database.tables.StatisticSportType;
-import ge.economy.involve.database.database.tables.StatisticType;
-import ge.economy.involve.database.database.tables.SystemProperties;
-import ge.economy.involve.database.database.tables.SystemPropertiesGroup;
-import ge.economy.involve.database.database.tables.Trainer;
-import ge.economy.involve.database.database.tables.TrainerQualification;
-import ge.economy.involve.database.database.tables.TrainerSportType;
-import ge.economy.involve.database.database.tables.User;
-import ge.economy.involve.database.database.tables.UserStatus;
+import ge.economy.involve.database.database.tables.Initiate;
+import ge.economy.involve.database.database.tables.InitiatedIssue;
+import ge.economy.involve.database.database.tables.InitiativeVote;
+import ge.economy.involve.database.database.tables.PollAnswer;
+import ge.economy.involve.database.database.tables.Priority;
+import ge.economy.involve.database.database.tables.PriorityAnswer;
+import ge.economy.involve.database.database.tables.PriorityItem;
+import ge.economy.involve.database.database.tables.PriorityVote;
+import ge.economy.involve.database.database.tables.Reform;
+import ge.economy.involve.database.database.tables.ReformDetail;
+import ge.economy.involve.database.database.tables.ReformFile;
+import ge.economy.involve.database.database.tables.ReformType;
+import ge.economy.involve.database.database.tables.Session;
+import ge.economy.involve.database.database.tables.SessionPoll;
+import ge.economy.involve.database.database.tables.SessionPollVote;
+import ge.economy.involve.database.database.tables.SessionVote;
+import ge.economy.involve.database.database.tables.Sphere;
+import ge.economy.involve.database.database.tables.UserApprove;
+import ge.economy.involve.database.database.tables.UserGroup;
+import ge.economy.involve.database.database.tables.UserType;
+import ge.economy.involve.database.database.tables.Users;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +33,6 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
-import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
@@ -74,7 +50,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -384549148;
+	private static final long serialVersionUID = 204409973;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -89,61 +65,6 @@ public class Public extends SchemaImpl {
 	}
 
 	@Override
-	public final List<Sequence<?>> getSequences() {
-		List result = new ArrayList();
-		result.addAll(getSequences0());
-		return result;
-	}
-
-	private final List<Sequence<?>> getSequences0() {
-		return Arrays.<Sequence<?>>asList(
-			Sequences.TRAINER_ID_SEQ,
-			Sequences.AWARD_ID_SEQ,
-			Sequences.CATEGORY_ID_SEQ,
-			Sequences.CHAMPIONSHIP_ID_SEQ,
-			Sequences.CHAMPIONSHIP_SUB_TYPE_ID_SEQ,
-			Sequences.CHAMPIONSHIP_TYPE_RELATION_ID_SEQ,
-			Sequences.CHEMPIONSHIP_TYPE_ID_SEQ,
-			Sequences.CITY_ID_SEQ,
-			Sequences.CONDITION_ID_SEQ,
-			Sequences.EVENT_ID_SEQ,
-			Sequences.EVENT_SUBSCRIPTION_ID_SEQ,
-			Sequences.EVENT_TYPE_ID_SEQ,
-			Sequences.FILE_TYPE_ID_SEQ,
-			Sequences.GENDER_ID_SEQ,
-			Sequences.NEWS_FILE_ID_SEQ,
-			Sequences.NEWS_ID_SEQ,
-			Sequences.OBJECT_TYPE_ID_SEQ,
-			Sequences.ORGANISATION_ID_SEQ,
-			Sequences.OWNERSHIP_ID_SEQ,
-			Sequences.PURPOSE_ID_SEQ,
-			Sequences.QUALIFICATION_ID_SEQ,
-			Sequences.REFEREE_ID_SEQ,
-			Sequences.REFEREE_SPORT_TYPE_ID_SEQ,
-			Sequences.REGION_ID_SEQ,
-			Sequences.RESULT_ID_SEQ,
-			Sequences.SECTION_ID_SEQ,
-			Sequences.SPORT_OBJECT_ID_SEQ,
-			Sequences.SPORT_TYPE_FILE_ID_SEQ,
-			Sequences.SPORT_TYPE_ID_SEQ,
-			Sequences.SPORTSMAN_FILE_ID_SEQ,
-			Sequences.SPORTSMAN_ID_SEQ,
-			Sequences.SPORTSMAN_SPORT_TYPE_ID_SEQ,
-			Sequences.SPORTSMAN_TRAINER_ID_SEQ,
-			Sequences.STATISTIC_CATEGORY_ID_SEQ,
-			Sequences.STATISTIC_RANGE_TYPE_ID_SEQ,
-			Sequences.STATISTIC_SPORT_TYPE_ID_SEQ,
-			Sequences.STATISTIC_SPORTSMAN_ID_SEQ,
-			Sequences.STATISTIC_TYPE_ID_SEQ,
-			Sequences.SYSTEM_PROPERTIES_GROUP_ID_SEQ,
-			Sequences.SYSTEM_PROPERTIES_ID_SEQ,
-			Sequences.TITLE_ID_SEQ,
-			Sequences.TRAINER_SPORT_TYPE_ID_SEQ,
-			Sequences.USER_ID_SEQ,
-			Sequences.USER_STATUS_ID_SEQ);
-	}
-
-	@Override
 	public final List<Table<?>> getTables() {
 		List result = new ArrayList();
 		result.addAll(getTables0());
@@ -152,50 +73,27 @@ public class Public extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
-			Award.AWARD,
-			Championship.CHAMPIONSHIP,
-			ChampionshipSubType.CHAMPIONSHIP_SUB_TYPE,
-			ChampionshipType.CHAMPIONSHIP_TYPE,
-			ChampionshipTypeRelation.CHAMPIONSHIP_TYPE_RELATION,
-			City.CITY,
-			Condition.CONDITION,
-			Event.EVENT,
-			EventSubscription.EVENT_SUBSCRIPTION,
-			EventType.EVENT_TYPE,
 			FileType.FILE_TYPE,
-			Gender.GENDER,
-			News.NEWS,
-			NewsFile.NEWS_FILE,
-			NewsType.NEWS_TYPE,
-			ObjectType.OBJECT_TYPE,
-			Organisation.ORGANISATION,
-			Ownership.OWNERSHIP,
-			Purpose.PURPOSE,
-			Referee.REFEREE,
-			RefereeCategory.REFEREE_CATEGORY,
-			RefereeSportType.REFEREE_SPORT_TYPE,
-			Region.REGION,
-			Result.RESULT,
-			Section.SECTION,
-			SportObject.SPORT_OBJECT,
-			SportType.SPORT_TYPE,
-			SportTypeFile.SPORT_TYPE_FILE,
-			Sportsman.SPORTSMAN,
-			SportsmanFile.SPORTSMAN_FILE,
-			SportsmanRank.SPORTSMAN_RANK,
-			SportsmanSportType.SPORTSMAN_SPORT_TYPE,
-			SportsmanTrainer.SPORTSMAN_TRAINER,
-			Statistic.STATISTIC,
-			StatisticCategory.STATISTIC_CATEGORY,
-			StatisticRangeType.STATISTIC_RANGE_TYPE,
-			StatisticSportType.STATISTIC_SPORT_TYPE,
-			StatisticType.STATISTIC_TYPE,
-			SystemProperties.SYSTEM_PROPERTIES,
-			SystemPropertiesGroup.SYSTEM_PROPERTIES_GROUP,
-			Trainer.TRAINER,
-			TrainerQualification.TRAINER_QUALIFICATION,
-			TrainerSportType.TRAINER_SPORT_TYPE,
-			User.USER,
-			UserStatus.USER_STATUS);
+			Initiate.INITIATE,
+			InitiatedIssue.INITIATED_ISSUE,
+			InitiativeVote.INITIATIVE_VOTE,
+			PollAnswer.POLL_ANSWER,
+			Priority.PRIORITY,
+			PriorityAnswer.PRIORITY_ANSWER,
+			PriorityItem.PRIORITY_ITEM,
+			PriorityVote.PRIORITY_VOTE,
+			Reform.REFORM,
+			ReformDetail.REFORM_DETAIL,
+			ReformFile.REFORM_FILE,
+			ReformType.REFORM_TYPE,
+			Session.SESSION,
+			SessionPoll.SESSION_POLL,
+			SessionPollVote.SESSION_POLL_VOTE,
+			SessionVote.SESSION_VOTE,
+			Sphere.SPHERE,
+			UserApprove.USER_APPROVE,
+			UserGroup.USER_GROUP,
+			UserType.USER_TYPE,
+			Users.USERS);
 	}
 }
