@@ -1,0 +1,1 @@
+modify and copy .ftl files in /opt/sportstat/email/templates dir

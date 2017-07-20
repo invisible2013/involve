@@ -1,0 +1,129 @@
+body{
+    margin:0;
+    padding:0;
+    font-size: 11px;
+    font-family: dejavus;
+}
+h4,.h4{
+    font-family: dejavus;
+}
+
+body.auth_bg{
+    background-color: #f3f3f0!important;
+}
+@font-face {
+    font-family: 'dejavus';
+    src: url('../fonts/bpg_dejavu_sans.eot');
+    src: url('../fonts/bpg_dejavu_sans.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: upper-font;
+    src: url(../fonts/bpg_nino_elite_exp_caps.otf);
+}
+
+a{
+    text-decoration: none;
+}
+
+.clear{
+    clear: both;
+}
+
+#logo {
+    background: url('../imgs/logo.png') no-repeat center;
+    width: 120px;
+    height: 105px;
+    background-size: cover;
+}
+#slogan {
+    background: url('../imgs/title-economy.png') no-repeat center;
+    width: 555px;
+    height: 105px;
+}
+
+.upper-font{
+    font-family: upper-font;
+}
+#auth.btn-xs{
+    padding-top: 5px;
+    padding-bottom: 3px;
+    background-color: #0d55cb;
+}
+
+
+.navbar{
+    background-color:#2b3643;
+    margin-bottom: 0;
+}
+.left-menu{
+    border-right: 1.1px solid #d3d3d3;
+    min-height: 800px;
+    height: auto;
+    background-color: #364150;
+    color:#ffffff;
+}
+.left-menu .list-group-item{
+    border:none;
+}
+.border-bottom-gray{
+    border-bottom:  1.1px solid #d3d3d3;
+}
+#selected_item{
+    min-height: 22px;
+}
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus{
+    background: #3e4b5c!important;
+}
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus{
+    background: #36c6d3!important;
+    color: #ffffff!important;
+    z-index:20;
+}
+
+.input-sm{
+    height: 30px;
+    padding: 5px 10px;
+}
+select.input-sm {
+    height: 30px;
+    line-height: 30px;
+}
+.btn-span{
+    cursor:pointer;
+}
+
+.color-white{
+    color:white;
+}
+.color-red{
+    color:#ff0000!important;
+}
+
+.list-group-item{
+    border-top: 1px solid #3d4957;
+    color: #b4bcc8!important;
+    background-color: #364150;
+
+}
+.active{
+    background: #36c6d3!important;
+    border-left: 4px solid #36c6d3;
+}
+
+.english-font{
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.margin5{
+    margin: 7px 0;
+}
+.btn-primary{
+    background-color: #36c6d3;
+    border-color: #36c6d3;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary
+{
+    background-color: #40b5bf;
+    border-color: #2e8a92;
+}
