@@ -1,6 +1,5 @@
 package ge.economy.involve.core.api.dto;
 
-import ge.economy.involve.database.database.Tables;
 import org.jooq.Record;
 
 import java.util.ArrayList;
@@ -9,24 +8,22 @@ import java.util.List;
 /**
  * Created by nl on 7/25/2016.
  */
-public class RegionDTO {
+public class ReformDTO {
 
     private int id;
     private  String name;
 
 
-    public static RegionDTO translate(Record record) {
-        RegionDTO dto = new RegionDTO();
-        dto.setId(record.getValue(Tables.REGION.ID));
-        dto.setName(record.getValue(Tables.REGION.NAME));
+    public static ReformDTO translate(Record record) {
+        ReformDTO dto = new ReformDTO();
         return dto;
     }
 
 
-    public static List<RegionDTO> translateArray(List<Record> records) {
-        ArrayList<RegionDTO> list = new ArrayList<RegionDTO>();
+    public static List<ReformDTO> translateArray(List<Record> records) {
+        ArrayList<ReformDTO> list = new ArrayList<ReformDTO>();
         for (Record record : records) {
-            list.add(RegionDTO.translate(record));
+            list.add(ReformDTO.translate(record));
         }
         return list;
     }

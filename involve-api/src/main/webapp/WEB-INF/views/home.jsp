@@ -58,47 +58,10 @@
             $scope.loadCount = $scope.sportsmans.length;
         }
 
-        ajaxCall($http, "sportsman/get-sportsmans?start=" + $scope.start + "&limit=" + $scope.limit, null, getSuccessSportsmans);
+        ajaxCall($http, "reform/get-reforms?start=" + $scope.start + "&limit=" + $scope.limit, null, getSuccessSportsmans);
 
-        function getSuccessRegions(res) {
-            $scope.regions = res.data;
-        }
 
-        ajaxCall($http, "parameter/get-regions", null, getSuccessRegions);
 
-        if ($scope.cities == undefined) {
-            function getSuccessCitiesSart(res) {
-                $scope.cities = res.data;
-            }
-
-            ajaxCall($http, "parameter/get-cities?regionId=1", null, getSuccessCitiesSart);
-        }
-
-        function getSuccessSportTypes(res) {
-            $scope.sportTypes = res.data;
-        }
-
-        ajaxCall($http, "parameter/get-sport-types", null, getSuccessSportTypes);
-
-        function getSuccessGenders(res) {
-            $scope.genders = res.data;
-        }
-
-        ajaxCall($http, "parameter/get-genders", null, getSuccessGenders);
-
-        function getSuccessRanks(res) {
-            $scope.ranks = res.data;
-        }
-
-        ajaxCall($http, "parameter/get-ranks", null, getSuccessRanks);
-
-        $scope.getCities = function () {
-            function getSuccessCities(res) {
-                $scope.cities = res.data;
-            }
-
-            ajaxCall($http, "parameter/get-cities?regionId=" + $scope.sportsman.regionId, null, getSuccessCities);
-        };
 
         $scope.loadMore = function () {
             $scope.start=$scope.start+$scope.limit;

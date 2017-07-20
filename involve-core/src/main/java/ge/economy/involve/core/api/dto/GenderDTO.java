@@ -17,8 +17,8 @@ public class GenderDTO {
 
     public static GenderDTO translate(Record record) {
         GenderDTO dto = new GenderDTO();
-        dto.setId(record.getValue(Tables.GENDER.ID));
-        dto.setName(record.getValue(Tables.GENDER.NAME));
+        //dto.setId(record.getValue(Tables.GENDER.ID));
+        //dto.setName(record.getValue(Tables.GENDER.NAME));
         return dto;
     }
 

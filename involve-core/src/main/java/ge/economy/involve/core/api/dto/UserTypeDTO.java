@@ -9,24 +9,24 @@ import java.util.List;
 /**
  * Created by nl on 7/25/2016.
  */
-public class AwardDTO {
+public class UserTypeDTO {
 
     private int id;
     private  String name;
 
 
-    public static AwardDTO translate(Record record) {
-        AwardDTO dto = new AwardDTO();
-        dto.setId(record.getValue(Tables.AWARD.ID));
-        dto.setName(record.getValue(Tables.AWARD.NAME));
+    public static UserTypeDTO translate(Record record) {
+        UserTypeDTO dto = new UserTypeDTO();
+        dto.setId(record.getValue(Tables.USER_TYPE.ID));
+        dto.setName(record.getValue(Tables.USER_TYPE.NAME));
         return dto;
     }
 
 
-    public static List<AwardDTO> translateArray(List<Record> records) {
-        ArrayList<AwardDTO> list = new ArrayList<AwardDTO>();
+    public static List<UserTypeDTO> translateArray(List<Record> records) {
+        ArrayList<UserTypeDTO> list = new ArrayList<UserTypeDTO>();
         for (Record record : records) {
-            list.add(AwardDTO.translate(record));
+            list.add(UserTypeDTO.translate(record));
         }
         return list;
     }

@@ -1,7 +1,6 @@
 package ge.economy.involve.core.api.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import ge.economy.involve.core.api.dto.TrainerSportTypeDTO;
 import ge.economy.involve.core.jsonhelper.JsonDateDeSerializeSupport;
 
 import java.util.Date;
@@ -33,7 +32,6 @@ public class AddTrainerRequest {
     private Integer regionId;
     private Integer genderId;
     private Integer cityId;
-    private List<TrainerSportTypeDTO> sportTypes;
 
     public int getId() {
         return id;
@@ -131,14 +129,6 @@ public class AddTrainerRequest {
 
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
-    }
-
-    public List<TrainerSportTypeDTO> getSportTypes() {
-        return sportTypes;
-    }
-
-    public void setSportTypes(List<TrainerSportTypeDTO> sportTypes) {
-        this.sportTypes = sportTypes;
     }
 
     public Date getCareerStartDate() {

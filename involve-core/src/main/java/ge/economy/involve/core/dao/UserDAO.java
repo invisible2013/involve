@@ -1,7 +1,7 @@
 package ge.economy.involve.core.dao;
 
 import ge.economy.involve.database.database.Tables;
-import ge.economy.involve.database.database.tables.records.UserRecord;
+import ge.economy.involve.database.database.tables.records.UsersRecord;
 import org.jooq.Record;
 import org.jooq.SelectConditionStep;
 import org.springframework.stereotype.Repository;
@@ -18,34 +18,34 @@ public class UserDAO extends AbstractDAO {
     public List<Record> getUsers() {
         return dslContext.
                 select().
-                from(Tables.USER).
-                join(Tables.USER_STATUS).
-                on(Tables.USER.STATUS_ID.eq(Tables.USER_STATUS.ID)).
+                from(Tables.USERS).
+                join(Tables.USER_GROUP).
+                on(Tables.USERS.USER_GROUP_ID.eq(Tables.USER_GROUP.ID)).
                 fetch();
     }
 
-    public List<UserRecord> search(String userName) {
+    public List<UsersRecord> search(String userName) {
 
         SelectConditionStep<Record> selectConditionStep =
                 dslContext.
                         select().
-                        from(Tables.USER).where(Tables.USER.ID.eq(Tables.USER.ID));
+                        from(Tables.USERS).where(Tables.USERS.ID.eq(Tables.USERS.ID));
 
         if (userName != null) {
-            selectConditionStep.and(Tables.USER.USER_NAME.eq(userName));
+            selectConditionStep.and(Tables.USERS.EMAIL.eq(userName));
         }
-        return selectConditionStep.fetch().into(UserRecord.class);
+        return selectConditionStep.fetch().into(UsersRecord.class);
     }
 
-    public UserRecord getUser(String username, String password) {
+    public UsersRecord getUser(String username, String password) {
 
         List<Record> records = dslContext
                 .select()
-                .from(Tables.USER)
-                .where(Tables.USER.EMAIL.eq(username))
-                .and(Tables.USER.PASSWORD.eq(password))
+                .from(Tables.USERS)
+                .where(Tables.USERS.EMAIL.eq(username))
+                .and(Tables.USERS.PASSWORD.eq(password))
                 .fetch();
 
-        return records.size() > 0 ? records.get(0).into(UserRecord.class) : null;
+        return records.size() > 0 ? records.get(0).into(UsersRecord.class) : null;
     }
 }

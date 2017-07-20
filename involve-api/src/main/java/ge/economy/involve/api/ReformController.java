@@ -5,41 +5,34 @@ import ge.economy.involve.core.response.Response;
 import ge.economy.involve.core.services.FileService;
 import ge.economy.involve.core.services.ParameterService;
 import ge.economy.involve.core.services.ReformService;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
-@RequestMapping({"/app"})
-public class ApplicationController {
-    @Autowired
-    private ParameterService parameterService;
+@RequestMapping({"/reform"})
+public class ReformController {
+
     @Autowired
     private ReformService reformService;
 
     @Autowired
     private FileService fileService;
 
-    @ResponseBody
-    @RequestMapping({"/get-version"})
-    public Response getVersion() {
-        return Response.withData("v0.0.1");
-    }
 
     @ResponseBody
-    @RequestMapping({"/get-sportsmans"})
+    @RequestMapping({"/get-reforms"})
     public Response getSportsmans(@RequestParam("sportTypeId") int sportTypeId, @RequestParam("genderId") int genderId, @RequestParam("regionId") int regionId,
                                   @RequestParam("cityId") int cityId, @RequestParam(required = false) String name, @RequestParam(required = false) String firstLetter,
                                   @RequestParam("start") int start, @RequestParam("limit") int limit) {
-        return Response.withData(reformService.searchSportsmans(name, firstLetter, sportTypeId, genderId, regionId, cityId, start, limit));
+        return Response.withData(reformService.getReforms(start, limit));
     }
 
 

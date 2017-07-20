@@ -2,7 +2,8 @@ package ge.economy.involve.core.services;
 
 import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.dao.UserDAO;
-import ge.economy.involve.database.database.tables.records.UserRecord;
+import ge.economy.involve.database.database.tables.records.UsersRecord;
+import ge.economy.involve.utils.MD5Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class UserService {
 
     public UserDTO getUser(String username, String password) {
 
-        UserRecord userRecord = userDAO.getUser(username, password);
+        UsersRecord userRecord = userDAO.getUser(username, MD5Provider.doubleMd5(password));
 
         if (userRecord == null) {
             return null;

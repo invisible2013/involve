@@ -25,7 +25,7 @@
                 return this.href.indexOf(url.pathname) > -1;
             }).addClass('active');
             if (url.pathname.indexOf("home") > -1) {
-                $('#selected_item').text("სპორტსმენები");
+                $('#selected_item').text("რეფორმები");
             } else if (url.pathname.indexOf("referee") > -1) {
                 $('#selected_item').text("მსაჯები");
             } else if (url.pathname.indexOf("users") > -1) {
@@ -57,8 +57,8 @@
             <div class="row" ng-controller="menuCtrl">
                 <div class="navbar navbar-inverse">
                     <div class="navbar-header english-font">
-                        <a class="navbar-brand" href="#">SPORT</a>
-                        <a class="navbar-brand color-red" href="#">STATISTIC</a>
+                        <a class="navbar-brand" href="#">JOIN</a>
+                        <a class="navbar-brand color-red" href="#">REFORMS</a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
@@ -83,25 +83,7 @@
             <div class="row">
                 <div class="list-group">
                         <a href="home" class="list-group-item"><span
-                                class="glyphicon glyphicon-user"></span> სპორტსმენები</a>
-                    <a href="referee" class="list-group-item"><span class="glyphicon glyphicon-user"></span>
-                        მსაჯები</a>
-                    <a href="trainer" class="list-group-item" ng-show="true"><span
-                            class="glyphicon glyphicon-user"></span> მწვრთნელები</a>
-                    <a href="championships" class="list-group-item" ng-show="true"><span
-                            class="glyphicon glyphicon-tower"></span> ჩემპიონატები</a>
-                        <a href="result" class="list-group-item" ng-show="true"><span
-                                class="glyphicon glyphicon-th-list"></span> შედეგები</a>
-                    <a href="event" class="list-group-item" ng-show="true"><span
-                            class="glyphicon glyphicon-calendar"></span> ღონისძიებები</a>
-                    <a href="statistic?type=sportsman" class="list-group-item" ng-show="true"><span
-                            class="glyphicon glyphicon-stats"></span> სტატისტიკა</a>
-                    <a href="news?type=news" class="list-group-item" ng-show="true"><span
-                            class="glyphicon glyphicon-asterisk"></span> სიახლეები</a>
-                    <a href="organisation" class="list-group-item" ng-show="true"><span
-                            class="glyphicon glyphicon-sound-dolby"></span> ორგანიზაციები</a>
-                    <a href="sportTypes" class="list-group-item" ng-show="true"><span
-                            class="glyphicon glyphicon-tasks"></span> სპორტის სახეობები</a>
+                                class="glyphicon glyphicon-adjust"></span> რეფორმები</a>
                     <a href="users" class="list-group-item" ng-show="true"><span
                             class="glyphicon glyphicon-user"></span> მომხმარებლები</a>
                 </div>

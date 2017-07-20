@@ -16,25 +16,39 @@ public class UserDTO {
 
 
     private Integer id;
-    private String userName;
+    private String firstName;
+    private String lastName;
+    private String orgName;
+    private String idNumber;
+    private String phone;
     private String email;
+    private Integer genderId;
+    private String genderName;
+    private Integer typeId;
+    private String typeName;
+    private Boolean approved;
+    private Integer groupId;
+    private String groupName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
-    private Date birthDate;
-    private int statusId;
+    private Date createDate;
+    private Integer statusId;
     private String statusName;
 
     public static UserDTO translate(Record record) {
         UserDTO dto = new UserDTO();
-        dto.setId(record.getValue(Tables.USER.ID));
-        dto.setUserName(record.getValue(Tables.USER.USER_NAME));
-        dto.setEmail(record.getValue(Tables.USER.EMAIL));
-        dto.setBirthDate(record.getValue(Tables.USER.BIRTH_DATE));
-        dto.setStatusId(record.getValue(Tables.USER_STATUS.ID));
-        try {
-            dto.setStatusName(record.getValue(Tables.USER_STATUS.NAME));
-        } catch (Exception ex) {
-
-        }
+        dto.setId(record.getValue(Tables.USERS.ID));
+        dto.setFirstName(record.getValue(Tables.USERS.FIRST_NAME));
+        dto.setLastName(record.getValue(Tables.USERS.LAST_NAME));
+        dto.setOrgName(record.getValue(Tables.USERS.LAST_NAME));
+        dto.setEmail(record.getValue(Tables.USERS.EMAIL));
+        dto.setIdNumber(record.getValue(Tables.USERS.ID_NUMBER));
+        dto.setPhone(record.getValue(Tables.USERS.PHONE));
+        dto.setGenderId(record.getValue(Tables.USERS.GENDER_ID));
+        dto.setTypeId(record.getValue(Tables.USERS.USER_TYPE_ID));
+        dto.setApproved(record.getValue(Tables.USERS.IS_APPROVED));
+        dto.setGroupId(record.getValue(Tables.USERS.USER_GROUP_ID));
+        dto.setCreateDate(record.getValue(Tables.USERS.CREATE_DATE));
+        dto.setStatusId(record.getValue(Tables.USERS.ID));
         return dto;
     }
 
@@ -55,12 +69,44 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -71,19 +117,75 @@ public class UserDTO {
         this.email = email;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public Integer getGenderId() {
+        return genderId;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setGenderId(Integer genderId) {
+        this.genderId = genderId;
     }
 
-    public int getStatusId() {
+    public String getGenderName() {
+        return genderName;
+    }
+
+    public void setGenderName(String genderName) {
+        this.genderName = genderName;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(int statusId) {
+    public void setStatusId(Integer statusId) {
         this.statusId = statusId;
     }
 
