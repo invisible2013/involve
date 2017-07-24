@@ -1,6 +1,8 @@
 package ge.economy.involve.core.services;
 
 import ge.economy.involve.core.api.dto.ReformDTO;
+import ge.economy.involve.core.api.dto.ReformTypeDTO;
+import ge.economy.involve.core.api.request.AddReformRequest;
 import ge.economy.involve.core.api.request.AddSportsmanRequest;
 import ge.economy.involve.core.dao.ReformDAO;
 import ge.economy.involve.database.database.Tables;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -31,10 +34,10 @@ public class ReformService {
     public ReformService() {
     }
 
-    public ReformDTO saveSportsman(AddSportsmanRequest request) {
+    public ReformDTO saveReform(AddReformRequest request) {
         boolean newRecord = false;
         ReformRecord record = null;
-        if (request.getId() != 0) {
+        if (request.getId() != null) {
             record = reformDAO.getReformObjectById(request.getId());
         }
 
@@ -43,8 +46,18 @@ public class ReformService {
             newRecord = true;
         }
 
-        record.setName(request.getAddress());
+        record.setName(request.getName());
+        record.setReformTypeId(request.getReformTypeId());
+        record.setExperience(request.getExperience());
+        record.setGeneralInfo(request.getGeneralInfo());
+        record.setProgressBarName_1(request.getProgressBarName1());
+        record.setProgressBarName_2(request.getProgressBarName2());
+        record.setProgressBarName_3(request.getProgressBarName3());
+        record.setProgressBarPercent_1(request.getProgressBarPercent1().toString());
+        record.setProgressBarPercent_2(request.getProgressBarPercent2().toString());
+        record.setProgressBarPercent_3(request.getProgressBarPercent3().toString());
         if (newRecord) {
+           // record.setCreateDate(new Date());
             record.store();
         } else {
             record.update();
@@ -57,6 +70,10 @@ public class ReformService {
         ReformDTO selected = ReformDTO.translate(reformDAO.getReformById(itemId));
 
         return selected;
+    }
+
+    public List<ReformTypeDTO> getReformTypes() {
+        return ReformTypeDTO.translateArray(reformDAO.getReformTypes());
     }
 
     public HashMap<String, Object> getReforms(int start, int limit) {
@@ -104,7 +121,6 @@ public class ReformService {
         */
         return resultMap;
     }
-
 
 
     public void deleteReform(int itemId) {

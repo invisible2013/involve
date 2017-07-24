@@ -47,6 +47,7 @@
 <script src="resources/gentelella/vendors/moment/min/moment.min.js"></script>
 <script src="resources/gentelella/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 
+
 <!-- Custom Theme Scripts -->
 <script src="resources/gentelella/build/js/custom.min.js"></script>
 

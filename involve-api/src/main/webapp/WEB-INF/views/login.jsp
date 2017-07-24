@@ -12,6 +12,17 @@
 <script type="text/javascript" src="resources/js/global_error_handler.js"></script>
 <script type="text/javascript" src="resources/js/misc.js"></script>
 
+<!-- Bootstrap -->
+<link href="resources/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="resources/gentelella/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<link href="resources/gentelella/vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- Animate.css -->
+<link href="resources/gentelella/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="resources/gentelella/build/css/custom.min.css" rel="stylesheet">
 
 <script type="text/javascript">
     var app = angular.module("app", []);
@@ -41,9 +52,46 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ავტორიზაცია</title>
     </head>
-    <body class="auth_bg" ng-app="app">
+    <body class="login" ng-app="app">
         <div class="container" data-role="none" ng-controller="loginCtrl">
-            <div class="row">
+
+            <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    <form>
+                        <h1>ჩაერთე</h1>
+                        <div>
+                            <input type="text" class="form-control" placeholder="მომხმარებელი" ng-model="user.email"  required="" />
+                        </div>
+                        <div>
+                            <input type="password" class="form-control" placeholder="პაროლი" ng-model="user.password" required="" />
+                        </div>
+                        <div>
+                            <input type="submit" style="margin-left: 0;float:none;" class="btn btn-success" ng-click="login()" value="ავტორიზაცია" />
+                            <%--<a class="reset_pass" href="#">Lost your password?</a>--%>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            <p class="change_link">New to site?
+                                <a href="#" class="to_register"> Create Account </a>
+                            </p>
+
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>
+                                <h1><i class="fa fa-paw"></i> Join Reform</h1>
+                                <p>©2017 All Rights Reserved. Economy.ge</p>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            </div>
+
+           <%-- <div class="row">
                 <div class="col-md-12">
                     <br />
                     <div class="row">
@@ -74,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
 
     </body>

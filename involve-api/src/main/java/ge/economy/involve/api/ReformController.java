@@ -1,5 +1,7 @@
 package ge.economy.involve.api;
 
+import ge.economy.involve.core.api.request.AddReformRequest;
+import ge.economy.involve.core.api.request.AddSportTypeRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
 import ge.economy.involve.core.response.Response;
 import ge.economy.involve.core.services.FileService;
@@ -7,6 +9,7 @@ import ge.economy.involve.core.services.ParameterService;
 import ge.economy.involve.core.services.ReformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,10 +32,22 @@ public class ReformController {
 
     @ResponseBody
     @RequestMapping({"/get-reforms"})
-    public Response getSportsmans(@RequestParam("sportTypeId") int sportTypeId, @RequestParam("genderId") int genderId, @RequestParam("regionId") int regionId,
-                                  @RequestParam("cityId") int cityId, @RequestParam(required = false) String name, @RequestParam(required = false) String firstLetter,
-                                  @RequestParam("start") int start, @RequestParam("limit") int limit) {
+    public Response getSportsmans(@RequestParam("start") int start, @RequestParam("limit") int limit) {
         return Response.withData(reformService.getReforms(start, limit));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-reform-types"})
+    public Response getSportsmans() {
+        return Response.withData(reformService.getReformTypes());
+    }
+
+
+    @ResponseBody
+    @RequestMapping({"/save-reform"})
+    public Response saveReform(@RequestBody AddReformRequest addReformRequest)
+    {
+        return Response.withData(reformService.saveReform(addReformRequest));
     }
 
 

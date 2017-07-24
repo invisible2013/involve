@@ -4,12 +4,8 @@ import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
 
 import java.util.HashMap;
-import java.util.List;
 
-import org.jooq.Condition;
-import org.jooq.Record;
-import org.jooq.SelectField;
-import org.jooq.SelectOnConditionStep;
+import org.jooq.*;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -36,6 +32,12 @@ public class ReformDAO extends AbstractDAO {
                         .join(Tables.REFORM_TYPE)
                         .on(Tables.REFORM.REFORM_TYPE_ID.eq(Tables.REFORM_TYPE.ID))
                         .where(Tables.REFORM.ID.eq(id)).fetchOne();
+    }
+
+    public Result<Record> getReformTypes() {
+        return dslContext.select()
+                .from(Tables.REFORM_TYPE)
+                .fetch();
     }
 
     public ReformRecord getReformObjectById(int id) {
