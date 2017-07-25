@@ -1,9 +1,11 @@
 package ge.economy.involve.core.api.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import ge.economy.involve.core.api.dto.ReformDetailDTO;
 import ge.economy.involve.core.jsonhelper.JsonDateDeSerializeSupport;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by nl on 7/20/2016.
@@ -23,6 +25,7 @@ public class AddReformRequest {
     private Integer progressBarPercent3;
     private String generalInfo;
     private String experience;
+    private List<ReformDetailDTO> reformDetails;
 
     public Integer getId() {
         return id;
@@ -118,5 +121,13 @@ public class AddReformRequest {
 
     public void setExperience(String experience) {
         this.experience = experience;
+    }
+
+    public List<ReformDetailDTO> getReformDetails() {
+        return reformDetails;
+    }
+
+    public void setReformDetails(List<ReformDetailDTO> reformDetails) {
+        this.reformDetails = reformDetails;
     }
 }

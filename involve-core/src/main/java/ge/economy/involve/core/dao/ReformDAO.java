@@ -1,9 +1,11 @@
 package ge.economy.involve.core.dao;
 
 import ge.economy.involve.database.database.Tables;
+import ge.economy.involve.database.database.tables.ReformDetail;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.jooq.*;
 import org.springframework.stereotype.Repository;
@@ -25,16 +27,20 @@ public class ReformDAO extends AbstractDAO {
     }
 
     public Record getReformById(int id) {
-        return
-
-                this.dslContext.select()
-                        .from(Tables.REFORM)
-                        .join(Tables.REFORM_TYPE)
-                        .on(Tables.REFORM.REFORM_TYPE_ID.eq(Tables.REFORM_TYPE.ID))
-                        .where(Tables.REFORM.ID.eq(id)).fetchOne();
+        return dslContext.select()
+                .from(Tables.REFORM)
+                .join(Tables.REFORM_TYPE)
+                .on(Tables.REFORM.REFORM_TYPE_ID.eq(Tables.REFORM_TYPE.ID))
+                .where(Tables.REFORM.ID.eq(id)).fetchOne();
     }
 
-    public Result<Record> getReformTypes() {
+    public List<Record> getReformDetails(int reformId) {
+        return dslContext.select()
+                .from(Tables.REFORM_DETAIL)
+                .where(Tables.REFORM_DETAIL.REFORM_ID.eq(reformId)).fetch();
+    }
+
+    public List<Record> getReformTypes() {
         return dslContext.select()
                 .from(Tables.REFORM_TYPE)
                 .fetch();
@@ -44,7 +50,9 @@ public class ReformDAO extends AbstractDAO {
         return (ReformRecord) this.dslContext.fetchOne(Tables.REFORM, Tables.REFORM.ID.eq(id));
     }
 
-
+    public void deleteReformDetails(int reformId) {
+        this.dslContext.deleteFrom(Tables.REFORM_DETAIL).where(Tables.REFORM_DETAIL.REFORM_ID.eq(reformId)).execute();
+    }
     public void deleteReform(int itemId) {
         this.dslContext.deleteFrom(Tables.REFORM).where(Tables.REFORM.ID.eq(itemId)).execute();
     }

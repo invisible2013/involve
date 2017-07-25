@@ -1,11 +1,13 @@
 package ge.economy.involve.core.services;
 
 import ge.economy.involve.core.api.dto.ReformDTO;
+import ge.economy.involve.core.api.dto.ReformDetailDTO;
 import ge.economy.involve.core.api.dto.ReformTypeDTO;
 import ge.economy.involve.core.api.request.AddReformRequest;
 import ge.economy.involve.core.api.request.AddSportsmanRequest;
 import ge.economy.involve.core.dao.ReformDAO;
 import ge.economy.involve.database.database.Tables;
+import ge.economy.involve.database.database.tables.records.ReformDetailRecord;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -57,10 +59,20 @@ public class ReformService {
         record.setProgressBarPercent_2(request.getProgressBarPercent2().toString());
         record.setProgressBarPercent_3(request.getProgressBarPercent3().toString());
         if (newRecord) {
-           // record.setCreateDate(new Date());
+            // record.setCreateDate(new Date());
             record.store();
         } else {
             record.update();
+        }
+        if (request.getReformDetails().size() > 0) {
+            reformDAO.deleteReformDetails(record.getId());
+            for (ReformDetailDTO d : request.getReformDetails()) {
+                ReformDetailRecord detailRecord = (ReformDetailRecord) this.dslContext.newRecord(Tables.REFORM_DETAIL);
+                detailRecord.setReformId(record.getId());
+                detailRecord.setName(d.getName());
+                detailRecord.setValue(d.getValue());
+                detailRecord.store();
+            }
         }
 
         return null;
@@ -81,6 +93,9 @@ public class ReformService {
         HashMap<String, Object> resultMap = new HashMap();
         HashMap<String, Object> map = this.reformDAO.getReforms(start, limit);
         List<ReformDTO> items = ReformDTO.translateArray((List) map.get("list"));
+        for (ReformDTO item : items) {
+            item.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(item.getId())));
+        }
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
         return resultMap;

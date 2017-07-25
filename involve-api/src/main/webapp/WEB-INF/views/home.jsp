@@ -33,6 +33,8 @@
         $scope.type = "details";
         $scope.reforms = [];
         $scope.reformTypes = [];
+        $scope.details = [];
+        $scope.detailsRows = [1];
         $scope.start = 0;
         $scope.limit = 20;
         $scope.size = 0;
@@ -82,6 +84,18 @@
                 location.reload();
             };
             ajaxCall($http, "reform/save-reform", angular.toJson($scope.reform), saveSuccessReform);
+        };
+
+        $scope.addDetailRow = function () {
+            var size = $scope.detailsRows.length;
+            $scope.detailsRows.push(size + 1);
+            $scope.details[size + 1] = $scope.details[1];
+        };
+        $scope.removeDetail = function (index) {
+            $scope.detailsRows.splice(index, 1);
+            if ($scope.reform.reformDetails) {
+                $scope.reform.reformDetails.splice(index, 1);
+            }
         };
 
 
@@ -197,6 +211,32 @@
                             <label class="control-label">3 პროგრეს ბარი პროცენტი</label>
                             <input type="number" ng-model="reform.progressBarPercent3" min="0" max="100"
                                    class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label col-sm-12">დამატებითი ინფორმაცია</label>
+                            <div class="row">
+                                <div ng-repeat="d in detailsRows" >
+                                    <div class="col-md-5" class="form-group">
+                                        <input type="text" placeholder="დასახელება"  ng-model="reform.reformDetails[d - 1].name"
+                                               class="form-control input-sm" >
+                                    </div>
+                                    <div class="col-md-5" class="form-group">
+                                        <input type="text" placeholder="მნიშვნელობა" ng-model="reform.reformDetails[d - 1].value"
+                                               class="form-control input-sm" >
+                                    </div>
+                                    <div class="col-md-1" ng-show="$index == 0">
+                                        <a class="btn btn-xs">
+                                            <span class="glyphicon glyphicon-plus" ng-click="addDetailRow()"></span>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-1" ng-show="$index > 0">
+                                        <a class="btn btn-xs row">
+                                                        <span class="glyphicon glyphicon-remove"
+                                                              ng-click="removeDetail($index)"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

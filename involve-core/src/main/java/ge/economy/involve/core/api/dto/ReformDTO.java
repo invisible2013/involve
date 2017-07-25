@@ -17,7 +17,7 @@ import java.util.List;
 public class ReformDTO {
 
     private int id;
-    private  String name;
+    private String name;
     private Integer reformTypeId;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
@@ -30,6 +30,7 @@ public class ReformDTO {
     private String generalInfo;
     private String experience;
     private String reformTypeName;
+    private List<ReformDetailDTO> reformDetails;
 
 
     public static ReformDTO translate(Record record) {
@@ -163,5 +164,13 @@ public class ReformDTO {
 
     public void setProgressBarPercent3(Integer progressBarPercent3) {
         this.progressBarPercent3 = progressBarPercent3;
+    }
+
+    public List<ReformDetailDTO> getReformDetails() {
+        return reformDetails;
+    }
+
+    public void setReformDetails(List<ReformDetailDTO> reformDetails) {
+        this.reformDetails = reformDetails;
     }
 }
