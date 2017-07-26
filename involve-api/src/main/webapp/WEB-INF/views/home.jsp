@@ -119,6 +119,10 @@
             if (itemId != undefined) {
                 var selected = $filter('filter')($scope.reforms, {id: itemId}, true);
                 $scope.reform = selected[0];
+                $scope.detailsRows = [];
+                angular.forEach($scope.reform.reformDetails, function (value, index) {
+                    $scope.detailsRows.push(index + 1);
+                });
             }
         };
         $scope.deleteItem = function (itemId) {
@@ -215,14 +219,16 @@
                         <div class="form-group col-sm-12">
                             <label class="control-label col-sm-12">დამატებითი ინფორმაცია</label>
                             <div class="row">
-                                <div ng-repeat="d in detailsRows" >
+                                <div ng-repeat="d in detailsRows">
                                     <div class="col-md-5" class="form-group">
-                                        <input type="text" placeholder="დასახელება"  ng-model="reform.reformDetails[d - 1].name"
-                                               class="form-control input-sm" >
+                                        <input type="text" placeholder="დასახელება"
+                                               ng-model="reform.reformDetails[d - 1].name"
+                                               class="form-control input-sm">
                                     </div>
                                     <div class="col-md-5" class="form-group">
-                                        <input type="text" placeholder="მნიშვნელობა" ng-model="reform.reformDetails[d - 1].value"
-                                               class="form-control input-sm" >
+                                        <input type="text" placeholder="მნიშვნელობა"
+                                               ng-model="reform.reformDetails[d - 1].value"
+                                               class="form-control input-sm">
                                     </div>
                                     <div class="col-md-1" ng-show="$index == 0">
                                         <a class="btn btn-xs">
@@ -317,27 +323,31 @@
                                 <td class="project_progress">
                                     <div class="progress progress_sm">
                                         <div class="progress-bar bg-green" role="progressbar"
-                                             data-transitiongoal="r.progressBarPercent1" style="width:{{r.progressBarPercent1}}%;"></div>
+                                             data-transitiongoal="r.progressBarPercent1"
+                                             style="width:{{r.progressBarPercent1}}%;"></div>
                                     </div>
                                     <small>{{r.progressBarPercent1}}% {{r.progressBarName1}}</small>
                                 </td>
                                 <td class="project_progress">
                                     <div class="progress progress_sm">
                                         <div class="progress-bar bg-green" role="progressbar"
-                                             data-transitiongoal="{{r.progressBarPercent2}}"  style="width:{{r.progressBarPercent2}}%;"></div>
+                                             data-transitiongoal="{{r.progressBarPercent2}}"
+                                             style="width:{{r.progressBarPercent2}}%;"></div>
                                     </div>
                                     <small>{{r.progressBarPercent2}}% {{r.progressBarName2}}</small>
                                 </td>
                                 <td class="project_progress">
                                     <div class="progress progress_sm">
                                         <div class="progress-bar bg-green" role="progressbar"
-                                             data-transitiongoal="{{r.progressBarPercent3}}"  style="width:{{r.progressBarPercent3}}%;"></div>
+                                             data-transitiongoal="{{r.progressBarPercent3}}"
+                                             style="width:{{r.progressBarPercent3}}%;"></div>
                                     </div>
                                     <small>{{r.progressBarPercent3}}% {{r.progressBarName3}}</small>
                                 </td>
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> ნახვა </a>
-                                    <a data-toggle="modal" data-target="#reformModal" ng-click="editItem(r.id)" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა </a>
+                                    <a data-toggle="modal" data-target="#reformModal" ng-click="editItem(r.id)"
+                                       class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა </a>
                                     <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> წაშლა </a>
                                 </td>
                             </tr>
