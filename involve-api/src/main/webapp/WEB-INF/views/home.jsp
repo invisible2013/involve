@@ -133,7 +133,7 @@
             }
         };
 
-        $scope.addFiles = function (itemId) {
+        $scope.itemFiles = function (itemId) {
             window.location = "reformFiles?itemId=" + itemId;
         };
 
@@ -248,8 +248,64 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">დახურვა</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
                     <button type="button" class="btn btn-success" ng-click="saveReform()">შენახვა</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="reformViewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="viewModalLabel">რეფორმის დეტალური ინფორმაცია</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <table class="table table-striped">
+                            <tr>
+                                <th class="col-md-4 text-right">რეფორმის დასახელება :</th>
+                                <td>{{reform.name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">რეფორმის ტიპი :</th>
+                                <td>{{reform.reformTypeName}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">ზოგადი ინფორმაცია :</th>
+                                <td>{{reform.generalInfo}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">საერთაშორისო გამოცდილება :</th>
+                                <td>{{reform.experience}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">1 პროგრეს ბარი :</th>
+                                <td>{{reform.progressBarName1}} {{reform.progressBarPercent1}}%</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">2 პროგრეს ბარი :</th>
+                                <td>{{reform.progressBarName2}} {{reform.progressBarPercent2}}%</td>
+                            </tr>
+                            <tr ng-show="reform.progressBarPercent3>0">
+                                <th class="col-md-4 text-right">3 პროგრეს ბარი :</th>
+                                <td>{{reform.progressBarName3}} {{reform.progressBarPercent3}}%</td>
+                            </tr>
+                            <tr ng-repeat="d in reform.reformDetails">
+                                <th class="col-md-4 text-right">{{d.name}} :</th>
+                                <td>{{d.value}}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
                 </div>
             </div>
         </div>
@@ -311,7 +367,10 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="r in reforms">
-                                <td>{{$index+1}}</td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#reformViewModal" ng-click="editItem(r.id)"
+                                       class="btn btn-link btn-xs">{{$index+1}}</a>
+                                    </td>
                                 <td>
                                     <a>{{r.name}}</a>
                                     <br/>
@@ -344,11 +403,14 @@
                                     </div>
                                     <small>{{r.progressBarPercent3}}% {{r.progressBarName3}}</small>
                                 </td>
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> ნახვა </a>
+                                <td ng-click="editItem(r.id)">
+                                  <%--  <a data-toggle="modal" data-target="#reformViewModal" ng-click="editItem(r.id)"
+                                       class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> ნახვა</a>--%>
                                     <a data-toggle="modal" data-target="#reformModal" ng-click="editItem(r.id)"
-                                       class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა </a>
-                                    <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> წაშლა </a>
+                                       class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
+                                    <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> წაშლა</a>
+                                    <a ng-click="itemFiles(r.id)" class="btn btn-dark btn-xs"><i class="fa fa-file"></i> ფაილი</a>
+                                    <a ng-click="itemSession(r.id)" class="btn btn-primary btn-xs"><i class="fa fa-bar-chart"></i> სესია</a>
                                 </td>
                             </tr>
                             </tbody>

@@ -23,8 +23,8 @@ import java.util.UUID;
 public class FileService {
 
 
-    //"D:\\upload"
-    private String rootDir = "Users/nino/Desktop/upload";
+    //private String rootDir = "Users/nino/Desktop/upload";
+    private String rootDir = "F:\\upload";
 
     private final Logger logger = Logger.getLogger(FileService.class);
 

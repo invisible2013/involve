@@ -2,12 +2,14 @@ package ge.economy.involve.core.services;
 
 import ge.economy.involve.core.api.dto.ReformDTO;
 import ge.economy.involve.core.api.dto.ReformDetailDTO;
+import ge.economy.involve.core.api.dto.ReformFileDTO;
 import ge.economy.involve.core.api.dto.ReformTypeDTO;
 import ge.economy.involve.core.api.request.AddReformRequest;
 import ge.economy.involve.core.api.request.AddSportsmanRequest;
 import ge.economy.involve.core.dao.ReformDAO;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.records.ReformDetailRecord;
+import ge.economy.involve.database.database.tables.records.ReformFileRecord;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -55,9 +57,15 @@ public class ReformService {
         record.setProgressBarName_1(request.getProgressBarName1());
         record.setProgressBarName_2(request.getProgressBarName2());
         record.setProgressBarName_3(request.getProgressBarName3());
-        record.setProgressBarPercent_1(request.getProgressBarPercent1().toString());
-        record.setProgressBarPercent_2(request.getProgressBarPercent2().toString());
-        record.setProgressBarPercent_3(request.getProgressBarPercent3().toString());
+        if (request.getProgressBarPercent1() != null) {
+            record.setProgressBarPercent_1(request.getProgressBarPercent1().toString());
+        }
+        if (request.getProgressBarPercent2() != null) {
+            record.setProgressBarPercent_2(request.getProgressBarPercent2().toString());
+        }
+        if (request.getProgressBarPercent3() != null) {
+            record.setProgressBarPercent_3(request.getProgressBarPercent3().toString());
+        }
         if (newRecord) {
             // record.setCreateDate(new Date());
             record.store();
@@ -82,6 +90,10 @@ public class ReformService {
         ReformDTO selected = ReformDTO.translate(reformDAO.getReformById(itemId));
 
         return selected;
+    }
+
+    public List<ReformFileDTO> getReformFiles(int reformId) {
+        return ReformFileDTO.translateArray(reformDAO.getReformFiles(reformId));
     }
 
     public List<ReformTypeDTO> getReformTypes() {
@@ -142,42 +154,42 @@ public class ReformService {
         this.reformDAO.deleteReform(itemId);
     }
 
-    public void addSportsmanImage(int sportsmanId, int fileTypeId, String fileUrl, MultipartFile file) {
-        String fileName = "";
+
+
+    public void addReformImage(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
+        String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
-            fileName = this.fileService.saveFile(file, sportsmanId + "");
+            fileName = this.fileService.saveFile(file, itemId + "");
         }
 
         try {
             if (fileName != null && !fileName.isEmpty() || fileTypeId == FileTypes.VIDEO.id()) {
-              /*  SportsmanFileRecord record = (SportsmanFileRecord) this.dslContext.newRecord(Tables.SPORTSMAN_FILE);
-                record.setSportsmanId(Integer.valueOf(sportsmanId));
+                ReformFileRecord record = (ReformFileRecord) this.dslContext.newRecord(Tables.REFORM_FILE);
+                record.setReformId(itemId);
                 record.setFileName(fileName);
-                record.setFileTypeId(Integer.valueOf(fileTypeId));
-                record.setFileUrl(fileUrl);
-                record.store();*/
+                record.setFileTypeId(fileTypeId);
+                record.store();
             }
-        } catch (Exception var7) {
-            ;
+        } catch (Exception ex) {
+
         }
 
     }
 
-    public void deleteSportsmanFile(int itemId) {
-      /*  SportsmanFileRecord record = this.sportsmanDAO.getSportsmanFileObjectById(itemId);
+    public void deleteReformFile(int itemId) {
+        ReformFileRecord record = this.reformDAO.getReformFileObjectById(itemId);
         if (record != null) {
             this.fileService.deleteFile(record.getFileName());
         }
 
-        this.sportsmanDAO.deleteSportsmanFile(itemId);*/
+        this.reformDAO.deleteReformFile(itemId);
     }
 
 }
 
 enum FileTypes {
     IMAGE(1),
-    FILE(2),
-    VIDEO(3);
+    VIDEO(2);
     private int id;
 
     FileTypes(int index) {

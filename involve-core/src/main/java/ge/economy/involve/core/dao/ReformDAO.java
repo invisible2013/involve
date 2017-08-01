@@ -2,6 +2,7 @@ package ge.economy.involve.core.dao;
 
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.ReformDetail;
+import ge.economy.involve.database.database.tables.records.ReformFileRecord;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
 
 import java.util.HashMap;
@@ -40,6 +41,12 @@ public class ReformDAO extends AbstractDAO {
                 .where(Tables.REFORM_DETAIL.REFORM_ID.eq(reformId)).fetch();
     }
 
+    public List<Record> getReformFiles(int reformId) {
+        return dslContext.select()
+                .from(Tables.REFORM_FILE)
+                .where(Tables.REFORM_FILE.REFORM_ID.eq(reformId)).fetch();
+    }
+
     public List<Record> getReformTypes() {
         return dslContext.select()
                 .from(Tables.REFORM_TYPE)
@@ -50,11 +57,20 @@ public class ReformDAO extends AbstractDAO {
         return (ReformRecord) this.dslContext.fetchOne(Tables.REFORM, Tables.REFORM.ID.eq(id));
     }
 
-    public void deleteReformDetails(int reformId) {
-        this.dslContext.deleteFrom(Tables.REFORM_DETAIL).where(Tables.REFORM_DETAIL.REFORM_ID.eq(reformId)).execute();
+    public ReformFileRecord getReformFileObjectById(int id) {
+        return (ReformFileRecord) dslContext.fetchOne(Tables.REFORM_FILE, Tables.REFORM_FILE.ID.eq(id));
     }
+
+    public void deleteReformDetails(int reformId) {
+        dslContext.deleteFrom(Tables.REFORM_DETAIL).where(Tables.REFORM_DETAIL.REFORM_ID.eq(reformId)).execute();
+    }
+
     public void deleteReform(int itemId) {
-        this.dslContext.deleteFrom(Tables.REFORM).where(Tables.REFORM.ID.eq(itemId)).execute();
+        dslContext.deleteFrom(Tables.REFORM).where(Tables.REFORM.ID.eq(itemId)).execute();
+    }
+
+    public void deleteReformFile(int itemId) {
+        dslContext.deleteFrom(Tables.REFORM_FILE).where(Tables.REFORM_FILE.ID.eq(itemId)).execute();
     }
 
  /*   public HashMap<String, Object> searchSportsmans(String name, String firstLetter, int sportTypeId, int genderId, int regionId, int cityId, int start, int limit) {
