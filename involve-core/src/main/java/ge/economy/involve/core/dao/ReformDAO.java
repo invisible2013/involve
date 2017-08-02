@@ -8,6 +8,7 @@ import ge.economy.involve.database.database.tables.records.ReformRecord;
 import java.util.HashMap;
 import java.util.List;
 
+import ge.economy.involve.database.database.tables.records.SessionRecord;
 import org.jooq.*;
 import org.springframework.stereotype.Repository;
 
@@ -47,6 +48,13 @@ public class ReformDAO extends AbstractDAO {
                 .where(Tables.REFORM_FILE.REFORM_ID.eq(reformId)).fetch();
     }
 
+    public List<Record> getReformSessions(int reformId) {
+        return dslContext.select()
+                .from(Tables.SESSION)
+                .where(Tables.SESSION.REFORM_ID.eq(reformId)).fetch();
+    }
+
+
     public List<Record> getReformTypes() {
         return dslContext.select()
                 .from(Tables.REFORM_TYPE)
@@ -55,6 +63,10 @@ public class ReformDAO extends AbstractDAO {
 
     public ReformRecord getReformObjectById(int id) {
         return (ReformRecord) this.dslContext.fetchOne(Tables.REFORM, Tables.REFORM.ID.eq(id));
+    }
+
+    public SessionRecord getSessionObjectById(int id) {
+        return (SessionRecord) this.dslContext.fetchOne(Tables.SESSION, Tables.SESSION.ID.eq(id));
     }
 
     public ReformFileRecord getReformFileObjectById(int id) {

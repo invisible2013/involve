@@ -5,12 +5,14 @@ import ge.economy.involve.core.api.dto.ReformDetailDTO;
 import ge.economy.involve.core.api.dto.ReformFileDTO;
 import ge.economy.involve.core.api.dto.ReformTypeDTO;
 import ge.economy.involve.core.api.request.AddReformRequest;
+import ge.economy.involve.core.api.request.AddSessionRequest;
 import ge.economy.involve.core.api.request.AddSportsmanRequest;
 import ge.economy.involve.core.dao.ReformDAO;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.records.ReformDetailRecord;
 import ge.economy.involve.database.database.tables.records.ReformFileRecord;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
+import ge.economy.involve.database.database.tables.records.SessionRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +88,34 @@ public class ReformService {
         return null;
     }
 
+
+    public ReformDTO saveSession(AddSessionRequest request) {
+        boolean newRecord = false;
+        SessionRecord record = null;
+        if (request.getId() != null) {
+            record = reformDAO.getSessionObjectById(request.getId());
+        }
+
+        if (record == null) {
+            record = (SessionRecord) this.dslContext.newRecord(Tables.SESSION);
+            newRecord = true;
+        }
+
+        record.setName(request.getName());
+        record.setReformId(request.getReformId());
+        record.setName(request.getName());
+        record.setStartDate(request.getStartDate());
+        record.setEndDate(request.getEndDate());
+
+        if (newRecord) {
+            //record.setCreateDate(new Date());
+            record.store();
+        } else {
+            record.update();
+        }
+        return null;
+    }
+
     public ReformDTO getReformById(int itemId) {
         ReformDTO selected = ReformDTO.translate(reformDAO.getReformById(itemId));
 
@@ -94,6 +124,10 @@ public class ReformService {
 
     public List<ReformFileDTO> getReformFiles(int reformId) {
         return ReformFileDTO.translateArray(reformDAO.getReformFiles(reformId));
+    }
+
+    public List<ReformFileDTO> getReformSessions(int reformId) {
+        return ReformFileDTO.translateArray(reformDAO.getReformSessions(reformId));
     }
 
     public List<ReformTypeDTO> getReformTypes() {

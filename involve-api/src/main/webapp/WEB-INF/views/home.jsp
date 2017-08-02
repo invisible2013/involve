@@ -136,6 +136,10 @@
         $scope.itemFiles = function (itemId) {
             window.location = "reformFiles?itemId=" + itemId;
         };
+        $scope.itemSession = function (itemId) {
+            window.location = "session?itemId=" + itemId;
+        };
+
 
         $scope.open = function (name) {
             window.open('file/draw/' + name + '/');

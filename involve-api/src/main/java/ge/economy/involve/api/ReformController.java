@@ -2,6 +2,7 @@ package ge.economy.involve.api;
 
 import ge.economy.involve.core.api.request.AddReformFileRequest;
 import ge.economy.involve.core.api.request.AddReformRequest;
+import ge.economy.involve.core.api.request.AddSessionRequest;
 import ge.economy.involve.core.api.request.AddSportTypeRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
 import ge.economy.involve.core.response.Response;
@@ -53,6 +54,13 @@ public class ReformController {
 
 
     @ResponseBody
+    @RequestMapping({"/save-session"})
+    public Response saveSession(@RequestBody AddSessionRequest request) {
+        return Response.withData(reformService.saveSession(request));
+    }
+
+
+    @ResponseBody
     @RequestMapping({"/get-reform-by-id"})
     public Response getReformById(@RequestParam("reformId") int reformId) {
         return Response.withData(reformService.getReformById(reformId));
@@ -62,6 +70,12 @@ public class ReformController {
     @RequestMapping({"/get-reform-files"})
     public Response getReformFiles(@RequestParam int itemId) {
         return Response.withData(reformService.getReformFiles(itemId));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-reform-sessions"})
+    public Response getReformSessions(@RequestParam int itemId) {
+        return Response.withData(reformService.getReformSessions(itemId));
     }
 
 
