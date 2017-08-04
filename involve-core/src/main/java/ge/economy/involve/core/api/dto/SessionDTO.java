@@ -22,6 +22,8 @@ public class SessionDTO {
     private Date startDate;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date endDate;
+    @JsonSerialize(using = JsonDateSerializeSupport.class)
+    private Date createDate;
 
 
     public static SessionDTO translate(Record record) {
@@ -32,6 +34,7 @@ public class SessionDTO {
         dto.setImageName(record.getValue(Tables.SESSION.IMAGE_NAME));
         dto.setStartDate(record.getValue(Tables.SESSION.START_DATE));
         dto.setEndDate(record.getValue(Tables.SESSION.END_DATE));
+        dto.setCreateDate(record.getValue(Tables.SESSION.CREATE_DATE));
         return dto;
     }
 
@@ -90,5 +93,13 @@ public class SessionDTO {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

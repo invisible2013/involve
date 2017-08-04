@@ -1,9 +1,6 @@
 package ge.economy.involve.api;
 
-import ge.economy.involve.core.api.request.AddReformFileRequest;
-import ge.economy.involve.core.api.request.AddReformRequest;
-import ge.economy.involve.core.api.request.AddSessionRequest;
-import ge.economy.involve.core.api.request.AddSportTypeRequest;
+import ge.economy.involve.core.api.request.*;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
 import ge.economy.involve.core.response.Response;
 import ge.economy.involve.core.services.FileService;
@@ -59,6 +56,12 @@ public class ReformController {
         return Response.withData(reformService.saveSession(request));
     }
 
+    @ResponseBody
+    @RequestMapping({"/save-session-poll"})
+    public Response saveSessionPoll(@RequestBody AddSessionPollRequest request) {
+        return Response.withData(reformService.saveSessionPoll(request));
+    }
+
 
     @ResponseBody
     @RequestMapping({"/get-reform-by-id"})
@@ -78,12 +81,45 @@ public class ReformController {
         return Response.withData(reformService.getReformSessions(itemId));
     }
 
+    @ResponseBody
+    @RequestMapping({"/get-session-polls"})
+    public Response getSessionPolls(@RequestParam int itemId) {
+        return Response.withData(reformService.getSessionPolls(itemId));
+    }
+
+    @RequestMapping({"/delete-reform"})
+    @ResponseBody
+    private Response deleteReform(@RequestParam int itemId) {
+        this.reformService.deleteReform(itemId);
+        return Response.withData(true);
+    }
+
+    @RequestMapping({"/delete-session"})
+    @ResponseBody
+    private Response deleteSession(@RequestParam int itemId) {
+        this.reformService.deleteSession(itemId);
+        return Response.withData(true);
+    }
+
+    @RequestMapping({"/delete-session-poll"})
+    @ResponseBody
+    private Response deleteSessionPoll(@RequestParam int itemId) {
+        this.reformService.deleteSessionPoll(itemId);
+        return Response.withData(true);
+    }
+
 
     @RequestMapping({"/add-image"})
     @ResponseBody
-    private Response addSportsmanImage(@RequestParam int itemId, @RequestParam int fileTypeId, @RequestParam String fileName, @RequestParam("file")
+    private Response addReformImage(@RequestParam int itemId, @RequestParam int fileTypeId, @RequestParam String fileName, @RequestParam("file")
             MultipartFile multipartFile) {
         reformService.addReformImage(itemId, fileTypeId, fileName, multipartFile);
+        return Response.withData(true);
+    }
+
+    @RequestMapping({"/add-session-image"})
+    private Response addSessionImage(@RequestParam int itemId, @RequestParam("file") MultipartFile multipartFile) {
+        reformService.addSessionImage(itemId, multipartFile);
         return Response.withData(true);
     }
 
@@ -97,7 +133,7 @@ public class ReformController {
 
     @RequestMapping({"/delete-file"})
     @ResponseBody
-    private Response deleteSportsmanFile(@RequestParam int itemId) {
+    private Response deleteReformFile(@RequestParam int itemId) {
         this.reformService.deleteReformFile(itemId);
         return Response.withData(true);
     }

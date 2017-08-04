@@ -42,9 +42,15 @@ public class ReformDTO {
         dto.setProgressBarName1(record.getValue(Tables.REFORM.PROGRESS_BAR_NAME_1));
         dto.setProgressBarName2(record.getValue(Tables.REFORM.PROGRESS_BAR_NAME_2));
         dto.setProgressBarName3(record.getValue(Tables.REFORM.PROGRESS_BAR_NAME_3));
-        dto.setProgressBarPercent1(Integer.parseInt(record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_1)));
-        dto.setProgressBarPercent2(Integer.parseInt(record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_2)));
-        dto.setProgressBarPercent3(Integer.parseInt(record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_3)));
+        if (record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_1) != null) {
+            dto.setProgressBarPercent1(Integer.parseInt(record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_1)));
+        }
+        if (record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_2) != null) {
+            dto.setProgressBarPercent2(Integer.parseInt(record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_2)));
+        }
+        if (record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_3) != null) {
+            dto.setProgressBarPercent3(Integer.parseInt(record.getValue(Tables.REFORM.PROGRESS_BAR_PERCENT_3)));
+        }
         dto.setReformTypeId(record.getValue(Tables.REFORM.REFORM_TYPE_ID));
         dto.setReformTypeName(record.getValue(Tables.REFORM_TYPE.NAME));
         dto.setCreateDate(record.getValue(Tables.REFORM.CREATE_DATE));

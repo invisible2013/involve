@@ -1,18 +1,13 @@
 package ge.economy.involve.core.services;
 
-import ge.economy.involve.core.api.dto.ReformDTO;
-import ge.economy.involve.core.api.dto.ReformDetailDTO;
-import ge.economy.involve.core.api.dto.ReformFileDTO;
-import ge.economy.involve.core.api.dto.ReformTypeDTO;
+import ge.economy.involve.core.api.dto.*;
 import ge.economy.involve.core.api.request.AddReformRequest;
+import ge.economy.involve.core.api.request.AddSessionPollRequest;
 import ge.economy.involve.core.api.request.AddSessionRequest;
 import ge.economy.involve.core.api.request.AddSportsmanRequest;
 import ge.economy.involve.core.dao.ReformDAO;
 import ge.economy.involve.database.database.Tables;
-import ge.economy.involve.database.database.tables.records.ReformDetailRecord;
-import ge.economy.involve.database.database.tables.records.ReformFileRecord;
-import ge.economy.involve.database.database.tables.records.ReformRecord;
-import ge.economy.involve.database.database.tables.records.SessionRecord;
+import ge.economy.involve.database.database.tables.records.*;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +111,27 @@ public class ReformService {
         return null;
     }
 
+    public SessionPollDTO saveSessionPoll(AddSessionPollRequest request) {
+
+        SessionPollRecord record = dslContext.newRecord(Tables.SESSION_POLL);
+
+
+        record.setName(request.getName());
+        record.setSessionId(request.getSessionId());
+
+        record.store();
+        if (request.getAnswers().size() > 0) {
+
+            for (PollAnswerDTO d : request.getAnswers()) {
+                PollAnswerRecord pollAnswerRecord = dslContext.newRecord(Tables.POLL_ANSWER);
+                pollAnswerRecord.setPollId(record.getId());
+                pollAnswerRecord.setValue(d.getValue());
+                pollAnswerRecord.store();
+            }
+        }
+        return null;
+    }
+
     public ReformDTO getReformById(int itemId) {
         ReformDTO selected = ReformDTO.translate(reformDAO.getReformById(itemId));
 
@@ -126,8 +142,16 @@ public class ReformService {
         return ReformFileDTO.translateArray(reformDAO.getReformFiles(reformId));
     }
 
-    public List<ReformFileDTO> getReformSessions(int reformId) {
-        return ReformFileDTO.translateArray(reformDAO.getReformSessions(reformId));
+    public List<SessionDTO> getReformSessions(int reformId) {
+        return SessionDTO.translateArray(reformDAO.getReformSessions(reformId));
+    }
+
+    public List<SessionPollDTO> getSessionPolls(int sessionId) {
+        List<SessionPollDTO> sessionPolls = SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId));
+        for (SessionPollDTO item : sessionPolls) {
+            item.setAnswers(PollAnswerDTO.translateArray(reformDAO.getPollAnswers(item.getId())));
+        }
+        return sessionPolls;
     }
 
     public List<ReformTypeDTO> getReformTypes() {
@@ -185,15 +209,31 @@ public class ReformService {
 
 
     public void deleteReform(int itemId) {
-        this.reformDAO.deleteReform(itemId);
+        List<SessionDTO> sessions = SessionDTO.translateArray(reformDAO.getReformSessions(itemId));
+        for (SessionDTO s : sessions) {
+            deleteSession(s.getId());
+        }
+        reformDAO.deleteReform(itemId);
     }
 
+    public void deleteSession(int itemId) {
+        List<SessionPollDTO> polls = SessionPollDTO.translateArray(reformDAO.getSessionPolls(itemId));
+        for (SessionPollDTO p : polls) {
+            deleteSessionPoll(p.getId());
+        }
+        reformDAO.deleteSession(itemId);
+    }
+
+    public void deleteSessionPoll(int itemId) {
+        reformDAO.deleteSessionPollAnswers(itemId);
+        reformDAO.deleteSessionPoll(itemId);
+    }
 
 
     public void addReformImage(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
         String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
-            fileName = this.fileService.saveFile(file, itemId + "");
+            fileName = this.fileService.saveFile(file, itemId + "_1_");
         }
 
         try {
@@ -217,6 +257,20 @@ public class ReformService {
         }
 
         this.reformDAO.deleteReformFile(itemId);
+    }
+
+    public void addSessionImage(int itemId, MultipartFile file) {
+        String fileName = this.fileService.saveFile(file, itemId + "_2_");
+        try {
+            if (fileName != null && !fileName.isEmpty()) {
+                SessionRecord record = reformDAO.getSessionObjectById(itemId);
+                record.setImageName(fileName);
+                record.store();
+            }
+        } catch (Exception ex) {
+
+        }
+
     }
 
 }

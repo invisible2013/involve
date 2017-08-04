@@ -8,6 +8,7 @@ import ge.economy.involve.database.database.tables.records.ReformRecord;
 import java.util.HashMap;
 import java.util.List;
 
+import ge.economy.involve.database.database.tables.records.SessionPollRecord;
 import ge.economy.involve.database.database.tables.records.SessionRecord;
 import org.jooq.*;
 import org.springframework.stereotype.Repository;
@@ -54,6 +55,18 @@ public class ReformDAO extends AbstractDAO {
                 .where(Tables.SESSION.REFORM_ID.eq(reformId)).fetch();
     }
 
+    public List<Record> getSessionPolls(int sessionId) {
+        return dslContext.select()
+                .from(Tables.SESSION_POLL)
+                .where(Tables.SESSION_POLL.SESSION_ID.eq(sessionId)).fetch();
+    }
+
+    public List<Record> getPollAnswers(int pollId) {
+        return dslContext.select()
+                .from(Tables.POLL_ANSWER)
+                .where(Tables.POLL_ANSWER.POLL_ID.eq(pollId)).fetch();
+    }
+
 
     public List<Record> getReformTypes() {
         return dslContext.select()
@@ -62,12 +75,17 @@ public class ReformDAO extends AbstractDAO {
     }
 
     public ReformRecord getReformObjectById(int id) {
-        return (ReformRecord) this.dslContext.fetchOne(Tables.REFORM, Tables.REFORM.ID.eq(id));
+        return (ReformRecord) dslContext.fetchOne(Tables.REFORM, Tables.REFORM.ID.eq(id));
     }
 
     public SessionRecord getSessionObjectById(int id) {
-        return (SessionRecord) this.dslContext.fetchOne(Tables.SESSION, Tables.SESSION.ID.eq(id));
+        return (SessionRecord) dslContext.fetchOne(Tables.SESSION, Tables.SESSION.ID.eq(id));
     }
+
+    public SessionPollRecord getSessionPollObjectById(int id) {
+        return (SessionPollRecord) dslContext.fetchOne(Tables.SESSION_POLL, Tables.SESSION_POLL.ID.eq(id));
+    }
+
 
     public ReformFileRecord getReformFileObjectById(int id) {
         return (ReformFileRecord) dslContext.fetchOne(Tables.REFORM_FILE, Tables.REFORM_FILE.ID.eq(id));
@@ -79,6 +97,18 @@ public class ReformDAO extends AbstractDAO {
 
     public void deleteReform(int itemId) {
         dslContext.deleteFrom(Tables.REFORM).where(Tables.REFORM.ID.eq(itemId)).execute();
+    }
+
+    public void deleteSession(int itemId) {
+        dslContext.deleteFrom(Tables.SESSION).where(Tables.SESSION.ID.eq(itemId)).execute();
+    }
+
+    public void deleteSessionPoll(int itemId) {
+        dslContext.deleteFrom(Tables.SESSION_POLL).where(Tables.SESSION_POLL.ID.eq(itemId)).execute();
+    }
+
+    public void deleteSessionPollAnswers(int itemId) {
+        dslContext.deleteFrom(Tables.POLL_ANSWER).where(Tables.POLL_ANSWER.POLL_ID.eq(itemId)).execute();
     }
 
     public void deleteReformFile(int itemId) {

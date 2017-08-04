@@ -30,7 +30,6 @@
 
     var app = angular.module("app", []);
     app.controller("homeCtrl", function ($scope, $http, $filter) {
-        $scope.type = "details";
         $scope.reforms = [];
         $scope.reformTypes = [];
         $scope.details = [];
@@ -120,6 +119,9 @@
                 var selected = $filter('filter')($scope.reforms, {id: itemId}, true);
                 $scope.reform = selected[0];
                 $scope.detailsRows = [];
+                if ($scope.reform.reformDetails.length == 0) {
+                    $scope.detailsRows = [1];
+                }
                 angular.forEach($scope.reform.reformDetails, function (value, index) {
                     $scope.detailsRows.push(index + 1);
                 });
@@ -141,9 +143,6 @@
         };
 
 
-        $scope.open = function (name) {
-            window.open('file/draw/' + name + '/');
-        };
         $scope.setNoteAsHtml = function (text) {
             CKEDITOR.instances.ckNote.setData(text);
         };
@@ -224,22 +223,22 @@
                             <label class="control-label col-sm-12">დამატებითი ინფორმაცია</label>
                             <div class="row">
                                 <div ng-repeat="d in detailsRows">
-                                    <div class="col-md-5" class="form-group">
+                                    <div class="col-md-5 form-group" >
                                         <input type="text" placeholder="დასახელება"
                                                ng-model="reform.reformDetails[d - 1].name"
                                                class="form-control input-sm">
                                     </div>
-                                    <div class="col-md-5" class="form-group">
+                                    <div class="col-md-5 form-group" >
                                         <input type="text" placeholder="მნიშვნელობა"
                                                ng-model="reform.reformDetails[d - 1].value"
                                                class="form-control input-sm">
                                     </div>
-                                    <div class="col-md-1" ng-show="$index == 0">
+                                    <div class="col-md-1 form-group" ng-show="$index == 0">
                                         <a class="btn btn-xs">
                                             <span class="glyphicon glyphicon-plus" ng-click="addDetailRow()"></span>
                                         </a>
                                     </div>
-                                    <div class="col-md-1" ng-show="$index > 0">
+                                    <div class="col-md-1 form-group" ng-show="$index > 0">
                                         <a class="btn btn-xs row">
                                                         <span class="glyphicon glyphicon-remove"
                                                               ng-click="removeDetail($index)"></span>
@@ -374,7 +373,7 @@
                                 <td>
                                     <a data-toggle="modal" data-target="#reformViewModal" ng-click="editItem(r.id)"
                                        class="btn btn-link btn-xs">{{$index+1}}</a>
-                                    </td>
+                                </td>
                                 <td>
                                     <a>{{r.name}}</a>
                                     <br/>
@@ -408,13 +407,16 @@
                                     <small>{{r.progressBarPercent3}}% {{r.progressBarName3}}</small>
                                 </td>
                                 <td ng-click="editItem(r.id)">
-                                  <%--  <a data-toggle="modal" data-target="#reformViewModal" ng-click="editItem(r.id)"
-                                       class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> ნახვა</a>--%>
+                                    <%--  <a data-toggle="modal" data-target="#reformViewModal" ng-click="editItem(r.id)"
+                                         class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> ნახვა</a>--%>
                                     <a data-toggle="modal" data-target="#reformModal" ng-click="editItem(r.id)"
                                        class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
-                                    <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> წაშლა</a>
-                                    <a ng-click="itemFiles(r.id)" class="btn btn-dark btn-xs"><i class="fa fa-file"></i> ფაილი</a>
-                                    <a ng-click="itemSession(r.id)" class="btn btn-primary btn-xs"><i class="fa fa-bar-chart"></i> სესია</a>
+                                    <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
+                                            class="fa fa-trash-o"></i> წაშლა</a>
+                                    <a ng-click="itemFiles(r.id)" class="btn btn-dark btn-xs"><i class="fa fa-file"></i>
+                                        ფაილი</a>
+                                    <a ng-click="itemSession(r.id)" class="btn btn-primary btn-xs"><i
+                                            class="fa fa-bar-chart"></i> სესია</a>
                                 </td>
                             </tr>
                             </tbody>

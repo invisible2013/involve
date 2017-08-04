@@ -1,38 +1,55 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="header2.jsp" %>
 <script>
-    $(document).ready(function () {
-        $('#startDate').datepicker({
-            dateFormat: 'dd/mm/yy',
-            yearRange: "-150:+0",
-            changeMonth: true,
-            changeYear: true
-        });
-        /*$('#birthDate').datepicker({
-         dateFormat: 'dd/mm/yy',
-         yearRange: "-150:+0",
-         changeMonth: true,
-         changeYear: true
-         });
 
-         $('#endDate').datepicker({
-         dateFormat: 'dd/mm/yy',
-         yearRange: "-150:+0",
-         changeMonth: true,
-         changeYear: true
-         });
-         $('#deathDate').datepicker({
-         dateFormat: 'dd/mm/yy',
-         yearRange: "-150:+0",
-         changeMonth: true,
-         changeYear: true
-         });*/
+    function getDateById(id) {
+        if ($('#' + id).val() != "") {
+            var arraydates = $('#' + id).val().split("/");
+            var newdate = arraydates[1] + "/" + arraydates[0] + "/" + arraydates[2];
+            return newdate;
+        }
+    }
+
+    function reverseDate(date) {
+        if (date.length > 0) {
+            var arraydates = date.split("/");
+            var newdate = arraydates[1] + "/" + arraydates[0] + "/" + arraydates[2];
+            return new Date(newdate);
+        }
+    }
+    function reverseDateString(date) {
+        if (date.length > 0) {
+            var arraydates = date.split("/");
+            var newdate = arraydates[1] + "/" + arraydates[0] + "/" + arraydates[2];
+            return newdate;
+        }
+    }
+
+    $(document).ready(function () {
+        var start = new Date();
+        $('input[name="startdate"]').daterangepicker({
+            singleDatePicker: true,
+            locale: {
+                //format: 'DD/MM/YYYY HH:mm'
+            }
+        });
+        $('input[name="enddate"]').daterangepicker({
+            singleDatePicker: true,
+            startDate: start,
+            locale: {
+                //format: 'DD/MM/YYYY HH:mm'
+            }
+        });
     });
 
     var app = angular.module("app", []);
-    app.controller("homeCtrl", function ($scope, $http, $filter,$location) {
+    app.controller("homeCtrl", function ($scope, $http, $filter, $location) {
         $scope.items = [];
+        $scope.sessionPolls = [];
+        $scope.poll = {};
+        $scope.poll.answers = [];
         $scope.selectedItemId = 0;
+        $scope.pollRows = [1];
         var absUrl = $location.absUrl();
         if (absUrl.split("?")[1]) {
             if (absUrl.split("?")[1].split("=")[1]) {
@@ -40,12 +57,18 @@
             }
         }
         function getSuccessSession(res) {
-            console.log(res.data);
             $scope.items = res.data;
+            var today = new Date();
+            angular.forEach($scope.items, function (v, index) {
+                var start = reverseDate(v.startDate);
+                var end = reverseDate(v.endDate);
+                var num = (today - start) / (1000 * 60 * 60 * 24);
+                var days = (end - start) / (1000 * 60 * 60 * 24);
+                v.percent = Math.round(Math.round(num) / Math.round(days) * 100);
+            });
         }
 
         ajaxCall($http, "reform/get-reform-sessions?itemId=" + $scope.selectedItemId, null, getSuccessSession);
-
 
 
         $scope.showReform = function () {
@@ -62,12 +85,34 @@
 
         $scope.saveItem = function () {
             console.log($scope.item);
+            $scope.item.reformId = $scope.selectedItemId;
+            $scope.item.startDate = getDateById('single_cal3');
+            $scope.item.endDate = getDateById('single_cal4');
             function saveSuccessItem(res) {
+                if ($('#documentId')[0].files[0] != undefined) {
+                    var oMyForm = new FormData();
+                    oMyForm.append("itemId", $scope.item.id);
+                    oMyForm.append("file", $('#documentId')[0].files[0]);
+                    $.ajax({
+                        url: 'reform/add-session-image',
+                        data: oMyForm,
+                        dataType: 'text',
+                        processData: false,
+                        contentType: false,
+                        type: 'POST',
+                        success: function (data) {
+                            location.reload();
+                        }
+                    }).success(function (data) {
+                        location.reload();
+                    }).error(function (data, status, headers, config) {
+                        location.reload();
+                    });
+                }
                 location.reload();
             };
             ajaxCall($http, "reform/save-session", angular.toJson($scope.item), saveSuccessItem);
         };
-
 
 
         $scope.detailEvent = function (eventId) {
@@ -89,7 +134,49 @@
         $scope.editItem = function (itemId) {
             if (itemId != undefined) {
                 var selected = $filter('filter')($scope.items, {id: itemId}, true);
-                $scope.item = selected[0];
+                var item = selected[0];
+                $('#single_cal3').val(reverseDateString(item.startDate));
+                $('#single_cal4').val(reverseDateString(item.endDate));
+                $scope.item = item;
+            }
+        };
+
+        $scope.questionItem = function (itemId) {
+            if (itemId != undefined) {
+                $scope.poll.sessionId = itemId;
+                function getSuccessSessionPoll(res) {
+                    $scope.sessionPolls = res.data;
+                }
+
+                ajaxCall($http, "reform/get-session-polls?itemId=" + itemId, null, getSuccessSessionPoll);
+            }
+        };
+        $scope.addPollItem = function () {
+            console.log($scope.poll);
+            function saveSuccessPoll(res) {
+                function getSuccessSessionPoll(res) {
+                    $scope.sessionPolls = res.data;
+                    var sessionId = $scope.poll.sessionId;
+                    $scope.poll = {};
+                    $scope.poll.answers = [];
+                    $scope.poll.sessionId = sessionId;
+                    $scope.pollRows = [1];
+                }
+
+                ajaxCall($http, "reform/get-session-polls?itemId=" + $scope.poll.sessionId, null, getSuccessSessionPoll);
+            };
+            ajaxCall($http, "reform/save-session-poll", angular.toJson($scope.poll), saveSuccessPoll);
+        };
+        $scope.deletePollItem = function (itemId) {
+            if (confirm("დარწმუნებული ხართ რომ გსურთ წაშლა?")) {
+                function deleteSuccessPoll(res) {
+                    function getSuccessSessionPoll(res) {
+                        $scope.sessionPolls = res.data;
+                    }
+
+                    ajaxCall($http, "reform/get-session-polls?itemId=" + $scope.poll.sessionId, null, getSuccessSessionPoll);
+                };
+                ajaxCall($http, "reform/delete-session-poll?itemId=" + itemId, angular.toJson($scope.poll), deleteSuccessPoll);
             }
         };
         $scope.deleteItem = function (itemId) {
@@ -100,8 +187,20 @@
             }
         };
 
+        $scope.addPollRow = function () {
+            var size = $scope.pollRows.length;
+            $scope.pollRows.push(size + 1);
+            //$scope.poll.answers[size + 1] = $scope.poll.answers[1];
+        };
+        $scope.removePoll = function (index) {
+            $scope.pollRows.splice(index, 1);
+            if ($scope.poll.answers) {
+                $scope.poll.answers.splice(index, 1);
+            }
+        };
+
         $scope.open = function (name) {
-            window.open('file/draw/' + name + '/');
+            window.open('upload/get-file?identifier=' + name);
         };
 
     });
@@ -127,35 +226,140 @@
                             <input type="text" ng-model="item.name"
                                    class="form-control ng-pristine ng-valid">
                         </div>
-                        <div class="form-group col-sm-12">
+                        <div class="form-group col-sm-6" has-feedback>
 
 
                             <label class="control-label">დაწყება</label>
+
                             <div class="control-group">
                                 <div class="controls">
-                                    <div class="col-md-11 xdisplay_inputx form-group has-feedback">
-                                        <input type="text" class="form-control has-feedback-left"  ng-model="item.startDate" id="single_cal3" aria-describedby="inputSuccess2Status3">
-                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                        <span id="inputSuccess2Status3" class="sr-only">(success)</span>
+                                    <div class="col-md-12 row xdisplay_inputx form-group has-feedback">
+                                        <input type="text" name="startdate" class="form-control has-feedback-left"
+                                               id="single_cal3"
+                                        >
+                                        <span class="fa fa-calendar-o form-control-feedback left"
+                                              aria-hidden="true"></span>
+
                                     </div>
                                 </div>
                             </div>
-                           <%-- <input type="text" ng-model="item.startDate"
-                                   class="form-control ng-pristine ng-valid">--%>
+                            <%-- <input type="text" ng-model="item.startDate"
+                                    class="form-control ng-pristine ng-valid">--%>
                         </div>
-                        <div class="form-group col-sm-12">
+                        <div class="form-group col-sm-6">
                             <label class="control-label">დასრულება</label>
                             <div class="control-group">
                                 <div class="controls">
-                                    <div class="col-md-11 xdisplay_inputx form-group has-feedback">
-                                        <input type="text" class="form-control has-feedback-left"  ng-model="item.endDate" id="single_cal4" aria-describedby="inputSuccess4">
-                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                        <span id="inputSuccess4" class="sr-only">(success)</span>
+                                    <div class="col-md-12 row xdisplay_inputx form-group has-feedback">
+                                        <input type="text" name="enddate" class="form-control has-feedback-left"
+                                               id="single_cal4"
+                                        >
+                                        <span class="fa fa-calendar-o form-control-feedback left"
+                                              aria-hidden="true"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <%--<div class="form-group col-sm-6">
+                            <label class="control-label">პროგრეს ბარი დასახელება</label>
+                            <input type="text" ng-model="reform.progressBarName"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>--%>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">შესრულებული სამუშაოს პროცენტი</label>
+                            <input type="number" ng-model="reform.progressBarPercent" min="0" max="100"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">ლოგო</label>
+                            <input type="file" id="documentId" name="file" class="form-control upload-file">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
+                    <button type="button" class="btn btn-success" ng-click="saveItem()">შენახვა</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" id="questionModal" tabindex="-1" role="dialog"
+         aria-labelledby="questionModalLabel"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="questionModalLabel">კითხვების დამატება</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">კითხვა</label>
+                            <input type="text" ng-model="poll.name"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label col-sm-12">პასუხები</label>
+                            <div class="row">
+                                <div ng-repeat="d in pollRows">
+                                    <div class="col-md-10 form-group">
+                                        <input type="text" placeholder="პასუხი"
+                                               ng-model="poll.answers[d - 1].value"
+                                               class="form-control input-sm">
+                                    </div>
+                                    <div class="col-md-1 form-group" ng-show="$index == 0">
+                                        <a class="btn btn-xs">
+                                            <span class="glyphicon glyphicon-plus" ng-click="addPollRow()"></span>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-1 form-group" ng-show="$index > 0">
+                                        <a class="btn btn-xs row">
+                                                        <span class="glyphicon glyphicon-remove"
+                                                              ng-click="removePoll($index)"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="button" class="btn btn-sm btn-primary" ng-click="addPollItem()">დამატება
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 1%">#</th>
+                                    <th style="width: 20%">კითხვა</th>
+                                    <th>პასუხები</th>
+                                    <th>#Edit</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="r in sessionPolls">
+                                    <td>{{$index+1}}</td>
+                                    <td>
+                                        {{r.name}}
+                                    </td>
+                                    <td>
+                                        <ul ng-repeat="s in r.answers">
+                                            <li>{{s.value}}</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <a ng-click="deletePollItem(r.id)" class="btn btn-danger btn-xs"><i
+                                                class="fa fa-trash-o"></i> წაშლა</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -230,8 +434,9 @@
                             <tr>
                                 <th style="width: 1%">#</th>
                                 <th style="width: 20%">დასახელება</th>
-                                <th>ტიპი</th>
-                                <th>1 პროგრეს ბარი</th>
+                                <th>ლოგო</th>
+                                <th>გასული დრო</th>
+                                <th>შესრულებული სამუშაო</th>
                                 <th style="width: 20%">#Edit</th>
                             </tr>
                             </thead>
@@ -247,21 +452,35 @@
                                     <small>თარიღი: {{r.createDate}}</small>
                                 </td>
                                 <td>
-                                    {{r.reformTypeName}}
+                                    <a class="btn btn-xs" ng-click="open(r.imageName);" ng-show="r.imageName.length>0">
+                                        <img src="upload/get-file?identifier={{r.imageName}}" class="img-thumbnail"
+                                             style="height: 60px;" height="60">
+                                    </a>
                                 </td>
                                 <td class="project_progress">
                                     <div class="progress progress_sm">
                                         <div class="progress-bar bg-green" role="progressbar"
-                                             data-transitiongoal="r.progressBarPercent1"
-                                             style="width:{{r.progressBarPercent1}}%;"></div>
+                                             data-transitiongoal="r.percent"
+                                             style="width:{{r.percent}}%;"></div>
                                     </div>
-                                    <small>{{r.progressBarPercent1}}% {{r.progressBarName1}}</small>
+                                    <small>{{r.percent}}%</small>
+                                    <small>{{r.startDate}} - {{r.endDate}}</small>
+                                </td>
+                                <td class="project_progress">
+                                    <div class="progress progress_sm">
+                                        <div class="progress-bar bg-green" role="progressbar"
+                                             data-transitiongoal="r.percent"
+                                             style="width:{{r.percent}}%;"></div>
+                                    </div>
+                                    <small>{{r.percent}}%</small>
                                 </td>
                                 <td ng-click="editItem(r.id)">
                                     <a data-toggle="modal" data-target="#itemModal" ng-click="editItem(r.id)"
                                        class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
                                     <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
                                             class="fa fa-trash-o"></i> წაშლა</a>
+                                    <a data-toggle="modal" data-target="#questionModal" ng-click="questionItem(r.id)"
+                                       class="btn btn-default btn-xs"><i class="fa fa-area-chart"></i> კითხვარი</a>
                                 </td>
                             </tr>
                             </tbody>
