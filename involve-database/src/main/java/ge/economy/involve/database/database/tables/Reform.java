@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Reform extends TableImpl<ReformRecord> {
 
-	private static final long serialVersionUID = -301224632;
+	private static final long serialVersionUID = -481489223;
 
 	/**
 	 * The reference instance of <code>public.reform</code>
@@ -49,11 +50,6 @@ public class Reform extends TableImpl<ReformRecord> {
 	public Class<ReformRecord> getRecordType() {
 		return ReformRecord.class;
 	}
-
-	/**
-	 * The column <code>public.reform.id</code>.
-	 */
-	public final TableField<ReformRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.reform.name</code>.
@@ -73,7 +69,7 @@ public class Reform extends TableImpl<ReformRecord> {
 	/**
 	 * The column <code>public.reform.progress_bar_percent_1</code>.
 	 */
-	public final TableField<ReformRecord, String> PROGRESS_BAR_PERCENT_1 = createField("progress_bar_percent_1", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
+	public final TableField<ReformRecord, String> PROGRESS_BAR_PERCENT_1 = createField("progress_bar_percent_1", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * The column <code>public.reform.progress_bar_name_2</code>.
@@ -116,6 +112,11 @@ public class Reform extends TableImpl<ReformRecord> {
 	public final TableField<ReformRecord, Integer> CREATOR_ID = createField("creator_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
+	 * The column <code>public.reform.id</code>.
+	 */
+	public final TableField<ReformRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+
+	/**
 	 * Create a <code>public.reform</code> table reference
 	 */
 	public Reform() {
@@ -135,6 +136,14 @@ public class Reform extends TableImpl<ReformRecord> {
 
 	private Reform(String alias, Table<ReformRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<ReformRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_REFORM;
 	}
 
 	/**

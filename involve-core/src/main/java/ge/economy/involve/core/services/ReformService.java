@@ -98,6 +98,7 @@ public class ReformService {
 
         record.setName(request.getName());
         record.setReformId(request.getReformId());
+        record.setWorkPercent(request.getWorkPercent());
         record.setName(request.getName());
         record.setStartDate(request.getStartDate());
         record.setEndDate(request.getEndDate());

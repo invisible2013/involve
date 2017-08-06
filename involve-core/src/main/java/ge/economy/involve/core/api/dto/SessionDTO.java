@@ -16,6 +16,7 @@ public class SessionDTO {
 
     private Integer id;
     private Integer reformId;
+    private Integer workPercent;
     private String name;
     private String imageName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
@@ -35,6 +36,7 @@ public class SessionDTO {
         dto.setStartDate(record.getValue(Tables.SESSION.START_DATE));
         dto.setEndDate(record.getValue(Tables.SESSION.END_DATE));
         dto.setCreateDate(record.getValue(Tables.SESSION.CREATE_DATE));
+        dto.setWorkPercent(record.getValue(Tables.SESSION.WORK_PERCENT));
         return dto;
     }
 
@@ -101,5 +103,13 @@ public class SessionDTO {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Integer getWorkPercent() {
+        return workPercent;
+    }
+
+    public void setWorkPercent(Integer workPercent) {
+        this.workPercent = workPercent;
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Session extends TableImpl<SessionRecord> {
 
-	private static final long serialVersionUID = 560986120;
+	private static final long serialVersionUID = -1067822742;
 
 	/**
 	 * The reference instance of <code>public.session</code>
@@ -49,11 +50,6 @@ public class Session extends TableImpl<SessionRecord> {
 	public Class<SessionRecord> getRecordType() {
 		return SessionRecord.class;
 	}
-
-	/**
-	 * The column <code>public.session.id</code>.
-	 */
-	public final TableField<SessionRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.session.reform_id</code>.
@@ -91,6 +87,16 @@ public class Session extends TableImpl<SessionRecord> {
 	public final TableField<SessionRecord, Integer> CREATOR_ID = createField("creator_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
+	 * The column <code>public.session.work_percent</code>.
+	 */
+	public final TableField<SessionRecord, Integer> WORK_PERCENT = createField("work_percent", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>public.session.id</code>.
+	 */
+	public final TableField<SessionRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+
+	/**
 	 * Create a <code>public.session</code> table reference
 	 */
 	public Session() {
@@ -110,6 +116,14 @@ public class Session extends TableImpl<SessionRecord> {
 
 	private Session(String alias, Table<SessionRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<SessionRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_SESSION;
 	}
 
 	/**

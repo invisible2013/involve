@@ -1,8 +1,10 @@
 package ge.economy.involve.api;
 
+import ge.economy.involve.core.api.request.AddInitiateRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
 import ge.economy.involve.core.response.Response;
 import ge.economy.involve.core.services.FileService;
+import ge.economy.involve.core.services.InitiateService;
 import ge.economy.involve.core.services.ParameterService;
 import ge.economy.involve.core.services.ReformService;
 
@@ -26,12 +28,27 @@ public class ApplicationController {
     private ReformService reformService;
 
     @Autowired
+    private InitiateService initiateService;
+
+
+    @Autowired
     private FileService fileService;
 
     @ResponseBody
     @RequestMapping({"/get-version"})
     public Response getVersion() {
         return Response.withData("v0.0.1");
+    }
+
+
+    @ResponseBody
+    @RequestMapping({"/save-initiate"})
+    public Response saveInitiate(@RequestParam int sphereId, @RequestParam String description) {
+        AddInitiateRequest request = new AddInitiateRequest();
+        request.setUserId(1);
+        request.setSphereId(sphereId);
+        request.setDescription(description);
+        return Response.withData(initiateService.saveInitiate(request));
     }
 
     @ResponseBody
@@ -50,14 +67,12 @@ public class ApplicationController {
     }
 
 
-
     @RequestMapping({"/get-file"})
     @ResponseBody
     public void getFile(HttpServletResponse response, @RequestParam String identifier)
             throws IOException {
         response.getOutputStream().write(fileService.readFile(identifier.split("\\.")[0]));
     }
-
 
 
     @ResponseBody

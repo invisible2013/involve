@@ -14,6 +14,7 @@ public class AddSessionRequest {
 
     private Integer id;
     private Integer reformId;
+    private Integer workPercent;
     private String name;
     private String imageName;
     @JsonDeserialize(using = JsonDateDeSerializeSupport.class)
@@ -67,5 +68,13 @@ public class AddSessionRequest {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getWorkPercent() {
+        return workPercent;
+    }
+
+    public void setWorkPercent(Integer workPercent) {
+        this.workPercent = workPercent;
     }
 }

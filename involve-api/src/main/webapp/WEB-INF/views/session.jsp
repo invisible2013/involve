@@ -268,7 +268,7 @@
                         </div>--%>
                         <div class="form-group col-sm-12">
                             <label class="control-label">შესრულებული სამუშაოს პროცენტი</label>
-                            <input type="number" ng-model="reform.progressBarPercent" min="0" max="100"
+                            <input type="number" ng-model="item.workPercent" min="0" max="100"
                                    class="form-control ng-pristine ng-valid">
                         </div>
                         <div class="form-group col-sm-12">
@@ -469,10 +469,10 @@
                                 <td class="project_progress">
                                     <div class="progress progress_sm">
                                         <div class="progress-bar bg-green" role="progressbar"
-                                             data-transitiongoal="r.percent"
-                                             style="width:{{r.percent}}%;"></div>
+                                             data-transitiongoal="r.workPercent"
+                                             style="width:{{r.workPercent}}%;"></div>
                                     </div>
-                                    <small>{{r.percent}}%</small>
+                                    <small>{{r.workPercent}}%</small>
                                 </td>
                                 <td ng-click="editItem(r.id)">
                                     <a data-toggle="modal" data-target="#itemModal" ng-click="editItem(r.id)"

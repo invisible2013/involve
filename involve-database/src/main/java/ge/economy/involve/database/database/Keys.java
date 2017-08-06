@@ -51,6 +51,7 @@ import ge.economy.involve.database.database.tables.records.UsersRecord;
 
 import javax.annotation.Generated;
 
+import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
 
@@ -73,6 +74,8 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<ReformRecord, Integer> IDENTITY_REFORM = Identities0.IDENTITY_REFORM;
+	public static final Identity<SessionRecord, Integer> IDENTITY_SESSION = Identities0.IDENTITY_SESSION;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -109,6 +112,11 @@ public class Keys {
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class Identities0 extends AbstractKeys {
+		public static Identity<ReformRecord, Integer> IDENTITY_REFORM = createIdentity(Reform.REFORM, Reform.REFORM.ID);
+		public static Identity<SessionRecord, Integer> IDENTITY_SESSION = createIdentity(Session.SESSION, Session.SESSION.ID);
+	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
 		public static final UniqueKey<FileTypeRecord> FILE_TYPE_PKEY = createUniqueKey(FileType.FILE_TYPE, FileType.FILE_TYPE.ID);
