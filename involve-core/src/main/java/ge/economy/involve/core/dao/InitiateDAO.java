@@ -35,12 +35,37 @@ public class InitiateDAO extends AbstractDAO {
     }
 
     public InitiateRecord getInitiateObjectById(int id) {
-        return (InitiateRecord) dslContext.fetchOne(Tables.INITIATE, Tables.INITIATE.ID.eq(id));
+        return dslContext.fetchOne(Tables.INITIATE, Tables.INITIATE.ID.eq(id));
     }
 
     public void deleteInitiate(int itemId) {
         dslContext.deleteFrom(Tables.INITIATE).where(Tables.INITIATE.ID.eq(itemId)).execute();
     }
 
+
+    public HashMap<String, Object> getIssue(int start, int limit) {
+        SelectOnConditionStep<Record> selectConditionStep =
+                dslContext.select()
+                        .from(Tables.INITIATED_ISSUE)
+                        .join(Tables.USERS).on(Tables.INITIATED_ISSUE.CREATOR_ID.eq(Tables.USERS.ID));
+
+        selectConditionStep.where();
+        SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
+        int recordSize = selectConditionStepSize.fetch().size();
+        selectConditionStep.orderBy(Tables.INITIATED_ISSUE.ID.desc()).limit(limit).offset(start);
+
+        HashMap<String, Object> map = new HashMap();
+        map.put("list", selectConditionStep.fetch());
+        map.put("size", recordSize);
+        return map;
+    }
+
+    public InitiatedIssueRecord getInitiatedIssueObjectById(int id) {
+        return dslContext.fetchOne(Tables.INITIATED_ISSUE, Tables.INITIATED_ISSUE.ID.eq(id));
+    }
+
+    public void deleteIssue(int itemId) {
+        dslContext.deleteFrom(Tables.INITIATED_ISSUE).where(Tables.INITIATED_ISSUE.ID.eq(itemId)).execute();
+    }
 
 }

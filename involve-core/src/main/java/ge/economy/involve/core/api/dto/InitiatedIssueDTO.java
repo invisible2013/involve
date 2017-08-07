@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by nl on 7/25/2016.
  */
-public class InitiateDTO {
+public class InitiatedIssueDTO {
 
     private Integer id;
     private Integer userId;
@@ -25,23 +25,21 @@ public class InitiateDTO {
     private Date createDate;
 
 
-    public static InitiateDTO translate(Record record) {
-        InitiateDTO dto = new InitiateDTO();
-        dto.setId(record.getValue(Tables.INITIATE.ID));
-        dto.setUserId(record.getValue(Tables.INITIATE.USER_ID));
-        dto.setGroupId(record.getValue(Tables.INITIATE.GROUP_ID));
-        dto.setSphereId(record.getValue(Tables.INITIATE.SPHERE_ID));
-        dto.setDescription(record.getValue(Tables.INITIATE.DESCRIPTION));
+    public static InitiatedIssueDTO translate(Record record) {
+        InitiatedIssueDTO dto = new InitiatedIssueDTO();
+        dto.setId(record.getValue(Tables.INITIATED_ISSUE.ID));
+        dto.setId(record.getValue(Tables.INITIATED_ISSUE.CREATOR_ID));
+        dto.setDescription(record.getValue(Tables.INITIATED_ISSUE.DESCRIPTION));
         dto.setUserName(record.getValue(Tables.USERS.FIRST_NAME) + " " + record.getValue(Tables.USERS.LAST_NAME) + " " + record.getValue(Tables.USERS.ORG_NAME));
-        dto.setCreateDate(record.getValue(Tables.INITIATE.CREATE_DATE));
+        dto.setCreateDate(record.getValue(Tables.INITIATED_ISSUE.CREATE_DATE));
         return dto;
     }
 
 
-    public static List<InitiateDTO> translateArray(List<Record> records) {
-        ArrayList<InitiateDTO> list = new ArrayList<InitiateDTO>();
+    public static List<InitiatedIssueDTO> translateArray(List<Record> records) {
+        ArrayList<InitiatedIssueDTO> list = new ArrayList<InitiatedIssueDTO>();
         for (Record record : records) {
-            list.add(InitiateDTO.translate(record));
+            list.add(InitiatedIssueDTO.translate(record));
         }
         return list;
     }
