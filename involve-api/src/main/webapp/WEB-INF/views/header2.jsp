@@ -70,6 +70,7 @@
                             <li><a><i class="fa fa-home"></i> მთავარი <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="home">რეფორმები</a></li>
+                                    <li><a href="addReform?reformId=0">რეფორმის დამატება</a></li>
                                     <li><a href="session">სესიები</a></li>
                                     <li><a href="initiate">ინიციატივები</a></li>
                                     <li><a href="initiatedIssue">ინიცირებული საკითხები</a></li>
@@ -119,7 +120,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                               {{currentUser.name}}
+                                {{currentUser.name}}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">

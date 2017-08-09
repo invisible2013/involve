@@ -39,7 +39,7 @@ public class UserDTO {
         dto.setId(record.getValue(Tables.USERS.ID));
         dto.setFirstName(record.getValue(Tables.USERS.FIRST_NAME));
         dto.setLastName(record.getValue(Tables.USERS.LAST_NAME));
-        dto.setOrgName(record.getValue(Tables.USERS.LAST_NAME));
+        dto.setOrgName(record.getValue(Tables.USERS.ORG_NAME));
         dto.setEmail(record.getValue(Tables.USERS.EMAIL));
         dto.setIdNumber(record.getValue(Tables.USERS.ID_NUMBER));
         dto.setPhone(record.getValue(Tables.USERS.PHONE));

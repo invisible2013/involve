@@ -1,9 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@include file="header.jsp" %>
+<%@include file="header2.jsp" %>
 
 <script>
     var app = angular.module("app", []);
-    app.controller("userCtrl", function ($scope, $http, $filter) {
+    app.controller("usersCtrl", function ($scope, $http, $filter) {
         $scope.user = {'userGroupId': 1, 'userStatusId': 1};
         $scope.users = [];
 
@@ -11,14 +11,17 @@
             $scope.users = res.data;
             console.log(res.data);
         }
+
         ajaxCall($http, "users/get-users", null, getUsers);
         function getUserGroups(res) {
             $scope.userGroups = res.data;
         }
+
         ajaxCall($http, "users/get-user-groups", null, getUserGroups);
         function getUserStatuses(res) {
             $scope.userStatuses = res.data;
         }
+
         ajaxCall($http, "users/get-user-statuses", null, getUserStatuses);
 
         $scope.addUser = function () {
@@ -28,12 +31,10 @@
             if (userId != undefined) {
                 var selected = $filter('filter')($scope.users, {id: userId});
                 $scope.user = selected[0];
-                $scope.user.userGroupId = $scope.user.usersGroup.id;
-                $scope.user.userStatusId = $scope.user.usersStatus.id;
             }
         };
         $scope.deleteUser = function (userId) {
-            ajaxCall($http, "user/delete-user", angular.toJson($scope.user), reload);
+            ajaxCall($http, "users/delete-user", angular.toJson($scope.user), reload);
         };
         $scope.groupFilter = function (item) {
             return item.usersGroup.id != 2;
@@ -41,97 +42,157 @@
     });
 </script>
 
-<div class="col-md-12" ng-controller="userCtrl">
-    <br/>
-    <form class="form-horizontal">
-        <div class="form-group col-sm-8 ">
-            <label class="control-label  col-sm-3">სახელი</label>
-            <div class="col-sm-9">
-                <input type="text" ng-model="user.name" class="form-control input-sm" >
-            </div>
-        </div>
-        <div class="form-group col-sm-8 ">
-            <label class="control-label col-sm-3">ელ.ფოსტა</label>
-            <div class="col-sm-9">
-                <input type="text" id="" ng-model="user.email" class="form-control input-sm" >
-            </div>
-        </div>
-        <div class="form-group col-sm-8">
-            <label class="control-label col-sm-3">ტელეფონი</label>
-            <div class="col-xs-9">
-                <input type="text" id="" ng-model="user.phone" class="form-control input-sm" >
-            </div>
-        </div>
-        <div class="form-group col-sm-8">
-            <label class="control-label col-sm-3">მისამართი</label>
-            <div class="col-sm-9">
-                <input type="text" id="" ng-model="user.address" class="form-control input-sm" >
-            </div>
-        </div>
-        <div class="form-group col-sm-8 ">
-            <label class="control-label col-sm-3">მომხმარებელი</label>
-            <div class="col-sm-9">
-                <input type="text" id="" ng-model="user.username" class="form-control input-sm" >
-            </div>
-        </div>
-        <div class="form-group col-sm-8">
-            <label class="control-label col-sm-3">პაროლი</label>
-            <div class="col-sm-9">
-                <input type="text" id="" ng-model="user.password" class="form-control input-sm" >
-            </div>
-        </div>
-        <div class="form-group col-sm-8">
-            <label class="control-label  col-sm-3">ჯგუფი</label>
-            <div class="col-sm-9">
-                <select class="form-control input-sm" ng-model="user.userGroupId">
-                    <option ng-repeat="g in userGroups" value="{{g.id}}">{{g.description}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group col-sm-8">
-            <label class="control-label  col-sm-3">სტატუსი</label>
-            <div class="col-sm-9">
-                <select class="form-control input-sm" ng-model="user.userStatusId">
-                    <option ng-repeat="s in userStatuses" value="{{s.id}}">{{s.name}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group col-sm-8 text-right">
-            <div class="col-sm-12">
-                <input id="addPersonItemBtn" type="button" class="btn btn-primary btn-xs" value="შენახვა" ng-click="addUser()">
-            </div>
-        </div>
+<div class="right_col" ng-controller="usersCtrl">
 
-    </form>
-    <table  class="table table-striped table-hover" id="userList">
-        <tr>
-            <th >ID</th>
-            <th >სახელი</th>
-            <th >ელ-ფოსტა</th>
-            <th >ტელეფონი</th>
-            <th >მისამართი</th>
-            <th >ჯგუფი</th>
-            <th >სტატუსი</th>
-            <th></th>
-        </tr>
-        <tr ng-repeat="i in users| filter: groupFilter">
-            <td>{{$index + 1}}</td>
-            <td>{{i.name}}</td>
-            <td>{{i.email}}</td>
-            <td>{{i.phone}}</td>
-            <td>{{i.address}}</td>
-            <td>{{i.usersGroup.description}}</td>
-            <td>{{i.usersStatus.name}}</td>
-            <td>
-                <button type="button" class="btn btn-xs" ng-click="editUser(i.id)">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-                <button type="button" class="btn btn-xs" ng-click="deleteUser(i.id)">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </td>
-        </tr>
-    </table>
+    <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">მომხმარებლის დამატება</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">მომხმარებლის ტიპი</label>
+                            <select class="form-control input-sm" ng-model="user.userTypeId">
+                                <option ng-repeat="u in userTypes" value="{{u.id}}">{{u.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">სქესი</label>
+                            <select class="form-control input-sm" ng-model="user.genderId">
+                                <option ng-repeat="g in genders" value="{{g.id}}">{{g.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">სახელი</label>
+                            <input type="text" ng-model="user.firstName"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">გვარი</label>
+                            <input type="text" ng-model="user.lastName"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">ორგანიზაციის დასახელება</label>
+                            <input type="text" ng-model="user.orgName"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">საიდენთიფიკაციო N</label>
+                            <input type="text" ng-model="user.idNumber"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">ტელეფონი</label>
+                            <input type="text" ng-model="user.phone"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">ელ-ფოსტა</label>
+                            <input type="text" ng-model="user.email"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">ჯგუფი</label>
+                            <select class="form-control input-sm" ng-model="user.userGroupId">
+                                <option ng-repeat="u in userGroups" value="{{u.id}}">{{u.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">სტატუსი</label>
+                            <select class="form-control input-sm" ng-model="user.statusId">
+                                <option ng-repeat="s in userStatuses" value="{{s.id}}">{{s.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">პაროლი</label>
+                            <input type="password" ng-model="user.password"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
+                    <button type="button" class="btn btn-success" ng-click="saveItem()">შენახვა</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>მომხმარებლები
+            </h3>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>მომხმარებლები</h2>
+
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#itemModal"
+                            ng-click="showItem();">დამატება
+                    </button>
+
+                    <table class="table table-striped table-hover projects" id="userList">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>სახელი</th>
+                            <th>ელ-ფოსტა</th>
+                            <th>ტელეფონი</th>
+                            <th>მისამართი</th>
+                            <th>სქესი</th>
+                            <th>ტიპი</th>
+                            <th>ჯგუფი</th>
+                            <th>სტატუსი</th>
+                            <th style="width: 160px;">#Edit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="i in users">
+                            <td>{{$index + 1}}</td>
+                            <td>{{i.firstName}} {{i.lastName}}</td>
+                            <td>{{i.email}}</td>
+                            <td>{{i.phone}}</td>
+                            <td>{{i.address}}</td>
+                            <td>{{i.genderName}}</td>
+                            <td>{{i.typeName}}</td>
+                            <td>{{i.userGroupName}}</td>
+                            <td>{{i.userStatusName}}</td>
+                            <td>
+                                <a data-toggle="modal" data-target="#itemModal" ng-click="editUser(i.id)"
+                                   class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
+                                <a ng-click="deleteUser(i.id)" class="btn btn-danger btn-xs"><i
+                                        class="fa fa-trash-o"></i> წაშლა</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<%@include file="footer.jsp" %>
+<%@include file="footer2.jsp" %>

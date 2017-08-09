@@ -69,7 +69,7 @@ public class ReformService {
         } else {
             record.update();
         }
-        if (request.getReformDetails().size() > 0) {
+        if (request.getReformDetails() != null && request.getReformDetails().size() > 0) {
             reformDAO.deleteReformDetails(record.getId());
             for (ReformDetailDTO d : request.getReformDetails()) {
                 ReformDetailRecord detailRecord = (ReformDetailRecord) this.dslContext.newRecord(Tables.REFORM_DETAIL);
@@ -80,7 +80,7 @@ public class ReformService {
             }
         }
 
-        return null;
+        return ReformDTO.translate(record);
     }
 
 
@@ -172,9 +172,11 @@ public class ReformService {
         return resultMap;
     }
 
-  /*  public List<SportsmanFileDTO> getSportsmanFiles(int sportsmanId) {
-        return SportsmanFileDTO.translateArray(reformDAO.getReformFiles(sportsmanId));
-    }*/
+    public ReformDTO getReform(int reformId) {
+        ReformDTO reform = ReformDTO.translate(reformDAO.getReformById(reformId));
+        reform.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(reform.getId())));
+        return reform;
+    }
 
 
     public HashMap<String, Object> searchSportsmans(String name, String firstLetter, int sportTypeId, int genderId, int regionId, int cityId, int start, int limit) {

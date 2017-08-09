@@ -11,7 +11,9 @@
         $scope.types = [];
         if (absUrl.split("?")[1]) {
             if (absUrl.split("?")[1].split("=")[1]) {
+
                 $scope.selectedItemId = absUrl.split("?")[1].split("=")[1];
+
             }
         }
         var a = {id: '1', name: 'სურათი'};
@@ -148,9 +150,13 @@
                                     <img src="upload/get-file?identifier={{s.fileName}}" class="img-thumbnail"
                                          style="height: 60px;" height="60">
                                 </a></td>
-                                <td><span ng-show="s.fileTypeId==1">{{s.fileName}}</span> <a ng-show="s.fileTypeId==2" href="{{s.fileName}}" target="_blank">{{s.fileName}}</a></td>
+                                <td><span ng-show="s.fileTypeId==1">{{s.fileName}}</span> <a ng-show="s.fileTypeId==2"
+                                                                                             href="{{s.fileName}}"
+                                                                                             target="_blank">{{s.fileName}}</a>
+                                </td>
                                 <td style="min-width: 75px;">
-                                    <a ng-click="deleteItem(s.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> წაშლა</a>
+                                    <a ng-click="deleteItem(s.id)" class="btn btn-danger btn-xs"><i
+                                            class="fa fa-trash-o"></i> წაშლა</a>
                                 </td>
                             </tr>
                         </table>

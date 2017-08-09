@@ -28,7 +28,7 @@ public class InitiatedIssueDTO {
     public static InitiatedIssueDTO translate(Record record) {
         InitiatedIssueDTO dto = new InitiatedIssueDTO();
         dto.setId(record.getValue(Tables.INITIATED_ISSUE.ID));
-        dto.setId(record.getValue(Tables.INITIATED_ISSUE.CREATOR_ID));
+        dto.setUserId(record.getValue(Tables.INITIATED_ISSUE.CREATOR_ID));
         dto.setDescription(record.getValue(Tables.INITIATED_ISSUE.DESCRIPTION));
         dto.setUserName(record.getValue(Tables.USERS.FIRST_NAME) + " " + record.getValue(Tables.USERS.LAST_NAME) + " " + record.getValue(Tables.USERS.ORG_NAME));
         dto.setCreateDate(record.getValue(Tables.INITIATED_ISSUE.CREATE_DATE));

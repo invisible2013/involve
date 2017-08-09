@@ -364,7 +364,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
-                    <button type="button" class="btn btn-success" ng-click="saveItem()">შენახვა</button>
+                    <%--<button type="button" class="btn btn-success" ng-click="saveItem()">შენახვა</button>--%>
                 </div>
             </div>
         </div>

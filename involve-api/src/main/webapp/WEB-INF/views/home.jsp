@@ -141,6 +141,9 @@
         $scope.itemSession = function (itemId) {
             window.location = "session?itemId=" + itemId;
         };
+        $scope.editLink = function (itemId) {
+            window.location = "addReform?reformId=" + itemId;
+        };
 
 
         $scope.setNoteAsHtml = function (text) {
@@ -223,12 +226,12 @@
                             <label class="control-label col-sm-12">დამატებითი ინფორმაცია</label>
                             <div class="row">
                                 <div ng-repeat="d in detailsRows">
-                                    <div class="col-md-5 form-group" >
+                                    <div class="col-md-5 form-group">
                                         <input type="text" placeholder="დასახელება"
                                                ng-model="reform.reformDetails[d - 1].name"
                                                class="form-control input-sm">
                                     </div>
-                                    <div class="col-md-5 form-group" >
+                                    <div class="col-md-5 form-group">
                                         <input type="text" placeholder="მნიშვნელობა"
                                                ng-model="reform.reformDetails[d - 1].value"
                                                class="form-control input-sm">
@@ -355,6 +358,7 @@
                         <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#reformModal"
                                 ng-click="showReform();">დამატება
                         </button>
+
                         <!-- start project list -->
                         <table class="table table-striped table-hover projects">
                             <thead>
@@ -365,7 +369,7 @@
                                 <th>1 პროგრეს ბარი</th>
                                 <th>2 პროგრეს ბარი</th>
                                 <th>3 პროგრეს ბარი</th>
-                                <th style="width: 23%">#Edit</th>
+                                <th style="width: 160px;">#Edit</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -406,17 +410,19 @@
                                     </div>
                                     <small>{{r.progressBarPercent3}}% {{r.progressBarName3}}</small>
                                 </td>
-                                <td ng-click="editItem(r.id)">
+                                <td>
                                     <%--  <a data-toggle="modal" data-target="#reformViewModal" ng-click="editItem(r.id)"
                                          class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> ნახვა</a>--%>
-                                    <a data-toggle="modal" data-target="#reformModal" ng-click="editItem(r.id)"
+                                    <%-- <a data-toggle="modal" data-target="#reformModal" ng-click="editItem(r.id)"
+                                        class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>--%>
+                                    <a ng-click="editLink(r.id)"
                                        class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
                                     <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
                                             class="fa fa-trash-o"></i> წაშლა</a>
-                                    <a ng-click="itemFiles(r.id)" class="btn btn-dark btn-xs"><i class="fa fa-file"></i>
-                                        ფაილი</a>
-                                    <a ng-click="itemSession(r.id)" class="btn btn-primary btn-xs"><i
-                                            class="fa fa-bar-chart"></i> სესია</a>
+                                    <%--     <a ng-click="itemFiles(r.id)" class="btn btn-dark btn-xs"><i class="fa fa-file"></i>
+                                             ფაილი</a>
+                                         <a ng-click="itemSession(r.id)" class="btn btn-primary btn-xs"><i
+                                                 class="fa fa-bar-chart"></i> სესია</a>--%>
                                 </td>
                             </tr>
                             </tbody>

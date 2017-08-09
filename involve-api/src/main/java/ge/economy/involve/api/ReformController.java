@@ -32,8 +32,14 @@ public class ReformController {
 
     @ResponseBody
     @RequestMapping({"/get-reforms"})
-    public Response getSportsmans(@RequestParam("start") int start, @RequestParam("limit") int limit) {
+    public Response getReforms(@RequestParam("start") int start, @RequestParam("limit") int limit) {
         return Response.withData(reformService.getReforms(start, limit));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-reform"})
+    public Response getReform(@RequestParam int itemId) {
+        return Response.withData(reformService.getReform(itemId));
     }
 
     @ResponseBody
