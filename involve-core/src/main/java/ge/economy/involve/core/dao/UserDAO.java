@@ -24,6 +24,20 @@ public class UserDAO extends AbstractDAO {
                 fetch();
     }
 
+    public List<Record> getUserGroups() {
+        return dslContext.
+                select().
+                from(Tables.USER_GROUP).
+                fetch();
+    }
+
+    public List<Record> getUserTypes() {
+        return dslContext.
+                select().
+                from(Tables.USER_TYPE).
+                fetch();
+    }
+
     public List<UsersRecord> search(String userName) {
 
         SelectConditionStep<Record> selectConditionStep =
