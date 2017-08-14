@@ -5,7 +5,11 @@ import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.dto.UserTypeDTO;
 import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.dao.UserDAO;
+import ge.economy.involve.core.execptions.MailAlreadyUsedException;
+import ge.economy.involve.core.execptions.UserNotFoundWithKeyException;
 import ge.economy.involve.database.database.Tables;
+import ge.economy.involve.database.database.tables.UserRegister;
+import ge.economy.involve.database.database.tables.records.UserRegisterRecord;
 import ge.economy.involve.database.database.tables.records.UsersRecord;
 import ge.economy.involve.utils.MD5Provider;
 import ge.economy.involve.utils.email.EmailNotSentException;
@@ -16,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by nino on 7/10/16.
@@ -30,12 +35,23 @@ public class UserService {
     private DSLContext dslContext;
 
 
-    public void registrationUser(AddUserRequest request) throws EmailNotSentException {
+    public void registrationUser(AddUserRequest request) throws EmailNotSentException, MailAlreadyUsedException {
+        UsersRecord oldUser = userDAO.getUserByMail(request.getEmail());
+        if (oldUser != null) {
+            throw new MailAlreadyUsedException();
+        }
+        request.setApproved(false);
         request.setGroupId(UserDTO.USER_GROUP_USER);
+        request.setStatusId(UserDTO.USER_STATUS_ACTIVE);
         UserDTO user = saveUser(request);
+        UserRegisterRecord record = dslContext.newRecord(Tables.USER_REGISTER);
+        record.setEmail(user.getEmail());
+        record.setUserId(user.getId());
+        record.setKey(UUID.randomUUID().toString());
+        record.setIsExpired(false);
+        record.store();
         SendEmailWithAttachment mailSender = new SendEmailWithAttachment();
         mailSender.setTo(user.getEmail());
-        mailSender.setSubject("CHAERTE ანგარიშის აქტივაცია");
         mailSender.setBody("                         <p>მოგესალმებით <b>" + user.getName() + "</b></p>\n" +
                 "                                    <p>ეს არის აქტივაციის ლინკი თქვენი მომხმარებლისთვის საიტზე chaerte.ge \n" +
                 "                                    <p></p>\n" +
@@ -43,13 +59,23 @@ public class UserService {
                 "                                    <p></p>\n" +
                 "                                    <p>აქტივაციის ლინკი:</p>\n" +
                 "                                    <p></p>\n" +
-                "                                    <p>http://chaerte.ge/activate.php?activateId=" + user.getEmail() + "</p>\n" +
+                "                                    <p>http://chaerte.ge/activate.php?activateId=" + record.getKey() + "</p>\n" +
                 "                                    <p></p>\n" +
                 "                                    <p>იმედი გვაქვს რომ მალე გიხილავთ!</p>\n" +
                 "                                    <br/>\n" +
                 "                                    <p>მადლობა,</p>\n" +
                 "                                    <p>ეკონომიკის და მდგრადი განვითარების სამინისტრო</p>\n");
         mailSender.send();
+    }
+
+    public void activateUser(String key) throws UserNotFoundWithKeyException {
+        UserRegisterRecord user = userDAO.getUserRegistrationByKey(key);
+        if (user != null) {
+            userDAO.updateUserActivation(user.getUserId());
+            userDAO.updateUserRegistration(user.getId());
+        } else {
+            throw new UserNotFoundWithKeyException("აქტივაციის კოდი უკვე არ არსებობს, თავიდან გაიარეთ რეგისტრაცია");
+        }
     }
 
     public UserDTO saveUser(AddUserRequest request) {

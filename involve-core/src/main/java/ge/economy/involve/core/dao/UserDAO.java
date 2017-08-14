@@ -1,6 +1,7 @@
 package ge.economy.involve.core.dao;
 
 import ge.economy.involve.database.database.Tables;
+import ge.economy.involve.database.database.tables.records.UserRegisterRecord;
 import ge.economy.involve.database.database.tables.records.UsersRecord;
 import org.jooq.Record;
 import org.jooq.SelectConditionStep;
@@ -90,5 +91,29 @@ public class UserDAO extends AbstractDAO {
 
     public void deleteUser(int itemId) {
         dslContext.deleteFrom(Tables.USERS).where(Tables.USERS.ID.eq(itemId)).execute();
+    }
+
+    public UserRegisterRecord getUserRegistrationByKey(String key) {
+        return dslContext.
+                select().
+                from(Tables.USER_REGISTER).
+                where(Tables.USER_REGISTER.KEY.eq(key)).and(Tables.USER_REGISTER.IS_EXPIRED.eq(false)).
+                fetchAny().into(Tables.USER_REGISTER);
+    }
+
+    public UsersRecord getUserByMail(String mail) {
+        return dslContext.
+                select().
+                from(Tables.USERS).
+                where(Tables.USERS.EMAIL.eq(mail)).
+                fetchAny().into(Tables.USERS);
+    }
+
+    public void updateUserRegistration(int id) {
+        dslContext.update(Tables.USER_REGISTER).set(Tables.USER_REGISTER.IS_EXPIRED, true).where(Tables.USER_REGISTER.ID.eq(id)).execute();
+    }
+
+    public void updateUserActivation(int userId) {
+        dslContext.update(Tables.USERS).set(Tables.USERS.IS_APPROVED, true).where(Tables.USERS.ID.eq(userId)).execute();
     }
 }

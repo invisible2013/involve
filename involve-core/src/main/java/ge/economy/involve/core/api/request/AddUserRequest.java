@@ -22,6 +22,7 @@ public class AddUserRequest {
     private int statusId;
     private int groupId;
     private int genderId;
+    private boolean isApproved;
 
     public Integer getId() {
         return id;
@@ -117,5 +118,13 @@ public class AddUserRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
     }
 }

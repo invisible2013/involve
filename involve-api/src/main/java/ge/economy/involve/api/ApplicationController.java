@@ -4,6 +4,8 @@ import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
 import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
+import ge.economy.involve.core.execptions.MailAlreadyUsedException;
+import ge.economy.involve.core.execptions.UserNotFoundWithKeyException;
 import ge.economy.involve.core.response.Response;
 import ge.economy.involve.core.services.*;
 
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import ge.economy.involve.utils.email.EmailNotSentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,10 +92,23 @@ public class ApplicationController {
         request.setPassword(password);
         try {
             userService.registrationUser(request);
-        } catch (Exception ex) {
-            return Response.withError("რეგისტრაცია არ სრულდება. შეცდომის კოდი: " + ex.getMessage());
+        } catch (EmailNotSentException ex) {
+            return Response.withError("ემაილის გაგზავნა მითითებულ მაილზე არ სრულდება, გთხოვთ სწორად შეიყვანოთ მაილი");
+        } catch (MailAlreadyUsedException e) {
+            return Response.withError(e.getMessage());
         }
         return Response.ok();
+    }
+
+    @ResponseBody
+    @RequestMapping({"/activate-user"})
+    public Response activateUser(@RequestParam String key) {
+        try {
+            userService.activateUser(key);
+            return Response.ok();
+        } catch (UserNotFoundWithKeyException e) {
+            return Response.withError(e.getMessage());
+        }
     }
 
     @ResponseBody
