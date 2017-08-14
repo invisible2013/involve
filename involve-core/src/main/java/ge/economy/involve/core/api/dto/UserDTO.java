@@ -37,6 +37,7 @@ public class UserDTO {
 
     public static Integer USER_PHISICAL = 1;
     public static Integer USER_GROUP_ADMIN = 1;
+    public static Integer USER_GROUP_USER = 2;
 
     public static UserDTO translate(Record record) {
         UserDTO dto = new UserDTO();

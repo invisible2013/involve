@@ -22,17 +22,17 @@ import java.util.Properties;
 
 public class SendEmailWithAttachment {
 
-    private String from = "lsmp0101@gmail.com";
+    private String from = "chaertege@gmail.com";
     private String to = "";
     private List<FileAttachment> fileUrls = new ArrayList<>();
-    private String subject = "LSMP";
+    private String subject = "CHAERTE";
     private String body = "";
     private String auth = "true";
     private String host = "smtp.gmail.com";
     private String port = "587";
     private String starttls = "true";
-    private String username = "lsmp0101@gmail.com";
-    private String password = "$lsmp0101%";
+    private String username = "chaertege@gmail.com";
+    private String password = "chaertege@";
 
     private static final Logger logger = Logger.getLogger(SendEmailWithAttachment.class);
 

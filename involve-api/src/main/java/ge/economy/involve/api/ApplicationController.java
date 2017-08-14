@@ -1,12 +1,11 @@
 package ge.economy.involve.api;
 
+import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
+import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
 import ge.economy.involve.core.response.Response;
-import ge.economy.involve.core.services.FileService;
-import ge.economy.involve.core.services.InitiateService;
-import ge.economy.involve.core.services.ParameterService;
-import ge.economy.involve.core.services.ReformService;
+import ge.economy.involve.core.services.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping({"/app"})
 public class ApplicationController {
     @Autowired
-    private ParameterService parameterService;
+    private UserService userService;
     @Autowired
     private ReformService reformService;
 
@@ -74,6 +73,27 @@ public class ApplicationController {
         response.getOutputStream().write(fileService.readFile(identifier.split("\\.")[0]));
     }
 
+    @ResponseBody
+    @RequestMapping({"/registration"})
+    public Response registration(@RequestParam Integer userTypeId, @RequestParam String firstName, @RequestParam String lastName, @RequestParam Integer genderId, @RequestParam String orgName,
+                                 @RequestParam String idNumber, @RequestParam String phone, @RequestParam String email, @RequestParam String password) {
+        AddUserRequest request = new AddUserRequest();
+        request.setFirstName(firstName);
+        request.setLastName(lastName);
+        request.setTypeId(userTypeId);
+        request.setGenderId(genderId);
+        request.setOrgName(orgName);
+        request.setIdNumber(idNumber);
+        request.setPhone(phone);
+        request.setEmail(email);
+        request.setPassword(password);
+        try {
+            userService.registrationUser(request);
+        } catch (Exception ex) {
+            return Response.withError("რეგისტრაცია არ სრულდება. შეცდომის კოდი: " + ex.getMessage());
+        }
+        return Response.ok();
+    }
 
     @ResponseBody
     @RequestMapping({"/subscribe-event"})

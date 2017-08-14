@@ -8,6 +8,8 @@ import ge.economy.involve.core.dao.UserDAO;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.records.UsersRecord;
 import ge.economy.involve.utils.MD5Provider;
+import ge.economy.involve.utils.email.EmailNotSentException;
+import ge.economy.involve.utils.email.SendEmailWithAttachment;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,28 @@ public class UserService {
     @Autowired
     private DSLContext dslContext;
 
+
+    public void registrationUser(AddUserRequest request) throws EmailNotSentException {
+        request.setGroupId(UserDTO.USER_GROUP_USER);
+        UserDTO user = saveUser(request);
+        SendEmailWithAttachment mailSender = new SendEmailWithAttachment();
+        mailSender.setTo(user.getEmail());
+        mailSender.setSubject("CHAERTE ანგარიშის აქტივაცია");
+        mailSender.setBody("                         <p>მოგესალმებით <b>" + user.getName() + "</b></p>\n" +
+                "                                    <p>ეს არის აქტივაციის ლინკი თქვენი მომხმარებლისთვის საიტზე chaerte.ge \n" +
+                "                                    <p></p>\n" +
+                "                                    <p>თქვენი ანგარიში არის: <b>" + user.getEmail() + "</b></p>\n" +
+                "                                    <p></p>\n" +
+                "                                    <p>აქტივაციის ლინკი:</p>\n" +
+                "                                    <p></p>\n" +
+                "                                    <p>http://chaerte.ge/activate.php?activateId=" + user.getEmail() + "</p>\n" +
+                "                                    <p></p>\n" +
+                "                                    <p>იმედი გვაქვს რომ მალე გიხილავთ!</p>\n" +
+                "                                    <br/>\n" +
+                "                                    <p>მადლობა,</p>\n" +
+                "                                    <p>ეკონომიკის და მდგრადი განვითარების სამინისტრო</p>\n");
+        mailSender.send();
+    }
 
     public UserDTO saveUser(AddUserRequest request) {
         boolean newRecord = false;
@@ -67,7 +91,7 @@ public class UserService {
         } else {
             record.update();
         }
-        return null;
+        return UserDTO.translate(record);
     }
 
     public List<UserDTO> getUsers() {
