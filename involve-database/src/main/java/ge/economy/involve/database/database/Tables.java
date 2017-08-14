@@ -23,8 +23,10 @@ import ge.economy.involve.database.database.tables.SessionPoll;
 import ge.economy.involve.database.database.tables.SessionPollVote;
 import ge.economy.involve.database.database.tables.SessionVote;
 import ge.economy.involve.database.database.tables.Sphere;
+import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
 import ge.economy.involve.database.database.tables.UserGroup;
+import ge.economy.involve.database.database.tables.UserRegister;
 import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
@@ -141,6 +143,11 @@ public class Tables {
 	public static final Sphere SPHERE = ge.economy.involve.database.database.tables.Sphere.SPHERE;
 
 	/**
+	 * The table public.token
+	 */
+	public static final Token TOKEN = ge.economy.involve.database.database.tables.Token.TOKEN;
+
+	/**
 	 * The table public.user_approve
 	 */
 	public static final UserApprove USER_APPROVE = ge.economy.involve.database.database.tables.UserApprove.USER_APPROVE;
@@ -149,6 +156,11 @@ public class Tables {
 	 * The table public.user_group
 	 */
 	public static final UserGroup USER_GROUP = ge.economy.involve.database.database.tables.UserGroup.USER_GROUP;
+
+	/**
+	 * The table public.user_register
+	 */
+	public static final UserRegister USER_REGISTER = ge.economy.involve.database.database.tables.UserRegister.USER_REGISTER;
 
 	/**
 	 * The table public.user_status

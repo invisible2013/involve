@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-	private static final long serialVersionUID = 1984123999;
+	private static final long serialVersionUID = 107859575;
 
 	/**
 	 * The reference instance of <code>public.users</code>
@@ -49,11 +50,6 @@ public class Users extends TableImpl<UsersRecord> {
 	public Class<UsersRecord> getRecordType() {
 		return UsersRecord.class;
 	}
-
-	/**
-	 * The column <code>public.users.id</code>.
-	 */
-	public final TableField<UsersRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.users.first_name</code>.
@@ -126,6 +122,11 @@ public class Users extends TableImpl<UsersRecord> {
 	public final TableField<UsersRecord, Integer> STATUS_ID = createField("status_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
+	 * The column <code>public.users.id</code>.
+	 */
+	public final TableField<UsersRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+
+	/**
 	 * Create a <code>public.users</code> table reference
 	 */
 	public Users() {
@@ -145,6 +146,14 @@ public class Users extends TableImpl<UsersRecord> {
 
 	private Users(String alias, Table<UsersRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<UsersRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_USERS;
 	}
 
 	/**

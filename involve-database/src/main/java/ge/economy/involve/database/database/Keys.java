@@ -23,8 +23,10 @@ import ge.economy.involve.database.database.tables.SessionPoll;
 import ge.economy.involve.database.database.tables.SessionPollVote;
 import ge.economy.involve.database.database.tables.SessionVote;
 import ge.economy.involve.database.database.tables.Sphere;
+import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
 import ge.economy.involve.database.database.tables.UserGroup;
+import ge.economy.involve.database.database.tables.UserRegister;
 import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
@@ -47,8 +49,10 @@ import ge.economy.involve.database.database.tables.records.SessionPollVoteRecord
 import ge.economy.involve.database.database.tables.records.SessionRecord;
 import ge.economy.involve.database.database.tables.records.SessionVoteRecord;
 import ge.economy.involve.database.database.tables.records.SphereRecord;
+import ge.economy.involve.database.database.tables.records.TokenRecord;
 import ge.economy.involve.database.database.tables.records.UserApproveRecord;
 import ge.economy.involve.database.database.tables.records.UserGroupRecord;
+import ge.economy.involve.database.database.tables.records.UserRegisterRecord;
 import ge.economy.involve.database.database.tables.records.UserStatusRecord;
 import ge.economy.involve.database.database.tables.records.UserTypeRecord;
 import ge.economy.involve.database.database.tables.records.UsersRecord;
@@ -84,7 +88,10 @@ public class Keys {
 	public static final Identity<ReformRecord, Integer> IDENTITY_REFORM = Identities0.IDENTITY_REFORM;
 	public static final Identity<SessionRecord, Integer> IDENTITY_SESSION = Identities0.IDENTITY_SESSION;
 	public static final Identity<SessionPollRecord, Integer> IDENTITY_SESSION_POLL = Identities0.IDENTITY_SESSION_POLL;
+	public static final Identity<TokenRecord, Integer> IDENTITY_TOKEN = Identities0.IDENTITY_TOKEN;
+	public static final Identity<UserRegisterRecord, Integer> IDENTITY_USER_REGISTER = Identities0.IDENTITY_USER_REGISTER;
 	public static final Identity<UserStatusRecord, Integer> IDENTITY_USER_STATUS = Identities0.IDENTITY_USER_STATUS;
+	public static final Identity<UsersRecord, Integer> IDENTITY_USERS = Identities0.IDENTITY_USERS;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -109,8 +116,10 @@ public class Keys {
 	public static final UniqueKey<SessionPollVoteRecord> SESSION_POLL_VOTE_PKEY = UniqueKeys0.SESSION_POLL_VOTE_PKEY;
 	public static final UniqueKey<SessionVoteRecord> SESSION_VOTE_PKEY = UniqueKeys0.SESSION_VOTE_PKEY;
 	public static final UniqueKey<SphereRecord> SPHERE_PKEY = UniqueKeys0.SPHERE_PKEY;
+	public static final UniqueKey<TokenRecord> TOKEN_PKEY = UniqueKeys0.TOKEN_PKEY;
 	public static final UniqueKey<UserApproveRecord> USER_APPROVE_PKEY = UniqueKeys0.USER_APPROVE_PKEY;
 	public static final UniqueKey<UserGroupRecord> USER_GROUP_PKEY = UniqueKeys0.USER_GROUP_PKEY;
+	public static final UniqueKey<UserRegisterRecord> USER_REGISTER_PKEY = UniqueKeys0.USER_REGISTER_PKEY;
 	public static final UniqueKey<UserStatusRecord> USER_STATUS_PKEY = UniqueKeys0.USER_STATUS_PKEY;
 	public static final UniqueKey<UserTypeRecord> USER_TYPE_PKEY = UniqueKeys0.USER_TYPE_PKEY;
 	public static final UniqueKey<UsersRecord> USERS_PKEY = UniqueKeys0.USERS_PKEY;
@@ -131,7 +140,10 @@ public class Keys {
 		public static Identity<ReformRecord, Integer> IDENTITY_REFORM = createIdentity(Reform.REFORM, Reform.REFORM.ID);
 		public static Identity<SessionRecord, Integer> IDENTITY_SESSION = createIdentity(Session.SESSION, Session.SESSION.ID);
 		public static Identity<SessionPollRecord, Integer> IDENTITY_SESSION_POLL = createIdentity(SessionPoll.SESSION_POLL, SessionPoll.SESSION_POLL.ID);
+		public static Identity<TokenRecord, Integer> IDENTITY_TOKEN = createIdentity(Token.TOKEN, Token.TOKEN.ID);
+		public static Identity<UserRegisterRecord, Integer> IDENTITY_USER_REGISTER = createIdentity(UserRegister.USER_REGISTER, UserRegister.USER_REGISTER.ID);
 		public static Identity<UserStatusRecord, Integer> IDENTITY_USER_STATUS = createIdentity(UserStatus.USER_STATUS, UserStatus.USER_STATUS.ID);
+		public static Identity<UsersRecord, Integer> IDENTITY_USERS = createIdentity(Users.USERS, Users.USERS.ID);
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
@@ -154,8 +166,10 @@ public class Keys {
 		public static final UniqueKey<SessionPollVoteRecord> SESSION_POLL_VOTE_PKEY = createUniqueKey(SessionPollVote.SESSION_POLL_VOTE, SessionPollVote.SESSION_POLL_VOTE.ID);
 		public static final UniqueKey<SessionVoteRecord> SESSION_VOTE_PKEY = createUniqueKey(SessionVote.SESSION_VOTE, SessionVote.SESSION_VOTE.ID);
 		public static final UniqueKey<SphereRecord> SPHERE_PKEY = createUniqueKey(Sphere.SPHERE, Sphere.SPHERE.ID);
+		public static final UniqueKey<TokenRecord> TOKEN_PKEY = createUniqueKey(Token.TOKEN, Token.TOKEN.ID);
 		public static final UniqueKey<UserApproveRecord> USER_APPROVE_PKEY = createUniqueKey(UserApprove.USER_APPROVE, UserApprove.USER_APPROVE.ID);
 		public static final UniqueKey<UserGroupRecord> USER_GROUP_PKEY = createUniqueKey(UserGroup.USER_GROUP, UserGroup.USER_GROUP.ID);
+		public static final UniqueKey<UserRegisterRecord> USER_REGISTER_PKEY = createUniqueKey(UserRegister.USER_REGISTER, UserRegister.USER_REGISTER.ID);
 		public static final UniqueKey<UserStatusRecord> USER_STATUS_PKEY = createUniqueKey(UserStatus.USER_STATUS, UserStatus.USER_STATUS.ID);
 		public static final UniqueKey<UserTypeRecord> USER_TYPE_PKEY = createUniqueKey(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 		public static final UniqueKey<UsersRecord> USERS_PKEY = createUniqueKey(Users.USERS, Users.USERS.ID);

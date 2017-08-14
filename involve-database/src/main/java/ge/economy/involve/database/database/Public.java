@@ -23,8 +23,10 @@ import ge.economy.involve.database.database.tables.SessionPoll;
 import ge.economy.involve.database.database.tables.SessionPollVote;
 import ge.economy.involve.database.database.tables.SessionVote;
 import ge.economy.involve.database.database.tables.Sphere;
+import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
 import ge.economy.involve.database.database.tables.UserGroup;
+import ge.economy.involve.database.database.tables.UserRegister;
 import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
@@ -53,7 +55,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -664616794;
+	private static final long serialVersionUID = -1529412023;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -82,7 +84,10 @@ public class Public extends SchemaImpl {
 			Sequences.REFORM_ID_SEQ,
 			Sequences.SESSION_ID_SEQ,
 			Sequences.SESSION_POLL_ID_SEQ,
-			Sequences.USER_STATUS_ID_SEQ);
+			Sequences.TOKEN_ID_SEQ,
+			Sequences.USER_REGISTER_ID_SEQ,
+			Sequences.USER_STATUS_ID_SEQ,
+			Sequences.USERS_ID_SEQ);
 	}
 
 	@Override
@@ -113,8 +118,10 @@ public class Public extends SchemaImpl {
 			SessionPollVote.SESSION_POLL_VOTE,
 			SessionVote.SESSION_VOTE,
 			Sphere.SPHERE,
+			Token.TOKEN,
 			UserApprove.USER_APPROVE,
 			UserGroup.USER_GROUP,
+			UserRegister.USER_REGISTER,
 			UserStatus.USER_STATUS,
 			UserType.USER_TYPE,
 			Users.USERS);
