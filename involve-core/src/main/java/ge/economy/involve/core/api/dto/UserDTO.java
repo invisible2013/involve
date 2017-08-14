@@ -33,6 +33,10 @@ public class UserDTO {
     private Date createDate;
     private Integer statusId;
     private String statusName;
+    private String name;
+
+    public static Integer USER_PHISICAL = 1;
+    public static Integer USER_GROUP_ADMIN = 1;
 
     public static UserDTO translate(Record record) {
         UserDTO dto = new UserDTO();
@@ -44,11 +48,22 @@ public class UserDTO {
         dto.setIdNumber(record.getValue(Tables.USERS.ID_NUMBER));
         dto.setPhone(record.getValue(Tables.USERS.PHONE));
         dto.setGenderId(record.getValue(Tables.USERS.GENDER_ID));
+        if (dto.getGenderId() != null) {
+            dto.setGenderName(record.getValue(Tables.GENDER.NAME));
+        }
         dto.setTypeId(record.getValue(Tables.USERS.USER_TYPE_ID));
+        dto.setTypeName(record.getValue(Tables.USER_TYPE.NAME));
         dto.setApproved(record.getValue(Tables.USERS.IS_APPROVED));
         dto.setGroupId(record.getValue(Tables.USERS.USER_GROUP_ID));
+        dto.setGroupName(record.getValue(Tables.USER_GROUP.NAME));
         dto.setCreateDate(record.getValue(Tables.USERS.CREATE_DATE));
-        dto.setStatusId(record.getValue(Tables.USERS.ID));
+        dto.setStatusId(record.getValue(Tables.USERS.STATUS_ID));
+        dto.setStatusName(record.getValue(Tables.USER_STATUS.NAME));
+        if (dto.getTypeId() == USER_PHISICAL) {
+            dto.setName(dto.getFirstName() + " " + dto.getLastName());
+        } else {
+            dto.setName(dto.getOrgName());
+        }
         return dto;
     }
 
@@ -195,6 +210,14 @@ public class UserDTO {
 
     public void setStatusName(String statusName) {
         this.statusName = statusName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

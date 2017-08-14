@@ -369,7 +369,7 @@
                                 <th>1 პროგრეს ბარი</th>
                                 <th>2 პროგრეს ბარი</th>
                                 <th>3 პროგრეს ბარი</th>
-                                <th style="width: 160px;">#Edit</th>
+                                <th style="width: 165px;">#Edit</th>
                             </tr>
                             </thead>
                             <tbody>

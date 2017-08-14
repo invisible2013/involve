@@ -5,6 +5,7 @@ package ge.economy.involve.database.database;
 
 
 import ge.economy.involve.database.database.tables.FileType;
+import ge.economy.involve.database.database.tables.Gender;
 import ge.economy.involve.database.database.tables.Initiate;
 import ge.economy.involve.database.database.tables.InitiatedIssue;
 import ge.economy.involve.database.database.tables.InitiativeVote;
@@ -24,6 +25,7 @@ import ge.economy.involve.database.database.tables.SessionVote;
 import ge.economy.involve.database.database.tables.Sphere;
 import ge.economy.involve.database.database.tables.UserApprove;
 import ge.economy.involve.database.database.tables.UserGroup;
+import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
 
@@ -47,6 +49,11 @@ public class Tables {
 	 * The table public.file_type
 	 */
 	public static final FileType FILE_TYPE = ge.economy.involve.database.database.tables.FileType.FILE_TYPE;
+
+	/**
+	 * The table public.gender
+	 */
+	public static final Gender GENDER = ge.economy.involve.database.database.tables.Gender.GENDER;
 
 	/**
 	 * The table public.initiate
@@ -142,6 +149,11 @@ public class Tables {
 	 * The table public.user_group
 	 */
 	public static final UserGroup USER_GROUP = ge.economy.involve.database.database.tables.UserGroup.USER_GROUP;
+
+	/**
+	 * The table public.user_status
+	 */
+	public static final UserStatus USER_STATUS = ge.economy.involve.database.database.tables.UserStatus.USER_STATUS;
 
 	/**
 	 * The table public.user_type

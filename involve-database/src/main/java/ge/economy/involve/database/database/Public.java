@@ -5,6 +5,7 @@ package ge.economy.involve.database.database;
 
 
 import ge.economy.involve.database.database.tables.FileType;
+import ge.economy.involve.database.database.tables.Gender;
 import ge.economy.involve.database.database.tables.Initiate;
 import ge.economy.involve.database.database.tables.InitiatedIssue;
 import ge.economy.involve.database.database.tables.InitiativeVote;
@@ -24,6 +25,7 @@ import ge.economy.involve.database.database.tables.SessionVote;
 import ge.economy.involve.database.database.tables.Sphere;
 import ge.economy.involve.database.database.tables.UserApprove;
 import ge.economy.involve.database.database.tables.UserGroup;
+import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
 
@@ -51,7 +53,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -1584994442;
+	private static final long serialVersionUID = -664616794;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -74,8 +76,13 @@ public class Public extends SchemaImpl {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
+			Sequences.GENDER_ID_SEQ,
+			Sequences.INITIATE_ID_SEQ,
+			Sequences.POLL_ANSWER_ID_SEQ,
 			Sequences.REFORM_ID_SEQ,
-			Sequences.SESSION_ID_SEQ);
+			Sequences.SESSION_ID_SEQ,
+			Sequences.SESSION_POLL_ID_SEQ,
+			Sequences.USER_STATUS_ID_SEQ);
 	}
 
 	@Override
@@ -88,6 +95,7 @@ public class Public extends SchemaImpl {
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
 			FileType.FILE_TYPE,
+			Gender.GENDER,
 			Initiate.INITIATE,
 			InitiatedIssue.INITIATED_ISSUE,
 			InitiativeVote.INITIATIVE_VOTE,
@@ -107,6 +115,7 @@ public class Public extends SchemaImpl {
 			Sphere.SPHERE,
 			UserApprove.USER_APPROVE,
 			UserGroup.USER_GROUP,
+			UserStatus.USER_STATUS,
 			UserType.USER_TYPE,
 			Users.USERS);
 	}

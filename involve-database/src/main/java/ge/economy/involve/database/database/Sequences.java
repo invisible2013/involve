@@ -24,6 +24,21 @@ import org.jooq.impl.SequenceImpl;
 public class Sequences {
 
 	/**
+	 * The sequence <code>public.gender_id_seq</code>
+	 */
+	public static final Sequence<Long> GENDER_ID_SEQ = new SequenceImpl<Long>("gender_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.initiate_id_seq</code>
+	 */
+	public static final Sequence<Long> INITIATE_ID_SEQ = new SequenceImpl<Long>("initiate_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.poll_answer_id_seq</code>
+	 */
+	public static final Sequence<Long> POLL_ANSWER_ID_SEQ = new SequenceImpl<Long>("poll_answer_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.reform_id_seq</code>
 	 */
 	public static final Sequence<Long> REFORM_ID_SEQ = new SequenceImpl<Long>("reform_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
@@ -32,4 +47,14 @@ public class Sequences {
 	 * The sequence <code>public.session_id_seq</code>
 	 */
 	public static final Sequence<Long> SESSION_ID_SEQ = new SequenceImpl<Long>("session_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.session_poll_id_seq</code>
+	 */
+	public static final Sequence<Long> SESSION_POLL_ID_SEQ = new SequenceImpl<Long>("session_poll_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.user_status_id_seq</code>
+	 */
+	public static final Sequence<Long> USER_STATUS_ID_SEQ = new SequenceImpl<Long>("user_status_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 }

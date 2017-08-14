@@ -36,10 +36,18 @@
     <script type="text/javascript" src="resources/js/global_error_handler.js"></script>
     <script type="text/javascript" src="resources/js/global_util.js"></script>
 </head>
+<script>
+    menuCtrl = function ($scope, $http) {
+        function getUser(res) {
+            $scope.currentUser = res.data.userData;
+        }
 
+        ajaxCall($http, "get-user", {}, getUser);
+    }
+</script>
 <body class="nav-md" ng-app="app">
 <div class="container body">
-    <div class="main_container">
+    <div class="main_container" ng-controller="menuCtrl">
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
@@ -55,7 +63,7 @@
                     </div>
                     <div class="profile_info">
                         <span>მოგესალმებით,</span>
-                        <h2>John Doe</h2>
+                        <h2>{{currentUser.name}}</h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->

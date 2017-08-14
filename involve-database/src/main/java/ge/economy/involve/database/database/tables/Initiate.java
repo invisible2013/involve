@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Initiate extends TableImpl<InitiateRecord> {
 
-	private static final long serialVersionUID = 1580635887;
+	private static final long serialVersionUID = 1767147113;
 
 	/**
 	 * The reference instance of <code>public.initiate</code>
@@ -49,11 +50,6 @@ public class Initiate extends TableImpl<InitiateRecord> {
 	public Class<InitiateRecord> getRecordType() {
 		return InitiateRecord.class;
 	}
-
-	/**
-	 * The column <code>public.initiate.id</code>.
-	 */
-	public final TableField<InitiateRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
 	/**
 	 * The column <code>public.initiate.sphere_id</code>.
@@ -81,6 +77,11 @@ public class Initiate extends TableImpl<InitiateRecord> {
 	public final TableField<InitiateRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
 
 	/**
+	 * The column <code>public.initiate.id</code>.
+	 */
+	public final TableField<InitiateRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+
+	/**
 	 * Create a <code>public.initiate</code> table reference
 	 */
 	public Initiate() {
@@ -100,6 +101,14 @@ public class Initiate extends TableImpl<InitiateRecord> {
 
 	private Initiate(String alias, Table<InitiateRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<InitiateRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_INITIATE;
 	}
 
 	/**

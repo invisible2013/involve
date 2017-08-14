@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -33,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PollAnswer extends TableImpl<PollAnswerRecord> {
 
-	private static final long serialVersionUID = 828873314;
+	private static final long serialVersionUID = 603356837;
 
 	/**
 	 * The reference instance of <code>public.poll_answer</code>
@@ -49,11 +50,6 @@ public class PollAnswer extends TableImpl<PollAnswerRecord> {
 	}
 
 	/**
-	 * The column <code>public.poll_answer.id</code>.
-	 */
-	public final TableField<PollAnswerRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
 	 * The column <code>public.poll_answer.poll_id</code>.
 	 */
 	public final TableField<PollAnswerRecord, Integer> POLL_ID = createField("poll_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
@@ -62,6 +58,11 @@ public class PollAnswer extends TableImpl<PollAnswerRecord> {
 	 * The column <code>public.poll_answer.value</code>.
 	 */
 	public final TableField<PollAnswerRecord, String> VALUE = createField("value", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+	/**
+	 * The column <code>public.poll_answer.id</code>.
+	 */
+	public final TableField<PollAnswerRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.poll_answer</code> table reference
@@ -83,6 +84,14 @@ public class PollAnswer extends TableImpl<PollAnswerRecord> {
 
 	private PollAnswer(String alias, Table<PollAnswerRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<PollAnswerRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_POLL_ANSWER;
 	}
 
 	/**

@@ -4,7 +4,7 @@
 <script>
     var app = angular.module("app", []);
     app.controller("usersCtrl", function ($scope, $http, $filter) {
-        $scope.user = {'userGroupId': 1, 'userStatusId': 1};
+
         $scope.users = [];
 
         function getUsers(res) {
@@ -24,8 +24,20 @@
 
         ajaxCall($http, "users/get-user-statuses", null, getUserStatuses);
 
-        $scope.addUser = function () {
-            ajaxCall($http, "users/add-user", angular.toJson($scope.user), reload);
+        function getUserTypes(res) {
+            $scope.userTypes = res.data;
+        }
+
+        ajaxCall($http, "users/get-user-types", null, getUserTypes);
+
+        function getGenders(res) {
+            $scope.genders = res.data;
+        }
+
+        ajaxCall($http, "users/get-genders", null, getGenders);
+
+        $scope.saveItem = function () {
+            ajaxCall($http, "users/save-user", angular.toJson($scope.user), reload);
         };
         $scope.editUser = function (userId) {
             if (userId != undefined) {
@@ -34,11 +46,14 @@
             }
         };
         $scope.deleteUser = function (userId) {
-            ajaxCall($http, "users/delete-user", angular.toJson($scope.user), reload);
+            ajaxCall($http, "users/delete-user?itemId" + userId, null, reload);
         };
         $scope.groupFilter = function (item) {
             return item.usersGroup.id != 2;
         };
+        $scope.showItem = function () {
+            $scope.user = {'groupId': 1, 'statusId': 1, 'typeId': 1};
+        }
     });
 </script>
 
@@ -57,27 +72,27 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label class="control-label">მომხმარებლის ტიპი</label>
-                            <select class="form-control input-sm" ng-model="user.userTypeId">
-                                <option ng-repeat="u in userTypes" value="{{u.id}}">{{u.name}}</option>
+                            <select class="form-control input-sm" ng-model="user.typeId">
+                                <option ng-repeat="t in userTypes" value="{{t.id}}">{{t.name}}</option>
                             </select>
                         </div>
-                        <div class="form-group col-sm-12">
+                        <div class="form-group col-sm-12" ng-show="user.typeId==1">
                             <label class="control-label">სქესი</label>
                             <select class="form-control input-sm" ng-model="user.genderId">
                                 <option ng-repeat="g in genders" value="{{g.id}}">{{g.name}}</option>
                             </select>
                         </div>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-6" ng-show="user.typeId==1">
                             <label class="control-label">სახელი</label>
                             <input type="text" ng-model="user.firstName"
                                    class="form-control ng-pristine ng-valid">
                         </div>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-6" ng-show="user.typeId==1">
                             <label class="control-label">გვარი</label>
                             <input type="text" ng-model="user.lastName"
                                    class="form-control ng-pristine ng-valid">
                         </div>
-                        <div class="form-group col-sm-12">
+                        <div class="form-group col-sm-12" ng-show="user.typeId!=1">
                             <label class="control-label">ორგანიზაციის დასახელება</label>
                             <input type="text" ng-model="user.orgName"
                                    class="form-control ng-pristine ng-valid">
@@ -100,7 +115,7 @@
 
                         <div class="form-group col-sm-6">
                             <label class="control-label">ჯგუფი</label>
-                            <select class="form-control input-sm" ng-model="user.userGroupId">
+                            <select class="form-control input-sm" ng-model="user.groupId">
                                 <option ng-repeat="u in userGroups" value="{{u.id}}">{{u.name}}</option>
                             </select>
                         </div>
@@ -161,25 +176,25 @@
                             <th>სახელი</th>
                             <th>ელ-ფოსტა</th>
                             <th>ტელეფონი</th>
-                            <th>მისამართი</th>
+                            <th>სიდენთ. N</th>
                             <th>სქესი</th>
                             <th>ტიპი</th>
                             <th>ჯგუფი</th>
                             <th>სტატუსი</th>
-                            <th style="width: 160px;">#Edit</th>
+                            <th style="width: 165px;">#Edit</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="i in users">
                             <td>{{$index + 1}}</td>
-                            <td>{{i.firstName}} {{i.lastName}}</td>
+                            <td>{{i.name}}</td>
                             <td>{{i.email}}</td>
                             <td>{{i.phone}}</td>
-                            <td>{{i.address}}</td>
+                            <td>{{i.idNumber}}</td>
                             <td>{{i.genderName}}</td>
                             <td>{{i.typeName}}</td>
-                            <td>{{i.userGroupName}}</td>
-                            <td>{{i.userStatusName}}</td>
+                            <td>{{i.groupName}}</td>
+                            <td>{{i.statusName}}</td>
                             <td>
                                 <a data-toggle="modal" data-target="#itemModal" ng-click="editUser(i.id)"
                                    class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
