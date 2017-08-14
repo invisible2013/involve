@@ -5,7 +5,6 @@ import ge.economy.involve.database.database.tables.records.UsersRecord;
 import org.jooq.Record;
 import org.jooq.SelectConditionStep;
 import org.springframework.stereotype.Repository;
-import sun.tools.jconsole.Tab;
 
 import java.util.List;
 
