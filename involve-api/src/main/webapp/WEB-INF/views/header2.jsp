@@ -132,7 +132,7 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="#"> პროფილი</a></li>
+                                <li><a href="userProfile?userId=0"> პროფილი</a></li>
                                 <%--<li>
                                     <a href="javascript:;">
                                         <span class="badge bg-red pull-right">50%</span>

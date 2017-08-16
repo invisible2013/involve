@@ -4,6 +4,7 @@ import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
 import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
+import ge.economy.involve.core.execptions.IncorectUserCredentialsException;
 import ge.economy.involve.core.execptions.MailAlreadyUsedException;
 import ge.economy.involve.core.execptions.UserNotFoundWithKeyException;
 import ge.economy.involve.core.response.Response;
@@ -42,6 +43,15 @@ public class ApplicationController {
         return Response.withData("v0.0.1");
     }
 
+    @ResponseBody
+    @RequestMapping({"/sign-in"})
+    public Response userSignIn(@RequestParam String email, @RequestParam String password) {
+        try {
+            return Response.withData(userService.signIn(email, password));
+        } catch (IncorectUserCredentialsException e) {
+            return Response.withError(e.getMessage());
+        }
+    }
 
     @ResponseBody
     @RequestMapping({"/save-initiate"})

@@ -11,14 +11,14 @@
     }
 
     function reverseDate(date) {
-        if (date.length > 0) {
+        if (date && date.length > 0) {
             var arraydates = date.split("/");
             var newdate = arraydates[1] + "/" + arraydates[0] + "/" + arraydates[2];
             return new Date(newdate);
         }
     }
     function reverseDateString(date) {
-        if (date.length > 0) {
+        if (date && date.length > 0) {
             var arraydates = date.split("/");
             var newdate = arraydates[1] + "/" + arraydates[0] + "/" + arraydates[2];
             return newdate;
@@ -50,6 +50,10 @@
         $scope.poll.answers = [];
         $scope.selectedItemId = 0;
         $scope.pollRows = [1];
+        $scope.start = 0;
+        $scope.limit = 20;
+        $scope.size = 0;
+        $scope.loadCount = 0;
         var absUrl = $location.absUrl();
         if (absUrl.split("?")[1]) {
             if (absUrl.split("?")[1].split("=")[1]) {
@@ -57,7 +61,13 @@
             }
         }
         function getSuccessSession(res) {
-            $scope.items = res.data;
+            if (res.data.list) {
+                $scope.items = $scope.items.concat(res.data.list);
+                $scope.size = res.data.size;
+                $scope.loadCount = $scope.items.length;
+            } else {
+                $scope.items = res.data;
+            }
             var today = new Date();
             angular.forEach($scope.items, function (v, index) {
                 var start = reverseDate(v.startDate);
@@ -68,8 +78,22 @@
             });
         }
 
-        ajaxCall($http, "reform/get-reform-sessions?itemId=" + $scope.selectedItemId, null, getSuccessSession);
+        if ($scope.selectedItemId > 0) {
 
+            ajaxCall($http, "reform/get-reform-sessions?itemId=" + $scope.selectedItemId, null, getSuccessSession);
+        } else {
+            ajaxCall($http, "reform/get-all-sessions?start=" + $scope.start + "&limit=" + $scope.limit, null, getSuccessSession);
+        }
+
+        $scope.loadMore = function () {
+            $scope.start = $scope.start + $scope.limit;
+            ajaxCall($http, "reform/get-all-sessions?start=" + $scope.start + "&limit=" + $scope.limit, null, getSuccessSession);
+        };
+        $scope.loadAll = function () {
+            $scope.start = $scope.start + $scope.limit;
+            $scope.limit = $scope.size;
+            ajaxCall($http, "reform/get-all-sessions?start=" + $scope.start + "&limit=" + $scope.limit, null, getSuccessSession);
+        };
 
         $scope.showReform = function () {
             $scope.reform = {
@@ -424,8 +448,9 @@
                     </div>
                     <div class="x_content">
 
-                        <p>აქ შეგიძლიათ დაამატოთ დაარედაქტიროთ ან წაშალოთ სესიები</p>
-                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#itemModal"
+                        <p>აქ შეგიძლიათ ნახოთ ყველა სესია</p>
+                        <button ng-show="selectedItemId>0" class="btn btn-primary pull-right" data-toggle="modal"
+                                data-target="#itemModal"
                                 ng-click="showItem();">დამატება
                         </button>
                         <!-- start project list -->
@@ -486,6 +511,11 @@
                             </tbody>
                         </table>
                         <!-- end project list -->
+                        <input type="button" ng-show="size>loadCount" class="btn btn-info" value="მეტის ჩატვირთვა"
+                               ng-click="loadMore();">
+                        <input type="button" ng-show="size>loadCount" class="btn btn-primary" value="ყველა"
+                               ng-click="loadAll();">
+                        <br/><br/>
                     </div>
                 </div>
             </div>

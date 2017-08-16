@@ -67,7 +67,7 @@
                             <input type="password" class="form-control" placeholder="პაროლი" ng-model="user.password" required="" />
                         </div>
                         <div>
-                            <input type="submit" style="margin-left: 0;float:none;" class="btn btn-success" ng-click="login()" value="ავტორიზაცია" />
+                            <input type="submit" style="margin-left: 0;float:none;" class="btn btn-success full-width" ng-click="login()" value="ავტორიზაცია" />
                             <%--<a class="reset_pass" href="#">Lost your password?</a>--%>
                         </div>
 

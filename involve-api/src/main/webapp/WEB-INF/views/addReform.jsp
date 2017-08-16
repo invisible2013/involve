@@ -185,8 +185,8 @@
                 var oMyForm = new FormData();
                 oMyForm.append("itemId", $scope.selectedItemId);
                 oMyForm.append("fileTypeId", $scope.fileTypeId);
-                oMyForm.append("fileName", $scope.fileName);
-                oMyForm.append("file", $('#documentId')[0].files[0]);
+                oMyForm.append("fileName", "");
+                oMyForm.append("file", $('#reformfileId')[0].files[0]);
                 $.ajax({
                     url: 'reform/add-image',
                     data: oMyForm,
@@ -479,7 +479,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
-                    <%--<button type="button" class="btn btn-success" ng-click="saveItem()">შენახვა</button>--%>
                 </div>
             </div>
         </div>
@@ -649,7 +648,7 @@
                                         <div class="clear"></div>
                                         <div class="form-group col-sm-6" ng-show="fileTypeId==1">
                                             <label class="control-label">აირჩიეთ</label>
-                                            <input type="file" id="documentfileId" name="file"
+                                            <input type="file" id="reformfileId" name="file"
                                                    class="form-control upload-file">
                                         </div>
                                         <div class="form-group col-md-6" ng-show="fileTypeId==2">
@@ -668,9 +667,9 @@
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>ფაილის ტიპი</th>
+                                                <th>ტიპი</th>
                                                 <th>ფაილი</th>
-                                                <th>მისამართი</th>
+                                                <th style="width: 50%">მისამართი</th>
                                                 <th></th>
                                             </tr>
                                             </thead>

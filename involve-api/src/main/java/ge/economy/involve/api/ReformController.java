@@ -88,6 +88,12 @@ public class ReformController {
     }
 
     @ResponseBody
+    @RequestMapping({"/get-all-sessions"})
+    public Response getAllSessions(@RequestParam("start") int start, @RequestParam("limit") int limit) {
+        return Response.withData(reformService.getAllSessions(start, limit));
+    }
+
+    @ResponseBody
     @RequestMapping({"/get-session-polls"})
     public Response getSessionPolls(@RequestParam int itemId) {
         return Response.withData(reformService.getSessionPolls(itemId));

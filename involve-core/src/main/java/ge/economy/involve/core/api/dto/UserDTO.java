@@ -34,6 +34,9 @@ public class UserDTO {
     private Integer statusId;
     private String statusName;
     private String name;
+    private String token;
+
+    public static Integer TOKEN_VALID_DAY_NUMBER = 365;
 
     public static Integer USER_PHISICAL = 1;
 
@@ -229,6 +232,14 @@ public class UserDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
 

@@ -49,6 +49,19 @@ public class ReformDAO extends AbstractDAO {
                 .where(Tables.REFORM_FILE.REFORM_ID.eq(reformId)).fetch();
     }
 
+    public HashMap<String, Object> getSessions(int start, int limit) {
+        SelectOnConditionStep<Record> selectConditionStep = (SelectOnConditionStep<Record>) dslContext.select()
+                .from(Tables.SESSION);
+        selectConditionStep.where(new Condition[0]);
+        SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
+        int recordSize = selectConditionStepSize.fetch().size();
+        selectConditionStep.orderBy(Tables.SESSION.ID.desc()).limit(limit).offset(start);
+        HashMap<String, Object> map = new HashMap();
+        map.put("list", selectConditionStep.fetch());
+        map.put("size", Integer.valueOf(recordSize));
+        return map;
+    }
+
     public List<Record> getReformSessions(int reformId) {
         return dslContext.select()
                 .from(Tables.SESSION)

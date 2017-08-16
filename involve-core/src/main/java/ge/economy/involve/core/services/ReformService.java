@@ -147,6 +147,16 @@ public class ReformService {
         return SessionDTO.translateArray(reformDAO.getReformSessions(reformId));
     }
 
+    public HashMap<String, Object> getAllSessions(int start, int limit) {
+        new HashMap();
+        HashMap<String, Object> resultMap = new HashMap();
+        HashMap<String, Object> map = this.reformDAO.getSessions(start, limit);
+        List<SessionDTO> items = SessionDTO.translateArray((List) map.get("list"));
+        resultMap.put("list", items);
+        resultMap.put("size", map.get("size"));
+        return resultMap;
+    }
+
     public List<SessionPollDTO> getSessionPolls(int sessionId) {
         List<SessionPollDTO> sessionPolls = SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId));
         for (SessionPollDTO item : sessionPolls) {

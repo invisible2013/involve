@@ -1,16 +1,20 @@
 package ge.economy.involve.core.services;
 
 import ge.economy.involve.core.api.dto.GenderDTO;
+import ge.economy.involve.core.api.dto.TokenDTO;
 import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.dto.UserTypeDTO;
 import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.dao.UserDAO;
+import ge.economy.involve.core.execptions.IncorectUserCredentialsException;
 import ge.economy.involve.core.execptions.MailAlreadyUsedException;
 import ge.economy.involve.core.execptions.UserNotFoundWithKeyException;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.UserRegister;
+import ge.economy.involve.database.database.tables.records.TokenRecord;
 import ge.economy.involve.database.database.tables.records.UserRegisterRecord;
 import ge.economy.involve.database.database.tables.records.UsersRecord;
+import ge.economy.involve.utils.DateTimeUtils;
 import ge.economy.involve.utils.MD5Provider;
 import ge.economy.involve.utils.email.EmailNotSentException;
 import ge.economy.involve.utils.email.SendEmailWithAttachment;
@@ -19,6 +23,7 @@ import org.jooq.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -124,6 +129,9 @@ public class UserService {
         return UserDTO.translateArray(userDAO.getUsers());
     }
 
+    public UserDTO getUserById(int id) {
+        return UserDTO.translate(userDAO.getUserById(id));
+    }
 
     public UserDTO getUser(String username, String password) {
 
@@ -133,6 +141,24 @@ public class UserService {
             return null;
         }
         return UserDTO.translate(record);
+    }
+
+    public UserDTO signIn(String username, String password) throws IncorectUserCredentialsException {
+
+        Record record = userDAO.getUser(username, MD5Provider.doubleMd5(password));
+        UserDTO user = null;
+        if (record != null) {
+            user = UserDTO.translate(record);
+            TokenRecord token = userDAO.getToken(user.getId());
+            if (token != null) {
+                userDAO.deleteToken(token.getId());
+            }
+            TokenRecord newToken = userDAO.generateToken(user.getId(), UUID.randomUUID().toString(), new Date(), DateTimeUtils.addDays(new Date(), UserDTO.TOKEN_VALID_DAY_NUMBER));
+            user.setToken(newToken.getKey());
+        } else {
+            throw new IncorectUserCredentialsException("ამ მონაცემებით აქტიური მომხმარებელი არ იძებნება");
+        }
+        return user;
     }
 
     public List<UserTypeDTO> getUserTypes() {
@@ -153,5 +179,9 @@ public class UserService {
 
     public void deleteUser(int itemId) {
         userDAO.deleteUser(itemId);
+    }
+
+    public void updateUserPassword(int userId, String password) {
+        userDAO.updateUserPassword(password, userId);
     }
 }

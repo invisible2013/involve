@@ -174,13 +174,14 @@
                         <tr>
                             <th>#</th>
                             <th>სახელი</th>
+                            <th>სტატუსი</th>
                             <th>ელ-ფოსტა</th>
                             <th>ტელეფონი</th>
                             <th>სიდენთ. N</th>
                             <th>სქესი</th>
                             <th>ტიპი</th>
                             <th>ჯგუფი</th>
-                            <th>სტატუსი</th>
+
                             <th style="width: 165px;">#Edit</th>
                         </tr>
                         </thead>
@@ -188,13 +189,16 @@
                         <tr ng-repeat="i in users">
                             <td>{{$index + 1}}</td>
                             <td>{{i.name}}</td>
-                            <td>{{i.email}}</td>
-                            <td>{{i.phone}}</td>
+                            <td><span class="label label-success" ng-show="i.statusId==1">{{i.statusName}}</span>
+                                <span class="label label-warning" ng-show="i.statusId==2">{{i.statusName}}</span>
+                            </td>
+                            <td><i class="fa fa-envelope"> </i> {{i.email}}</td>
+                            <td><i class="fa fa-phone"> </i> {{i.phone}}</td>
                             <td>{{i.idNumber}}</td>
                             <td>{{i.genderName}}</td>
                             <td>{{i.typeName}}</td>
                             <td>{{i.groupName}}</td>
-                            <td>{{i.statusName}}</td>
+
                             <td>
                                 <a data-toggle="modal" data-target="#itemModal" ng-click="editUser(i.id)"
                                    class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
