@@ -5,6 +5,7 @@ import ge.economy.involve.database.database.tables.ReformDetail;
 import ge.economy.involve.database.database.tables.records.ReformFileRecord;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +54,34 @@ public class ReformDAO extends AbstractDAO {
         SelectOnConditionStep<Record> selectConditionStep = (SelectOnConditionStep<Record>) dslContext.select()
                 .from(Tables.SESSION);
         selectConditionStep.where(new Condition[0]);
+        SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
+        int recordSize = selectConditionStepSize.fetch().size();
+        selectConditionStep.orderBy(Tables.SESSION.ID.desc()).limit(limit).offset(start);
+        HashMap<String, Object> map = new HashMap();
+        map.put("list", selectConditionStep.fetch());
+        map.put("size", Integer.valueOf(recordSize));
+        return map;
+    }
+
+    public HashMap<String, Object> getActiveSessions(int start, int limit) {
+        Date now = new Date();
+        SelectOnConditionStep<Record> selectConditionStep = (SelectOnConditionStep<Record>) dslContext.select()
+                .from(Tables.SESSION);
+        selectConditionStep.where(Tables.SESSION.END_DATE.greaterOrEqual(now));
+        SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
+        int recordSize = selectConditionStepSize.fetch().size();
+        selectConditionStep.orderBy(Tables.SESSION.ID.desc()).limit(limit).offset(start);
+        HashMap<String, Object> map = new HashMap();
+        map.put("list", selectConditionStep.fetch());
+        map.put("size", Integer.valueOf(recordSize));
+        return map;
+    }
+
+    public HashMap<String, Object> getCloseSessions(int start, int limit) {
+        Date now = new Date();
+        SelectOnConditionStep<Record> selectConditionStep = (SelectOnConditionStep<Record>) dslContext.select()
+                .from(Tables.SESSION);
+        selectConditionStep.where(Tables.SESSION.END_DATE.lessThan(now));
         SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
         int recordSize = selectConditionStepSize.fetch().size();
         selectConditionStep.orderBy(Tables.SESSION.ID.desc()).limit(limit).offset(start);

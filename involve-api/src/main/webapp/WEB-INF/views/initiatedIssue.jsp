@@ -205,7 +205,7 @@
                     </div>
                     <div class="x_content">
 
-                        <p>სამინისიტროს მიერ ინიცირებული საკითხები</p>
+                        <p>სამინისტროს მიერ ინიცირებული საკითხები</p>
                         <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#itemModal"
                                 ng-click="showItem();">დამატება
                         </button>

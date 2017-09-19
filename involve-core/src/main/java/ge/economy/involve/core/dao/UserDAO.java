@@ -97,7 +97,7 @@ public class UserDAO extends AbstractDAO {
                 .and(Tables.USERS.PASSWORD.eq(password))
                 .and(Tables.USERS.STATUS_ID.eq(UserDTO.USER_STATUS_ACTIVE))
                 .and(Tables.USERS.IS_APPROVED.eq(true))
-                .fetchAny();
+                .fetchOne();
 
     }
 

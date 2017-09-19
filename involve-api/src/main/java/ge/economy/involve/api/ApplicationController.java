@@ -63,21 +63,6 @@ public class ApplicationController {
         return Response.withData(initiateService.saveInitiate(request));
     }
 
-    @ResponseBody
-    @RequestMapping({"/get-sportsmans"})
-    public Response getSportsmans(@RequestParam("sportTypeId") int sportTypeId, @RequestParam("genderId") int genderId, @RequestParam("regionId") int regionId,
-                                  @RequestParam("cityId") int cityId, @RequestParam(required = false) String name, @RequestParam(required = false) String firstLetter,
-                                  @RequestParam("start") int start, @RequestParam("limit") int limit) {
-        return Response.withData(reformService.searchSportsmans(name, firstLetter, sportTypeId, genderId, regionId, cityId, start, limit));
-    }
-
-
-    @ResponseBody
-    @RequestMapping({"/get-reform-by-id"})
-    public Response getReformById(@RequestParam("reformId") int reformId) {
-        return Response.withData(reformService.getReformById(reformId));
-    }
-
 
     @RequestMapping({"/get-file"})
     @ResponseBody
@@ -121,7 +106,30 @@ public class ApplicationController {
         }
     }
 
+
     @ResponseBody
+    @RequestMapping({"/get-active-sessions"})
+    public Response getAllSessions(@RequestParam int limit) {
+        return Response.withData(reformService.getActiveSessions(0, limit));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-close-sessions"})
+    public Response getCloseSessions(@RequestParam int start, @RequestParam int limit) {
+        return Response.withData(reformService.getCloseSessions(start, limit));
+    }
+
+
+    @ResponseBody
+    @RequestMapping({"/get-sportsmans"})
+    public Response getSportsmans(@RequestParam("sportTypeId") int sportTypeId, @RequestParam("genderId") int genderId, @RequestParam("regionId") int regionId,
+                                  @RequestParam("cityId") int cityId, @RequestParam(required = false) String name, @RequestParam(required = false) String firstLetter,
+                                  @RequestParam("start") int start, @RequestParam("limit") int limit) {
+        return Response.withData(reformService.searchSportsmans(name, firstLetter, sportTypeId, genderId, regionId, cityId, start, limit));
+    }
+
+
+  /*  @ResponseBody
     @RequestMapping({"/subscribe-event"})
     public Response subscribeEvent(@RequestParam String email, @RequestParam String sportTypes) {
         SubscribeEventRequest subscribeEventRequest = new SubscribeEventRequest();
@@ -134,7 +142,7 @@ public class ApplicationController {
         subscribeEventRequest.setSportTypes(sportTypeList);
         //this.eventSubscriptionService.subscribeEvent(subscribeEventRequest);
         return Response.ok();
-    }
+    }*/
 
 
 }

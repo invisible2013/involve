@@ -355,9 +355,9 @@
                     <div class="x_content">
 
                         <p>აქ შეგიძლიათ დაამატოთ დაარედაქტიროთ ან წაშალოთ რეფორმები</p>
-                        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#reformModal"
+                        <%--<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#reformModal"
                                 ng-click="showReform();">დამატება
-                        </button>
+                        </button>--%>
 
                         <!-- start project list -->
                         <table class="table table-striped table-hover projects">

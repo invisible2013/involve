@@ -182,6 +182,6 @@ public class UserService {
     }
 
     public void updateUserPassword(int userId, String password) {
-        userDAO.updateUserPassword(password, userId);
+        userDAO.updateUserPassword(MD5Provider.doubleMd5(password), userId);
     }
 }
