@@ -31,6 +31,7 @@ public class ReformDTO {
     private String experience;
     private String reformTypeName;
     private List<ReformDetailDTO> reformDetails;
+    private List<ReformFileDTO> reformFiles;
 
 
     public static ReformDTO translate(Record record) {
@@ -178,5 +179,13 @@ public class ReformDTO {
 
     public void setReformDetails(List<ReformDetailDTO> reformDetails) {
         this.reformDetails = reformDetails;
+    }
+
+    public List<ReformFileDTO> getReformFiles() {
+        return reformFiles;
+    }
+
+    public void setReformFiles(List<ReformFileDTO> reformFiles) {
+        this.reformFiles = reformFiles;
     }
 }

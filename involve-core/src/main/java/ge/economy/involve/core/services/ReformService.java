@@ -6,6 +6,7 @@ import ge.economy.involve.core.api.request.AddSessionPollRequest;
 import ge.economy.involve.core.api.request.AddSessionRequest;
 import ge.economy.involve.core.api.request.AddSportsmanRequest;
 import ge.economy.involve.core.dao.ReformDAO;
+import ge.economy.involve.core.execptions.MainObjectNotFoundException;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.records.*;
 import org.jooq.DSLContext;
@@ -84,7 +85,10 @@ public class ReformService {
     }
 
 
-    public ReformDTO saveSession(AddSessionRequest request) {
+    public ReformDTO saveSession(AddSessionRequest request) throws MainObjectNotFoundException {
+        if (request.getReformId() == null || request.getReformId() == 0) {
+            throw new MainObjectNotFoundException("რეფორმის ობიექტი არ იძებნება გთხოვთ სცადოთ თავიდან.");
+        }
         boolean newRecord = false;
         SessionRecord record = null;
         if (request.getId() != null) {
@@ -156,11 +160,15 @@ public class ReformService {
         resultMap.put("size", map.get("size"));
         return resultMap;
     }
-    public HashMap<String, Object> getActiveSessions(int start, int limit) {
+
+    public HashMap<String, Object> getActiveSessions(int start, int limit, String orderBy) {
         new HashMap();
         HashMap<String, Object> resultMap = new HashMap();
-        HashMap<String, Object> map = this.reformDAO.getActiveSessions(start, limit);
+        HashMap<String, Object> map = this.reformDAO.getActiveSessions(start, limit, orderBy);
         List<SessionDTO> items = SessionDTO.translateArray((List) map.get("list"));
+        for (SessionDTO s : items) {
+            s.setReform(getReform(s.getReformId()));
+        }
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
         return resultMap;
@@ -204,7 +212,17 @@ public class ReformService {
     public ReformDTO getReform(int reformId) {
         ReformDTO reform = ReformDTO.translate(reformDAO.getReformById(reformId));
         reform.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(reform.getId())));
+        reform.setReformFiles(ReformFileDTO.translateArray(reformDAO.getReformFiles(reformId)));
         return reform;
+    }
+
+    public SessionDTO getSession(int sessionId) {
+        SessionDTO session = SessionDTO.translate(reformDAO.getSessionById(sessionId));
+        if (session != null) {
+            session.setPolls(SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId)));
+            session.setReform(getReform(session.getReformId()));
+        }
+        return session;
     }
 
 

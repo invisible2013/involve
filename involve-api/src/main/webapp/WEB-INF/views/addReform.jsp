@@ -119,14 +119,6 @@
 
             function getSuccessSession(res) {
                 $scope.items = res.data;
-                var today = new Date();
-                angular.forEach($scope.items, function (v, index) {
-                    var start = reverseDate(v.startDate);
-                    var end = reverseDate(v.endDate);
-                    var num = (today - start) / (1000 * 60 * 60 * 24);
-                    var days = (end - start) / (1000 * 60 * 60 * 24);
-                    v.percent = Math.round(Math.round(num) / Math.round(days) * 100);
-                });
             }
 
             ajaxCall($http, "reform/get-reform-sessions?itemId=" + $scope.selectedItemId, null, getSuccessSession);
@@ -219,34 +211,39 @@
         //Session
 
         $scope.saveSession = function () {
-            console.log($scope.item);
-            $scope.item.reformId = $scope.selectedItemId;
-            $scope.item.startDate = getDateById('single_cal3');
-            $scope.item.endDate = getDateById('single_cal4');
-            function saveSuccessItem(res) {
-                if ($('#documentId')[0].files[0] != undefined) {
-                    var oMyForm = new FormData();
-                    oMyForm.append("itemId", $scope.item.id);
-                    oMyForm.append("file", $('#documentId')[0].files[0]);
-                    $.ajax({
-                        url: 'reform/add-session-image',
-                        data: oMyForm,
-                        dataType: 'text',
-                        processData: false,
-                        contentType: false,
-                        type: 'POST',
-                        success: function (data) {
+            if ($scope.selectedItemId > 0) {
+                console.log($scope.item);
+                $scope.item.reformId = $scope.selectedItemId;
+                $scope.item.startDate = getDateById('single_cal3');
+                $scope.item.endDate = getDateById('single_cal4');
+                function saveSuccessItem(res) {
+                    if ($('#documentId')[0].files[0] != undefined) {
+                        var oMyForm = new FormData();
+                        oMyForm.append("itemId", $scope.item.id);
+                        oMyForm.append("file", $('#documentId')[0].files[0]);
+                        $.ajax({
+                            url: 'reform/add-session-image',
+                            data: oMyForm,
+                            dataType: 'text',
+                            processData: false,
+                            contentType: false,
+                            type: 'POST',
+                            success: function (data) {
+                                location.reload();
+                            }
+                        }).success(function (data) {
                             location.reload();
-                        }
-                    }).success(function (data) {
-                        location.reload();
-                    }).error(function (data, status, headers, config) {
-                        location.reload();
-                    });
-                }
-                location.reload();
-            };
-            ajaxCall($http, "reform/save-session", angular.toJson($scope.item), saveSuccessItem);
+                        }).error(function (data, status, headers, config) {
+                            location.reload();
+                        });
+                    }
+                    location.reload();
+                };
+                ajaxCall($http, "reform/save-session", angular.toJson($scope.item), saveSuccessItem);
+            } else {
+                alert("გთხოვთ გვერდი ჩატვირთოთ თავიდან.");
+                return;
+            }
         };
 
 
@@ -318,6 +315,13 @@
             }
         };
 
+        $scope.deleteReformFile = function (itemId) {
+            if (confirm("დარწმუნებული ხართ რომ გსურთ წაშლა?")) {
+                if (itemId != undefined) {
+                    ajaxCall($http, "reform/delete-reform-file?itemId=" + itemId, null, reload);
+                }
+            }
+        };
     });
 </script>
 
@@ -686,7 +690,7 @@
                                                         ng-show="s.fileTypeId==2" href="{{s.fileName}}" target="_blank">{{s.fileName}}</a>
                                                 </td>
                                                 <td style="min-width: 75px;">
-                                                    <a ng-click="deleteFile(s.id)" class="btn btn-danger btn-xs"><i
+                                                    <a ng-click="deleteReformFile(s.id)" class="btn btn-danger btn-xs"><i
                                                             class="fa fa-trash-o"></i> წაშლა</a>
                                                 </td>
                                             </tr>
@@ -735,10 +739,10 @@
                                             <td class="project_progress">
                                                 <div class="progress progress_sm">
                                                     <div class="progress-bar bg-green" role="progressbar"
-                                                         data-transitiongoal="r.percent"
-                                                         style="width:{{r.percent}}%;"></div>
+                                                         data-transitiongoal="r.timePercent"
+                                                         style="width:{{r.timePercent}}%;"></div>
                                                 </div>
-                                                <small>{{r.percent}}%</small>
+                                                <small>{{r.timePercent}}%</small>
                                                 <small>{{r.startDate}} - {{r.endDate}}</small>
                                             </td>
                                             <td class="project_progress">

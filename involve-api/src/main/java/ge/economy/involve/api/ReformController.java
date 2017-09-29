@@ -2,6 +2,7 @@ package ge.economy.involve.api;
 
 import ge.economy.involve.core.api.request.*;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
+import ge.economy.involve.core.execptions.MainObjectNotFoundException;
 import ge.economy.involve.core.response.Response;
 import ge.economy.involve.core.services.FileService;
 import ge.economy.involve.core.services.ParameterService;
@@ -59,7 +60,11 @@ public class ReformController {
     @ResponseBody
     @RequestMapping({"/save-session"})
     public Response saveSession(@RequestBody AddSessionRequest request) {
-        return Response.withData(reformService.saveSession(request));
+        try {
+            return Response.withData(reformService.saveSession(request));
+        } catch (MainObjectNotFoundException ex) {
+            return Response.withError(ex.getMessage());
+        }
     }
 
     @ResponseBody
@@ -143,7 +148,7 @@ public class ReformController {
     }
 
 
-    @RequestMapping({"/delete-file"})
+    @RequestMapping({"/delete-reform-file"})
     @ResponseBody
     private Response deleteReformFile(@RequestParam int itemId) {
         this.reformService.deleteReformFile(itemId);

@@ -68,14 +68,6 @@
             } else {
                 $scope.items = res.data;
             }
-            var today = new Date();
-            angular.forEach($scope.items, function (v, index) {
-                var start = reverseDate(v.startDate);
-                var end = reverseDate(v.endDate);
-                var num = (today - start) / (1000 * 60 * 60 * 24);
-                var days = (end - start) / (1000 * 60 * 60 * 24);
-                v.percent = Math.round(Math.round(num) / Math.round(days) * 100);
-            });
         }
 
         if ($scope.selectedItemId > 0) {
@@ -485,10 +477,10 @@
                                 <td class="project_progress">
                                     <div class="progress progress_sm">
                                         <div class="progress-bar bg-green" role="progressbar"
-                                             data-transitiongoal="r.percent"
-                                             style="width:{{r.percent}}%;"></div>
+                                             data-transitiongoal="r.timePercent"
+                                             style="width:{{r.timePercent}}%;"></div>
                                     </div>
-                                    <small>{{r.percent}}%</small>
+                                    <small>{{r.timePercent}}%</small>
                                     <small>{{r.startDate}} - {{r.endDate}}</small>
                                 </td>
                                 <td class="project_progress">

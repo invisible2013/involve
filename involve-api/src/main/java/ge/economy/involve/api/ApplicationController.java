@@ -3,6 +3,7 @@ package ge.economy.involve.api;
 import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
 import ge.economy.involve.core.api.request.AddUserRequest;
+import ge.economy.involve.core.api.request.AddVoteRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
 import ge.economy.involve.core.execptions.IncorectUserCredentialsException;
 import ge.economy.involve.core.execptions.MailAlreadyUsedException;
@@ -29,11 +30,10 @@ public class ApplicationController {
     private UserService userService;
     @Autowired
     private ReformService reformService;
-
     @Autowired
     private InitiateService initiateService;
-
-
+    @Autowired
+    private VoteService voteService;
     @Autowired
     private FileService fileService;
 
@@ -109,8 +109,14 @@ public class ApplicationController {
 
     @ResponseBody
     @RequestMapping({"/get-active-sessions"})
-    public Response getAllSessions(@RequestParam int limit) {
-        return Response.withData(reformService.getActiveSessions(0, limit));
+    public Response getAllSessions(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam int limit, @RequestParam(required = false, defaultValue = "desc") String orderBy) {
+        return Response.withData(reformService.getActiveSessions(start, limit, orderBy));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-session-by-id"})
+    public Response getSessionById(@RequestParam int sessionId) {
+        return Response.withData(reformService.getSession(sessionId));
     }
 
     @ResponseBody
@@ -119,7 +125,31 @@ public class ApplicationController {
         return Response.withData(reformService.getCloseSessions(start, limit));
     }
 
+    @ResponseBody
+    @RequestMapping({"/get-session-details"})
+    public Response getSessionDetails(@RequestParam int sessionId) {
+        return Response.withData(reformService.getSession(sessionId));
+    }
 
+    @ResponseBody
+    @RequestMapping({"/save-poll-vote"})
+    public Response savePollVote(@RequestParam int reformId, @RequestParam int sessionId, @RequestParam int questionId, @RequestParam int answerId, @RequestParam String answerNote,
+                                 @RequestParam int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam String ipAddress, @RequestParam String clientUID) {
+        AddVoteRequest request = new AddVoteRequest();
+        request.setReformId(reformId);
+        request.setSessionId(sessionId);
+        request.setQuestionId(questionId);
+        request.setAnswerId(answerId);
+        request.setAnswerNote(answerNote);
+        request.setSessionVoteId(sessionVoteId);
+        request.setUserId(userId);
+        request.setIpAddress(ipAddress);
+        request.setClientUID(clientUID);
+        return Response.withData(voteService.saveSessionPollVote(request));
+    }
+
+
+ /*
     @ResponseBody
     @RequestMapping({"/get-sportsmans"})
     public Response getSportsmans(@RequestParam("sportTypeId") int sportTypeId, @RequestParam("genderId") int genderId, @RequestParam("regionId") int regionId,
@@ -129,7 +159,7 @@ public class ApplicationController {
     }
 
 
-  /*  @ResponseBody
+   @ResponseBody
     @RequestMapping({"/subscribe-event"})
     public Response subscribeEvent(@RequestParam String email, @RequestParam String sportTypes) {
         SubscribeEventRequest subscribeEventRequest = new SubscribeEventRequest();

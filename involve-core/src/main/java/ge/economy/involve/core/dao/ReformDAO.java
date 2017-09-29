@@ -63,14 +63,18 @@ public class ReformDAO extends AbstractDAO {
         return map;
     }
 
-    public HashMap<String, Object> getActiveSessions(int start, int limit) {
+    public HashMap<String, Object> getActiveSessions(int start, int limit, String orderBy) {
         Date now = new Date();
         SelectOnConditionStep<Record> selectConditionStep = (SelectOnConditionStep<Record>) dslContext.select()
                 .from(Tables.SESSION);
         selectConditionStep.where(Tables.SESSION.END_DATE.greaterOrEqual(now));
         SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
         int recordSize = selectConditionStepSize.fetch().size();
-        selectConditionStep.orderBy(Tables.SESSION.ID.desc()).limit(limit).offset(start);
+        if (orderBy.equals("asc")) {
+            selectConditionStep.orderBy(Tables.SESSION.ID.asc()).limit(limit).offset(start);
+        } else {
+            selectConditionStep.orderBy(Tables.SESSION.ID.desc()).limit(limit).offset(start);
+        }
         HashMap<String, Object> map = new HashMap();
         map.put("list", selectConditionStep.fetch());
         map.put("size", Integer.valueOf(recordSize));
@@ -91,10 +95,28 @@ public class ReformDAO extends AbstractDAO {
         return map;
     }
 
+    public List<Record> getSessionVote(int sessionId) {
+        return dslContext.select()
+                .from(Tables.SESSION_VOTE)
+                .where(Tables.SESSION_VOTE.SESSION_ID.eq(sessionId)).fetch();
+    }
+
+    public List<Record> getSessionPollVote(int sessionId) {
+        return dslContext.select()
+                .from(Tables.SESSION_POLL_VOTE)
+                .where(Tables.SESSION_POLL_VOTE.SESSION_ID.eq(sessionId)).fetch();
+    }
+
     public List<Record> getReformSessions(int reformId) {
         return dslContext.select()
                 .from(Tables.SESSION)
                 .where(Tables.SESSION.REFORM_ID.eq(reformId)).fetch();
+    }
+
+    public Record getSessionById(int id) {
+        return dslContext.select()
+                .from(Tables.SESSION)
+                .where(Tables.SESSION.ID.eq(id)).fetchOne();
     }
 
     public List<Record> getSessionPolls(int sessionId) {

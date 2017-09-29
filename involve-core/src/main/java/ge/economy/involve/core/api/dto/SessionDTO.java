@@ -3,6 +3,7 @@ package ge.economy.involve.core.api.dto;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ge.economy.involve.core.jsonhelper.JsonDateSerializeSupport;
 import ge.economy.involve.database.database.Tables;
+import ge.economy.involve.utils.DateTimeUtils;
 import org.jooq.Record;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class SessionDTO {
     private Integer id;
     private Integer reformId;
     private Integer workPercent;
+    private Integer timePercent;
     private String name;
     private String imageName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
@@ -25,6 +27,8 @@ public class SessionDTO {
     private Date endDate;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
+    private List<SessionPollDTO> polls;
+    private ReformDTO reform;
 
 
     public static SessionDTO translate(Record record) {
@@ -37,6 +41,7 @@ public class SessionDTO {
         dto.setEndDate(record.getValue(Tables.SESSION.END_DATE));
         dto.setCreateDate(record.getValue(Tables.SESSION.CREATE_DATE));
         dto.setWorkPercent(record.getValue(Tables.SESSION.WORK_PERCENT));
+        dto.setTimePercent(DateTimeUtils.getPastTimePercent(dto.getStartDate(), dto.getEndDate()));
         return dto;
     }
 
@@ -111,5 +116,29 @@ public class SessionDTO {
 
     public void setWorkPercent(Integer workPercent) {
         this.workPercent = workPercent;
+    }
+
+    public Integer getTimePercent() {
+        return timePercent;
+    }
+
+    public void setTimePercent(Integer timePercent) {
+        this.timePercent = timePercent;
+    }
+
+    public List<SessionPollDTO> getPolls() {
+        return polls;
+    }
+
+    public void setPolls(List<SessionPollDTO> polls) {
+        this.polls = polls;
+    }
+
+    public ReformDTO getReform() {
+        return reform;
+    }
+
+    public void setReform(ReformDTO reform) {
+        this.reform = reform;
     }
 }

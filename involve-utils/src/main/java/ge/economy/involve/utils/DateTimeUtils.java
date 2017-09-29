@@ -14,6 +14,13 @@ public class DateTimeUtils {
         return (int) ((t2 - t1) / (1000 * 60 * 60 * 24));
     }
 
+    public static int getPastTimePercent(Date startDate, Date endDate) {
+        double allDays = daysBetween(startDate.getTime(), endDate.getTime());
+        double pastDays = daysBetween(startDate.getTime(), new Date().getTime());
+        int pastTimePercent = ((int) ((pastDays / allDays) * 100));
+        return pastTimePercent < 0 ? 0 : pastTimePercent;
+    }
+
     public static Date addDays(Date startDate, int dayNumber) {
         Calendar c = Calendar.getInstance();
         c.setTime(startDate);
