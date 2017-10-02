@@ -220,6 +220,11 @@ public class ReformService {
         SessionDTO session = SessionDTO.translate(reformDAO.getSessionById(sessionId));
         if (session != null) {
             session.setPolls(SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId)));
+            List<SessionPollDTO> polls = SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId));
+            for (SessionPollDTO s : polls) {
+                s.setAnswers(PollAnswerDTO.translateArray(reformDAO.getPollAnswers(s.getId())));
+            }
+            session.setPolls(polls);
             session.setReform(getReform(session.getReformId()));
         }
         return session;
