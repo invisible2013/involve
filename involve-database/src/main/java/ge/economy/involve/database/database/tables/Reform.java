@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Reform extends TableImpl<ReformRecord> {
 
-	private static final long serialVersionUID = -481489223;
+	private static final long serialVersionUID = 276420152;
 
 	/**
 	 * The reference instance of <code>public.reform</code>
@@ -115,6 +115,11 @@ public class Reform extends TableImpl<ReformRecord> {
 	 * The column <code>public.reform.id</code>.
 	 */
 	public final TableField<ReformRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+
+	/**
+	 * The column <code>public.reform.note</code>.
+	 */
+	public final TableField<ReformRecord, String> NOTE = createField("note", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * Create a <code>public.reform</code> table reference
