@@ -2,14 +2,19 @@ package ge.economy.involve.core.services;
 
 import ge.economy.involve.core.api.dto.InitiateDTO;
 import ge.economy.involve.core.api.dto.InitiatedIssueDTO;
+import ge.economy.involve.core.api.dto.SessionPollVoteDTO;
+import ge.economy.involve.core.api.dto.SessionVoteDTO;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
+import ge.economy.involve.core.api.request.AddSessionVoteRequest;
 import ge.economy.involve.core.api.request.AddVoteRequest;
 import ge.economy.involve.core.dao.InitiateDAO;
 import ge.economy.involve.core.dao.VoteDAO;
 import ge.economy.involve.database.database.Tables;
+import ge.economy.involve.database.database.tables.SessionPollVote;
 import ge.economy.involve.database.database.tables.records.InitiateRecord;
 import ge.economy.involve.database.database.tables.records.InitiatedIssueRecord;
 import ge.economy.involve.database.database.tables.records.SessionPollVoteRecord;
+import ge.economy.involve.database.database.tables.records.SessionVoteRecord;
 import org.apache.log4j.Logger;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +33,7 @@ public class VoteService {
 
     private Logger logger = Logger.getLogger(VoteService.class);
 
-    public InitiateDTO saveSessionPollVote(AddVoteRequest request) {
+    public SessionPollVoteDTO saveSessionPollVote(AddVoteRequest request) {
         boolean newRecord = false;
         SessionPollVoteRecord record = null;
         if (request.getId() != null) {
@@ -57,6 +62,33 @@ public class VoteService {
         }
 
         return null;
+    }
+
+
+    public SessionVoteDTO saveSessionVote(AddSessionVoteRequest request) {
+        boolean newRecord = false;
+        SessionVoteRecord record = null;
+        if (request.getId() != null) {
+            record = voteDAO.getSessionVoteObjectById(request.getId());
+        }
+
+        if (record == null) {
+            record = (SessionVoteRecord) dslContext.newRecord(Tables.SESSION_VOTE);
+            newRecord = true;
+        }
+
+        record.setUserId(request.getUserId());
+        record.setSessionId(request.getSessionId());
+        record.setAgreed(request.getAgreed());
+        record.setUserId(request.getUserId());
+        if (newRecord) {
+            record.setCreateDate(new Date());
+            record.store();
+        } else {
+            record.update();
+        }
+
+        return SessionVoteDTO.translate(record);
     }
 
     public HashMap<String, Object> getVotes(int start, int limit) {

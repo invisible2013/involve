@@ -29,6 +29,8 @@ public class SessionDTO {
     private Date createDate;
     private List<SessionPollDTO> polls;
     private ReformDTO reform;
+    private Integer yesPercent;
+    private Integer noPercent;
 
 
     public static SessionDTO translate(Record record) {
@@ -140,5 +142,21 @@ public class SessionDTO {
 
     public void setReform(ReformDTO reform) {
         this.reform = reform;
+    }
+
+    public Integer getYesPercent() {
+        return yesPercent;
+    }
+
+    public void setYesPercent(Integer yesPercent) {
+        this.yesPercent = yesPercent;
+    }
+
+    public Integer getNoPercent() {
+        return noPercent;
+    }
+
+    public void setNoPercent(Integer noPercent) {
+        this.noPercent = noPercent;
     }
 }

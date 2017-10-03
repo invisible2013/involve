@@ -1,7 +1,6 @@
 package ge.economy.involve.core.dao;
 
 import ge.economy.involve.database.database.Tables;
-import ge.economy.involve.database.database.tables.ReformDetail;
 import ge.economy.involve.database.database.tables.records.ReformFileRecord;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
 
@@ -129,6 +128,23 @@ public class ReformDAO extends AbstractDAO {
         return dslContext.select()
                 .from(Tables.POLL_ANSWER)
                 .where(Tables.POLL_ANSWER.POLL_ID.eq(pollId)).fetch();
+    }
+
+    public Integer getSessionAllVoteCount(int sessionId) {
+        return dslContext.
+                selectCount()
+                .from(Tables.SESSION_VOTE)
+                .where(Tables.SESSION_VOTE.SESSION_ID.eq(sessionId))
+                .fetchOne().into(Integer.class);
+    }
+
+    public Integer getSessionVoting(int sessionId, boolean agreed) {
+        return dslContext.
+                selectCount()
+                .from(Tables.SESSION_VOTE)
+                .where(Tables.SESSION_VOTE.SESSION_ID.eq(sessionId))
+                .and(Tables.SESSION_VOTE.AGREED.eq(agreed))
+                .fetchOne().into(Integer.class);
     }
 
 

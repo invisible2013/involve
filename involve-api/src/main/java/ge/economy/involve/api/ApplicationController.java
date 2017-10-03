@@ -2,6 +2,7 @@ package ge.economy.involve.api;
 
 import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
+import ge.economy.involve.core.api.request.AddSessionVoteRequest;
 import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.api.request.AddVoteRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
@@ -132,9 +133,19 @@ public class ApplicationController {
     }
 
     @ResponseBody
+    @RequestMapping({"/save-session-vote"})
+    public Response saveSessionVote(@RequestParam int sessionId, @RequestParam boolean agreed, @RequestParam(required = false, defaultValue = "0") int userId) {
+        AddSessionVoteRequest request = new AddSessionVoteRequest();
+        request.setSessionId(sessionId);
+        request.setUserId(userId);
+        request.setAgreed(agreed);
+        return Response.withData(voteService.saveSessionVote(request));
+    }
+
+    @ResponseBody
     @RequestMapping({"/save-poll-vote"})
-    public Response savePollVote(@RequestParam int reformId, @RequestParam int sessionId, @RequestParam int questionId, @RequestParam int answerId, @RequestParam String answerNote,
-                                 @RequestParam int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam String ipAddress, @RequestParam String clientUID) {
+    public Response savePollVote(@RequestParam int reformId, @RequestParam int sessionId, @RequestParam int questionId, @RequestParam int answerId, @RequestParam(required = false) String answerNote,
+                                 @RequestParam int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam(required = false) String ipAddress,@RequestParam(required = false) String clientUID) {
         AddVoteRequest request = new AddVoteRequest();
         request.setReformId(reformId);
         request.setSessionId(sessionId);

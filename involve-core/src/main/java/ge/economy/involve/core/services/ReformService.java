@@ -220,6 +220,11 @@ public class ReformService {
         SessionDTO session = SessionDTO.translate(reformDAO.getSessionById(sessionId));
         if (session != null) {
             session.setPolls(SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId)));
+            float allCount = reformDAO.getSessionAllVoteCount(sessionId);
+            float yesCount = reformDAO.getSessionVoting(sessionId, true);
+            float noCount = reformDAO.getSessionVoting(sessionId, false);
+            session.setYesPercent((int) (yesCount / allCount * 100));
+            session.setNoPercent((int) (noCount / allCount * 100));
             List<SessionPollDTO> polls = SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId));
             for (SessionPollDTO s : polls) {
                 s.setAnswers(PollAnswerDTO.translateArray(reformDAO.getPollAnswers(s.getId())));
