@@ -1,13 +1,11 @@
 package ge.economy.involve.core.services;
 
-import ge.economy.involve.core.api.dto.InitiateDTO;
-import ge.economy.involve.core.api.dto.InitiatedIssueDTO;
-import ge.economy.involve.core.api.dto.SessionPollVoteDTO;
-import ge.economy.involve.core.api.dto.SessionVoteDTO;
+import ge.economy.involve.core.api.dto.*;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
 import ge.economy.involve.core.api.request.AddSessionVoteRequest;
 import ge.economy.involve.core.api.request.AddVoteRequest;
 import ge.economy.involve.core.dao.InitiateDAO;
+import ge.economy.involve.core.dao.ReformDAO;
 import ge.economy.involve.core.dao.VoteDAO;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.SessionPollVote;
@@ -20,6 +18,8 @@ import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,43 +29,35 @@ public class VoteService {
     @Autowired
     private VoteDAO voteDAO;
     @Autowired
+    private ReformDAO reformDAO;
+    @Autowired
     private DSLContext dslContext;
 
     private Logger logger = Logger.getLogger(VoteService.class);
 
     public SessionPollVoteDTO saveSessionPollVote(AddVoteRequest request) {
-        boolean newRecord = false;
-        SessionPollVoteRecord record = null;
-        if (request.getId() != null) {
-            record = voteDAO.getPollVoteObjectById(request.getId());
-        }
 
-        if (record == null) {
-            record = (SessionPollVoteRecord) dslContext.newRecord(Tables.SESSION_POLL_VOTE);
-            newRecord = true;
-        }
 
-        record.setUserId(request.getUserId());
-        record.setReformId(request.getReformId());
-        record.setSessionId(request.getSessionId());
-        record.setQuestionId(request.getQuestionId());
-        record.setAnswerId(request.getAnswerId());
-        record.setAnswerNote(request.getAnswerNote());
-        record.setSessionVoteId(request.getSessionVoteId());
-        record.setIpAddress(request.getIpAddress());
-        record.setClientUid(request.getClientUID());
-        if (newRecord) {
+        for (QuestionAnswer q : request.getQuestionAnswerList()) {
+            SessionPollVoteRecord record = (SessionPollVoteRecord) dslContext.newRecord(Tables.SESSION_POLL_VOTE);
+            record.setUserId(request.getUserId());
+            record.setReformId(request.getReformId());
+            record.setSessionId(request.getSessionId());
+            record.setQuestionId(q.getQuestionId());
+            record.setAnswerId(q.getAnswerId());
+            record.setAnswerNote(q.getAnswerNote());
+            record.setSessionVoteId(request.getSessionVoteId());
+            record.setIpAddress(request.getIpAddress());
+            record.setClientUid(request.getClientUID());
             record.setCreateDate(new Date());
             record.store();
-        } else {
-            record.update();
         }
 
         return null;
     }
 
 
-    public SessionVoteDTO saveSessionVote(AddSessionVoteRequest request) {
+    public ParamPojo saveSessionVote(AddSessionVoteRequest request) {
         boolean newRecord = false;
         SessionVoteRecord record = null;
         if (request.getId() != null) {
@@ -87,8 +79,13 @@ public class VoteService {
         } else {
             record.update();
         }
-
-        return SessionVoteDTO.translate(record);
+        ParamPojo pojo = new ParamPojo();
+        pojo.setSessionVoteId(record.getId());
+        float allCount = reformDAO.getSessionAllVoteCount(request.getSessionId());
+        float yesCount = reformDAO.getSessionVoting(request.getSessionId(), true);
+        pojo.setYesPercent((int) (yesCount / allCount * 100));
+        pojo.setNoPercent(100 - pojo.getYesPercent());
+        return pojo;
     }
 
     public HashMap<String, Object> getVotes(int start, int limit) {

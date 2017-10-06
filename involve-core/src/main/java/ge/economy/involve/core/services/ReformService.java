@@ -52,6 +52,7 @@ public class ReformService {
         record.setReformTypeId(request.getReformTypeId());
         record.setExperience(request.getExperience());
         record.setGeneralInfo(request.getGeneralInfo());
+        record.setNote(request.getNote());
         record.setProgressBarName_1(request.getProgressBarName1());
         record.setProgressBarName_2(request.getProgressBarName2());
         record.setProgressBarName_3(request.getProgressBarName3());
@@ -65,7 +66,7 @@ public class ReformService {
             record.setProgressBarPercent_3(request.getProgressBarPercent3().toString());
         }
         if (newRecord) {
-            // record.setCreateDate(new Date());
+            record.setCreateDate(new Date());
             record.store();
         } else {
             record.update();
@@ -85,7 +86,7 @@ public class ReformService {
     }
 
 
-    public ReformDTO saveSession(AddSessionRequest request) throws MainObjectNotFoundException {
+    public SessionDTO saveSession(AddSessionRequest request) throws MainObjectNotFoundException {
         if (request.getReformId() == null || request.getReformId() == 0) {
             throw new MainObjectNotFoundException("რეფორმის ობიექტი არ იძებნება გთხოვთ სცადოთ თავიდან.");
         }
@@ -103,12 +104,12 @@ public class ReformService {
         record.setName(request.getName());
         record.setReformId(request.getReformId());
         record.setWorkPercent(request.getWorkPercent());
-        record.setName(request.getName());
+        record.setNote(request.getNote());
         record.setStartDate(request.getStartDate());
         record.setEndDate(request.getEndDate());
 
         if (newRecord) {
-            //record.setCreateDate(new Date());
+            record.setCreateDate(new Date());
             record.store();
         } else {
             record.update();
@@ -154,7 +155,7 @@ public class ReformService {
     public HashMap<String, Object> getAllSessions(int start, int limit) {
         new HashMap();
         HashMap<String, Object> resultMap = new HashMap();
-        HashMap<String, Object> map = this.reformDAO.getSessions(start, limit);
+        HashMap<String, Object> map = reformDAO.getSessions(start, limit);
         List<SessionDTO> items = SessionDTO.translateArray((List) map.get("list"));
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
@@ -222,9 +223,8 @@ public class ReformService {
             session.setPolls(SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId)));
             float allCount = reformDAO.getSessionAllVoteCount(sessionId);
             float yesCount = reformDAO.getSessionVoting(sessionId, true);
-            float noCount = reformDAO.getSessionVoting(sessionId, false);
             session.setYesPercent((int) (yesCount / allCount * 100));
-            session.setNoPercent((int) (noCount / allCount * 100));
+            session.setNoPercent(100 - session.getYesPercent());
             List<SessionPollDTO> polls = SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId));
             for (SessionPollDTO s : polls) {
                 s.setAnswers(PollAnswerDTO.translateArray(reformDAO.getPollAnswers(s.getId())));

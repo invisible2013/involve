@@ -25,6 +25,7 @@ public class AddReformRequest {
     private Integer progressBarPercent3;
     private String generalInfo;
     private String experience;
+    private String note;
     private List<ReformDetailDTO> reformDetails;
 
     public Integer getId() {
@@ -129,5 +130,13 @@ public class AddReformRequest {
 
     public void setReformDetails(List<ReformDetailDTO> reformDetails) {
         this.reformDetails = reformDetails;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

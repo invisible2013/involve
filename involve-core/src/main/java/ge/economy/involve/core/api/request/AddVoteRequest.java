@@ -1,5 +1,9 @@
 package ge.economy.involve.core.api.request;
 
+import ge.economy.involve.core.api.dto.QuestionAnswer;
+
+import java.util.List;
+
 /**
  * Created by nl on 7/20/2016.
  */
@@ -15,7 +19,7 @@ public class AddVoteRequest {
     private Integer userId;
     private String ipAddress;
     private String clientUID;
-
+    private List<QuestionAnswer> questionAnswerList;
 
     public Integer getId() {
         return id;
@@ -95,5 +99,13 @@ public class AddVoteRequest {
 
     public void setClientUID(String clientUID) {
         this.clientUID = clientUID;
+    }
+
+    public List<QuestionAnswer> getQuestionAnswerList() {
+        return questionAnswerList;
+    }
+
+    public void setQuestionAnswerList(List<QuestionAnswer> questionAnswerList) {
+        this.questionAnswerList = questionAnswerList;
     }
 }

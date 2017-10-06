@@ -18,6 +18,7 @@ public class ReformDTO {
 
     private int id;
     private String name;
+    private String note;
     private Integer reformTypeId;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
@@ -40,6 +41,7 @@ public class ReformDTO {
         dto.setName(record.getValue(Tables.REFORM.NAME));
         dto.setGeneralInfo(record.getValue(Tables.REFORM.GENERAL_INFO));
         dto.setExperience(record.getValue(Tables.REFORM.EXPERIENCE));
+        dto.setNote(record.getValue(Tables.REFORM.NOTE));
         dto.setProgressBarName1(record.getValue(Tables.REFORM.PROGRESS_BAR_NAME_1));
         dto.setProgressBarName2(record.getValue(Tables.REFORM.PROGRESS_BAR_NAME_2));
         dto.setProgressBarName3(record.getValue(Tables.REFORM.PROGRESS_BAR_NAME_3));
@@ -187,5 +189,13 @@ public class ReformDTO {
 
     public void setReformFiles(List<ReformFileDTO> reformFiles) {
         this.reformFiles = reformFiles;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

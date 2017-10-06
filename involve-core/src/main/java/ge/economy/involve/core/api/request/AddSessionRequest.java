@@ -17,6 +17,7 @@ public class AddSessionRequest {
     private Integer workPercent;
     private String name;
     private String imageName;
+    private String note;
     @JsonDeserialize(using = JsonDateDeSerializeSupport.class)
     private Date startDate;
     @JsonDeserialize(using = JsonDateDeSerializeSupport.class)
@@ -76,5 +77,13 @@ public class AddSessionRequest {
 
     public void setWorkPercent(Integer workPercent) {
         this.workPercent = workPercent;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

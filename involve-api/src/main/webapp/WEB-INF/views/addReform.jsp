@@ -345,6 +345,12 @@
                             <input type="text" ng-model="item.name"
                                    class="form-control ng-pristine ng-valid">
                         </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">აღწერა</label>
+                            <textarea rows="4" ng-model="item.note"
+                                      class="form-control ng-pristine ng-valid">
+                            </textarea>
+                        </div>
                         <div class="form-group col-sm-6" has-feedback>
 
 
@@ -614,9 +620,12 @@
                                                            class="form-control input-sm">
                                                 </div>
                                                 <div class="col-md-5 form-group">
-                                                    <input type="text" placeholder="მნიშვნელობა"
+                                                     <textarea rows="3" ng-model="reform.reformDetails[d - 1].value"
+                                                               placeholder="მნიშვნელობა" class="form-control ng-pristine ng-valid">
+                                                    </textarea>
+                                                    <%--<input type="text" placeholder="მნიშვნელობა"
                                                            ng-model="reform.reformDetails[d - 1].value"
-                                                           class="form-control input-sm">
+                                                           class="form-control input-sm">--%>
                                                 </div>
                                                 <div class="col-md-1 form-group" ng-show="$index == 0">
                                                     <a class="btn btn-xs">
@@ -690,7 +699,8 @@
                                                         ng-show="s.fileTypeId==2" href="{{s.fileName}}" target="_blank">{{s.fileName}}</a>
                                                 </td>
                                                 <td style="min-width: 75px;">
-                                                    <a ng-click="deleteReformFile(s.id)" class="btn btn-danger btn-xs"><i
+                                                    <a ng-click="deleteReformFile(s.id)"
+                                                       class="btn btn-danger btn-xs"><i
                                                             class="fa fa-trash-o"></i> წაშლა</a>
                                                 </td>
                                             </tr>
@@ -711,6 +721,7 @@
                                             <th style="width: 1%">#</th>
                                             <th style="width: 20%">დასახელება</th>
                                             <th>ლოგო</th>
+                                            <th>აღწერა</th>
                                             <th>გასული დრო</th>
                                             <th>შესრულებული სამუშაო</th>
                                             <th style="width: 20%">#Edit</th>
@@ -736,6 +747,7 @@
                                                          style="height: 60px;" height="60">
                                                 </a>
                                             </td>
+                                            <td>{{r.note}}</td>
                                             <td class="project_progress">
                                                 <div class="progress progress_sm">
                                                     <div class="progress-bar bg-green" role="progressbar"

@@ -20,6 +20,7 @@ public class SessionDTO {
     private Integer workPercent;
     private Integer timePercent;
     private String name;
+    private String note;
     private String imageName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date startDate;
@@ -38,6 +39,7 @@ public class SessionDTO {
         dto.setId(record.getValue(Tables.SESSION.ID));
         dto.setReformId(record.getValue(Tables.SESSION.REFORM_ID));
         dto.setName(record.getValue(Tables.SESSION.NAME));
+        dto.setNote(record.getValue(Tables.SESSION.NOTE));
         dto.setImageName(record.getValue(Tables.SESSION.IMAGE_NAME));
         dto.setStartDate(record.getValue(Tables.SESSION.START_DATE));
         dto.setEndDate(record.getValue(Tables.SESSION.END_DATE));
@@ -158,5 +160,13 @@ public class SessionDTO {
 
     public void setNoPercent(Integer noPercent) {
         this.noPercent = noPercent;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

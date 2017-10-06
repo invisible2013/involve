@@ -70,12 +70,7 @@
             }
         }
 
-        if ($scope.selectedItemId > 0) {
-
-            ajaxCall($http, "reform/get-reform-sessions?itemId=" + $scope.selectedItemId, null, getSuccessSession);
-        } else {
-            ajaxCall($http, "reform/get-all-sessions?start=" + $scope.start + "&limit=" + $scope.limit, null, getSuccessSession);
-        }
+        ajaxCall($http, "reform/get-all-sessions?start=" + $scope.start + "&limit=" + $scope.limit, null, getSuccessSession);
 
         $scope.loadMore = function () {
             $scope.start = $scope.start + $scope.limit;
@@ -101,7 +96,6 @@
 
         $scope.saveItem = function () {
             console.log($scope.item);
-            $scope.item.reformId = $scope.selectedItemId;
             $scope.item.startDate = getDateById('single_cal3');
             $scope.item.endDate = getDateById('single_cal4');
             function saveSuccessItem(res) {
@@ -149,6 +143,7 @@
 
         $scope.editItem = function (itemId) {
             if (itemId != undefined) {
+                $scope.selectedItemId = itemId;
                 var selected = $filter('filter')($scope.items, {id: itemId}, true);
                 var item = selected[0];
                 $('#single_cal3').val(reverseDateString(item.startDate));
@@ -242,25 +237,24 @@
                             <input type="text" ng-model="item.name"
                                    class="form-control ng-pristine ng-valid">
                         </div>
+                        <div class="form-group col-sm-12">
+                            <label class="control-label">აღწერა</label>
+                            <textarea rows="4" ng-model="item.note"
+                                      class="form-control ng-pristine ng-valid">
+                            </textarea>
+                        </div>
                         <div class="form-group col-sm-6" has-feedback>
-
-
                             <label class="control-label">დაწყება</label>
-
                             <div class="control-group">
                                 <div class="controls">
                                     <div class="col-md-12 row xdisplay_inputx form-group has-feedback">
                                         <input type="text" name="startdate" class="form-control has-feedback-left"
-                                               id="single_cal3"
-                                        >
+                                               id="single_cal3">
                                         <span class="fa fa-calendar-o form-control-feedback left"
                                               aria-hidden="true"></span>
-
                                     </div>
                                 </div>
                             </div>
-                            <%-- <input type="text" ng-model="item.startDate"
-                                    class="form-control ng-pristine ng-valid">--%>
                         </div>
                         <div class="form-group col-sm-6">
                             <label class="control-label">დასრულება</label>

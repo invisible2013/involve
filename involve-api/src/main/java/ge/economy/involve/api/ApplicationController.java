@@ -1,5 +1,8 @@
 package ge.economy.involve.api;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ge.economy.involve.core.api.dto.QuestionAnswer;
 import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
 import ge.economy.involve.core.api.request.AddSessionVoteRequest;
@@ -14,6 +17,7 @@ import ge.economy.involve.core.services.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
@@ -144,19 +148,24 @@ public class ApplicationController {
 
     @ResponseBody
     @RequestMapping({"/save-poll-vote"})
-    public Response savePollVote(@RequestParam int reformId, @RequestParam int sessionId, @RequestParam int questionId, @RequestParam int answerId, @RequestParam(required = false) String answerNote,
-                                 @RequestParam int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam(required = false) String ipAddress,@RequestParam(required = false) String clientUID) {
-        AddVoteRequest request = new AddVoteRequest();
-        request.setReformId(reformId);
-        request.setSessionId(sessionId);
-        request.setQuestionId(questionId);
-        request.setAnswerId(answerId);
-        request.setAnswerNote(answerNote);
-        request.setSessionVoteId(sessionVoteId);
-        request.setUserId(userId);
-        request.setIpAddress(ipAddress);
-        request.setClientUID(clientUID);
-        return Response.withData(voteService.saveSessionPollVote(request));
+    public Response savePollVote(@RequestParam int reformId, @RequestParam int sessionId, @RequestParam String questionAnswerList, @RequestParam(required = false) String answerNote,
+                                 @RequestParam int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam(required = false) String ipAddress, @RequestParam(required = false) String clientUID) throws IOException {
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        QuestionAnswer[] questionAnswers = mapper.readValue(questionAnswerList, QuestionAnswer[].class);
+        if (questionAnswers.length > 0) {
+            AddVoteRequest request = new AddVoteRequest();
+            request.setReformId(reformId);
+            request.setSessionId(sessionId);
+            request.setQuestionAnswerList(Arrays.asList(questionAnswers));
+            request.setAnswerNote(answerNote);
+            request.setSessionVoteId(sessionVoteId);
+            request.setUserId(userId);
+            request.setIpAddress(ipAddress);
+            request.setClientUID(clientUID);
+            return Response.withData(voteService.saveSessionPollVote(request));
+        } else return Response.withError("polls is empty");
     }
 
 
