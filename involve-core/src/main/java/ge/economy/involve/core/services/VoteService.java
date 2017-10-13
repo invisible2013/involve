@@ -35,11 +35,13 @@ public class VoteService {
 
     private Logger logger = Logger.getLogger(VoteService.class);
 
-    public SessionPollVoteDTO saveSessionPollVote(AddVoteRequest request) {
+    public ParamPojo saveSessionPollVote(AddVoteRequest request) {
 
-
+        ParamPojo pojo = new ParamPojo();
+        int index = 0;
         for (QuestionAnswer q : request.getQuestionAnswerList()) {
             SessionPollVoteRecord record = (SessionPollVoteRecord) dslContext.newRecord(Tables.SESSION_POLL_VOTE);
+
             record.setUserId(request.getUserId());
             record.setReformId(request.getReformId());
             record.setSessionId(request.getSessionId());
@@ -51,9 +53,16 @@ public class VoteService {
             record.setClientUid(request.getClientUID());
             record.setCreateDate(new Date());
             record.store();
+            if (index == 0 && request.getSessionVoteId() == 0) {
+                pojo.setSessionVoteId(record.getId());
+                index++;
+            }
+            if (request.getSessionVoteId() == 0) {
+                record.setSessionVoteId(pojo.getSessionVoteId());
+                record.update();
+            }
         }
-
-        return null;
+        return pojo;
     }
 
 
@@ -81,6 +90,9 @@ public class VoteService {
         }
         ParamPojo pojo = new ParamPojo();
         pojo.setSessionVoteId(record.getId());
+        if (request.getSessionVoteId() > 0) {
+            voteDAO.updateSessionPollVote(request.getSessionVoteId(), record.getId());
+        }
         float allCount = reformDAO.getSessionAllVoteCount(request.getSessionId());
         float yesCount = reformDAO.getSessionVoting(request.getSessionId(), true);
         pojo.setYesPercent((int) (yesCount / allCount * 100));
@@ -101,6 +113,5 @@ public class VoteService {
     public void deleteSessionPollVote(int itemId) {
         voteDAO.deleteSessionPollVote(itemId);
     }
-
 
 }

@@ -138,9 +138,11 @@ public class ApplicationController {
 
     @ResponseBody
     @RequestMapping({"/save-session-vote"})
-    public Response saveSessionVote(@RequestParam int sessionId, @RequestParam boolean agreed, @RequestParam(required = false, defaultValue = "0") int userId) {
+    public Response saveSessionVote(@RequestParam int sessionId, @RequestParam boolean agreed, @RequestParam(required = false, defaultValue = "0") int userId,
+                                    @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false) String clientUID) {
         AddSessionVoteRequest request = new AddSessionVoteRequest();
         request.setSessionId(sessionId);
+        request.setSessionVoteId(sessionVoteId);
         request.setUserId(userId);
         request.setAgreed(agreed);
         return Response.withData(voteService.saveSessionVote(request));
@@ -149,7 +151,7 @@ public class ApplicationController {
     @ResponseBody
     @RequestMapping({"/save-poll-vote"})
     public Response savePollVote(@RequestParam int reformId, @RequestParam int sessionId, @RequestParam String questionAnswerList, @RequestParam(required = false) String answerNote,
-                                 @RequestParam int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam(required = false) String ipAddress, @RequestParam(required = false) String clientUID) throws IOException {
+                                 @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam(required = false) String ipAddress, @RequestParam(required = false) String clientUID) throws IOException {
 
 
         ObjectMapper mapper = new ObjectMapper();

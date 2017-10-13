@@ -7,6 +7,7 @@ public class ParamPojo {
 
     private int id;
     private int sessionVoteId;
+    private int sessionPollVoteId;
     private int yesPercent;
     private int noPercent;
 
@@ -41,5 +42,13 @@ public class ParamPojo {
 
     public void setNoPercent(int noPercent) {
         this.noPercent = noPercent;
+    }
+
+    public int getSessionPollVoteId() {
+        return sessionPollVoteId;
+    }
+
+    public void setSessionPollVoteId(int sessionPollVoteId) {
+        this.sessionPollVoteId = sessionPollVoteId;
     }
 }

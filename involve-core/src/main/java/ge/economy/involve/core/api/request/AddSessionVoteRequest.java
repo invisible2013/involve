@@ -6,6 +6,7 @@ package ge.economy.involve.core.api.request;
 public class AddSessionVoteRequest {
 
     private Integer id;
+    private Integer sessionVoteId;
     private Integer sessionId;
     private Integer userId;
     private String mail;
@@ -77,5 +78,13 @@ public class AddSessionVoteRequest {
 
     public void setFieldOfActivity(String fieldOfActivity) {
         this.fieldOfActivity = fieldOfActivity;
+    }
+
+    public Integer getSessionVoteId() {
+        return sessionVoteId;
+    }
+
+    public void setSessionVoteId(Integer sessionVoteId) {
+        this.sessionVoteId = sessionVoteId;
     }
 }

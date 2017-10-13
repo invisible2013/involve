@@ -32,7 +32,9 @@ public class SessionDTO {
     private ReformDTO reform;
     private Integer yesPercent;
     private Integer noPercent;
-
+    private int statusId;
+    public static final int ACTIVE_SESSION = 1;
+    public static final int CLOSE_SESSION = 2;
 
     public static SessionDTO translate(Record record) {
         SessionDTO dto = new SessionDTO();
@@ -46,6 +48,7 @@ public class SessionDTO {
         dto.setCreateDate(record.getValue(Tables.SESSION.CREATE_DATE));
         dto.setWorkPercent(record.getValue(Tables.SESSION.WORK_PERCENT));
         dto.setTimePercent(DateTimeUtils.getPastTimePercent(dto.getStartDate(), dto.getEndDate()));
+        dto.setStatusId(dto.getEndDate().compareTo(new Date()) < 0 ? CLOSE_SESSION : ACTIVE_SESSION);
         return dto;
     }
 
@@ -168,5 +171,13 @@ public class SessionDTO {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 }

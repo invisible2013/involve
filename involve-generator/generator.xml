@@ -3,9 +3,9 @@
     <!-- Configure the database connection here -->
     <jdbc>
         <driver>org.postgresql.Driver</driver>
-        <url>jdbc:postgresql://localhost:5432/involve</url>
+        <url>jdbc:postgresql://10.20.21.85:5432/involve</url>
         <user>nlomineishvili</user>
-        <password>123456</password>
+        <password>2wsx@WSX</password>
 
         <!--     You can also pass user/password and other JDBC properties in the optional properties tag:
             <properties>

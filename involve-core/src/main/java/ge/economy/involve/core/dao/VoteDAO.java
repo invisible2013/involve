@@ -44,5 +44,12 @@ public class VoteDAO extends AbstractDAO {
         dslContext.deleteFrom(Tables.SESSION_POLL_VOTE).where(Tables.SESSION_POLL_VOTE.ID.eq(itemId)).execute();
     }
 
+    public void updateSessionPollVote(int oldSessionVoteId, int sessionVoteId) {
+        dslContext.update(Tables.SESSION_POLL_VOTE).
+                set(Tables.SESSION_POLL_VOTE.SESSION_VOTE_ID, sessionVoteId).
+                where(Tables.SESSION_POLL_VOTE.SESSION_VOTE_ID.eq(oldSessionVoteId)).
+                execute();
+    }
+
 
 }

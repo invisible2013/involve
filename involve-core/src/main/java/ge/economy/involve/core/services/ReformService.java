@@ -169,6 +169,10 @@ public class ReformService {
         List<SessionDTO> items = SessionDTO.translateArray((List) map.get("list"));
         for (SessionDTO s : items) {
             s.setReform(getReform(s.getReformId()));
+            float allCount = reformDAO.getSessionAllVoteCount(s.getId());
+            float yesCount = reformDAO.getSessionVoting(s.getId(), true);
+            s.setYesPercent((int) (yesCount / allCount * 100));
+            s.setNoPercent(100 - s.getYesPercent());
         }
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
@@ -181,6 +185,13 @@ public class ReformService {
         HashMap<String, Object> map = this.reformDAO.getCloseSessions(start, limit);
         List<SessionDTO> items = SessionDTO.translateArray((List) map.get("list"));
         resultMap.put("list", items);
+        for (SessionDTO s : items) {
+            s.setReform(getReform(s.getReformId()));
+            float allCount = reformDAO.getSessionAllVoteCount(s.getId());
+            float yesCount = reformDAO.getSessionVoting(s.getId(), true);
+            s.setYesPercent((int) (yesCount / allCount * 100));
+            s.setNoPercent(100 - s.getYesPercent());
+        }
         resultMap.put("size", map.get("size"));
         return resultMap;
     }
