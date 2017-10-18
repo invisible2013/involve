@@ -37,19 +37,22 @@ public class SessionDTO {
     public static final int CLOSE_SESSION = 2;
 
     public static SessionDTO translate(Record record) {
-        SessionDTO dto = new SessionDTO();
-        dto.setId(record.getValue(Tables.SESSION.ID));
-        dto.setReformId(record.getValue(Tables.SESSION.REFORM_ID));
-        dto.setName(record.getValue(Tables.SESSION.NAME));
-        dto.setNote(record.getValue(Tables.SESSION.NOTE));
-        dto.setImageName(record.getValue(Tables.SESSION.IMAGE_NAME));
-        dto.setStartDate(record.getValue(Tables.SESSION.START_DATE));
-        dto.setEndDate(record.getValue(Tables.SESSION.END_DATE));
-        dto.setCreateDate(record.getValue(Tables.SESSION.CREATE_DATE));
-        dto.setWorkPercent(record.getValue(Tables.SESSION.WORK_PERCENT));
-        dto.setTimePercent(DateTimeUtils.getPastTimePercent(dto.getStartDate(), dto.getEndDate()));
-        dto.setStatusId(dto.getEndDate().compareTo(new Date()) < 0 ? CLOSE_SESSION : ACTIVE_SESSION);
-        return dto;
+        if (record != null) {
+            SessionDTO dto = new SessionDTO();
+            dto.setId(record.getValue(Tables.SESSION.ID));
+            dto.setReformId(record.getValue(Tables.SESSION.REFORM_ID));
+            dto.setName(record.getValue(Tables.SESSION.NAME));
+            dto.setNote(record.getValue(Tables.SESSION.NOTE));
+            dto.setImageName(record.getValue(Tables.SESSION.IMAGE_NAME));
+            dto.setStartDate(record.getValue(Tables.SESSION.START_DATE));
+            dto.setEndDate(record.getValue(Tables.SESSION.END_DATE));
+            dto.setCreateDate(record.getValue(Tables.SESSION.CREATE_DATE));
+            dto.setWorkPercent(record.getValue(Tables.SESSION.WORK_PERCENT));
+            dto.setTimePercent(DateTimeUtils.getPastTimePercent(dto.getStartDate(), dto.getEndDate()));
+            dto.setStatusId(dto.getEndDate().compareTo(new Date()) < 0 ? CLOSE_SESSION : ACTIVE_SESSION);
+            return dto;
+        }
+        return null;
     }
 
 

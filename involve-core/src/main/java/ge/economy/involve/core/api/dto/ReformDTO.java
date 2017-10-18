@@ -33,6 +33,7 @@ public class ReformDTO {
     private String reformTypeName;
     private List<ReformDetailDTO> reformDetails;
     private List<ReformFileDTO> reformFiles;
+    private List<SessionDTO> sessions;
 
 
     public static ReformDTO translate(Record record) {
@@ -197,5 +198,13 @@ public class ReformDTO {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public List<SessionDTO> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<SessionDTO> sessions) {
+        this.sessions = sessions;
     }
 }

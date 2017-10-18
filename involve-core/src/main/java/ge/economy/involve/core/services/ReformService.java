@@ -152,6 +152,20 @@ public class ReformService {
         return SessionDTO.translateArray(reformDAO.getReformSessions(reformId));
     }
 
+    public HashMap<String, Object> getCurrentReforms(int start, int limit) {
+        new HashMap();
+        HashMap<String, Object> resultMap = new HashMap();
+        HashMap<String, Object> map = reformDAO.getReforms(start, limit);
+        List<ReformDTO> items = ReformDTO.translateArray((List) map.get("list"));
+        for (ReformDTO item : items) {
+            item.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(item.getId())));
+            item.setReformFiles(ReformFileDTO.translateArray(reformDAO.getReformFiles(item.getId())));
+        }
+        resultMap.put("list", items);
+        resultMap.put("size", map.get("size"));
+        return resultMap;
+    }
+
     public HashMap<String, Object> getAllSessions(int start, int limit) {
         new HashMap();
         HashMap<String, Object> resultMap = new HashMap();
@@ -225,6 +239,7 @@ public class ReformService {
         ReformDTO reform = ReformDTO.translate(reformDAO.getReformById(reformId));
         reform.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(reform.getId())));
         reform.setReformFiles(ReformFileDTO.translateArray(reformDAO.getReformFiles(reformId)));
+        reform.setSessions(SessionDTO.translateArray(reformDAO.getReformSessions(reformId)));
         return reform;
     }
 
