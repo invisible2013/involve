@@ -1,9 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="header2.jsp" %>
 <script>
-    window.onload = function () {
-
-    };
     function getDateById(id) {
         if ($('#' + id).val() != "") {
             var arraydates = $('#' + id).val().split("/");
@@ -42,23 +39,28 @@
                 //format: 'DD/MM/YYYY HH:mm'
             }
         });
-        /*$('.editors').each(function(){
-         CKEDITOR.replace( $(this).attr('id') );
-         });*/
-
-        /*  CKEDITOR.replace("ckNote0");
-         CKEDITOR.add;
-         CKEDITOR.replace("ckNote1");
-         CKEDITOR.add;
-         */
     });
 
     var app = angular.module("app", []);
-    app.filter('asHtml', function ($sce) {
-        return function (val) {
-            return $sce.trustAsHtml(val);
+    app.directive('ckEditor', [function () {
+        return {
+            require: '?ngModel',
+            link: function ($scope, elm, attr, ngModel) {
+
+                var ck = CKEDITOR.replace(elm[0]);
+
+                ck.on('pasteState', function () {
+                    $scope.$apply(function () {
+                        ngModel.$setViewValue(ck.getData());
+                    });
+                });
+
+                ngModel.$render = function (value) {
+                    ck.setData(ngModel.$modelValue);
+                };
+            }
         };
-    });
+    }]);
     app.controller("homeCtrl", function ($scope, $http, $filter, $location) {
         var absUrl = $location.absUrl();
         $scope.selectedItemId = 0;
@@ -122,7 +124,6 @@
                 }
                 angular.forEach($scope.reform.reformDetails, function (value, index) {
                     $scope.detailsRows.push(index + 1);
-                    //$scope.setNoteAsHtml(index, value.value);
                 });
             }
 
@@ -158,9 +159,6 @@
 
         $scope.saveReform = function () {
             console.log($scope.reform);
-            angular.forEach($scope.reform.reformDetails, function (value, index) {
-                //value.value = $scope.getNoteAsHtml(index);
-            });
             function saveSuccessReform(res) {
                 if ($scope.selectedItemId > 0) {
                     location.reload();
@@ -342,22 +340,6 @@
                     ajaxCall($http, "reform/delete-reform-file?itemId=" + itemId, null, reload);
                 }
             }
-        };
-        $scope.setNoteAsHtml = function (itemIndex, text) {
-            angular.forEach(CKEDITOR.instances, function (value, index) {
-                if ('ckNote' + itemIndex == index) {
-                    value.setData(text);
-                }
-            });
-            //CKEDITOR.instances.ckNote.setData(text);
-        };
-        $scope.getNoteAsHtml = function (itemIndex) {
-            angular.forEach(CKEDITOR.instances, function (value, index) {
-                if ('ckNote' + itemIndex == index) {
-                    return value.getData();
-                }
-            });
-
         };
 
 
@@ -666,17 +648,12 @@
                                                            class="form-control input-sm">
                                                 </div>
                                                 <div class="col-md-5 form-group">
-
-                                                    <textarea id="ckNote{{d-1}}" rows="3"
+                                                    <textarea data-ng-model="reform.reformDetails[d - 1].value" rows="3" placeholder="მნიშვნელობა" data-ck-editor></textarea>
+                                                   <%-- <textarea id="ckNote{{d-1}}" rows="3"
                                                               ng-model="reform.reformDetails[d - 1].value"
                                                               placeholder="მნიშვნელობა"
                                                               class="form-control ng-pristine ng-valid editors">
-                                                    </textarea>
-
-
-                                                    <%--<input type="text" placeholder="მნიშვნელობა"
-                                                           ng-model="reform.reformDetails[d - 1].value"
-                                                           class="form-control input-sm">--%>
+                                                    </textarea>--%>
                                                 </div>
                                                 <div class="col-md-1 form-group" ng-show="$index == 0">
                                                     <a class="btn btn-xs">
@@ -691,21 +668,6 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                            <%-- <script>
-                                                 $(function () {
-                                                     $('.editors').each(function () {
-                                                         CKEDITOR.replace($(this).attr('id'));
-                                                         console.log($(this).attr('id'));
-                                                     });
-
-                                                 });
-                                             </script>--%>
-                                            <%--<script>
-                                                $(function () {
-                                                    CKEDITOR.replace("ckNote1");
-                                                    CKEDITOR.add("ckNote1");
-                                                });
-                                            </script>--%>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">
