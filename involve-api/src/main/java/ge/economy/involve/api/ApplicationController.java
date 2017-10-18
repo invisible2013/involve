@@ -119,6 +119,18 @@ public class ApplicationController {
     }
 
     @ResponseBody
+    @RequestMapping({"/get-current-reforms"})
+    public Response getCurrentReform(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam int limit) {
+        return Response.withData(reformService.getCurrentReforms(start, limit));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-reform-by-id"})
+    public Response getReformById(@RequestParam int reformId) {
+        return Response.withData(reformService.getReform(reformId));
+    }
+
+    @ResponseBody
     @RequestMapping({"/get-session-by-id"})
     public Response getSessionById(@RequestParam int sessionId) {
         return Response.withData(reformService.getSession(sessionId));

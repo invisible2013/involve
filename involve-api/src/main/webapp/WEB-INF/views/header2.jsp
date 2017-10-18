@@ -35,6 +35,7 @@
     <script type="text/javascript" src="resources/js/angular.min.js"></script>
     <script type="text/javascript" src="resources/js/global_error_handler.js"></script>
     <script type="text/javascript" src="resources/js/global_util.js"></script>
+    <script type="text/javascript" src="resources/ckeditor/ckeditor.js"></script>
 </head>
 <script>
     menuCtrl = function ($scope, $http) {
