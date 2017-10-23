@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PriorityVote extends TableImpl<PriorityVoteRecord> {
 
-	private static final long serialVersionUID = -1227585784;
+	private static final long serialVersionUID = 106061321;
 
 	/**
 	 * The reference instance of <code>public.priority_vote</code>
@@ -53,7 +54,7 @@ public class PriorityVote extends TableImpl<PriorityVoteRecord> {
 	/**
 	 * The column <code>public.priority_vote.id</code>.
 	 */
-	public final TableField<PriorityVoteRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<PriorityVoteRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.priority_vote.priority_id</code>.
@@ -105,6 +106,14 @@ public class PriorityVote extends TableImpl<PriorityVoteRecord> {
 
 	private PriorityVote(String alias, Table<PriorityVoteRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<PriorityVoteRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_PRIORITY_VOTE;
 	}
 
 	/**

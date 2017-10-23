@@ -1,15 +1,12 @@
 package ge.economy.involve.core.dao;
 
 import ge.economy.involve.database.database.Tables;
-import ge.economy.involve.database.database.tables.records.ReformFileRecord;
-import ge.economy.involve.database.database.tables.records.ReformRecord;
+import ge.economy.involve.database.database.tables.records.*;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import ge.economy.involve.database.database.tables.records.SessionPollRecord;
-import ge.economy.involve.database.database.tables.records.SessionRecord;
 import org.jooq.*;
 import org.springframework.stereotype.Repository;
 
@@ -47,6 +44,12 @@ public class ReformDAO extends AbstractDAO {
         return dslContext.select()
                 .from(Tables.REFORM_FILE)
                 .where(Tables.REFORM_FILE.REFORM_ID.eq(reformId)).fetch();
+    }
+
+    public List<Record> getSessionFiles(int sessionId) {
+        return dslContext.select()
+                .from(Tables.SESSION_FILE)
+                .where(Tables.SESSION_FILE.SESSION_ID.eq(sessionId)).fetch();
     }
 
     public HashMap<String, Object> getSessions(int start, int limit) {
@@ -94,10 +97,10 @@ public class ReformDAO extends AbstractDAO {
         return map;
     }
 
-    public List<Record> getSessionVote(int sessionId) {
+    public List<Record> getReformVotes(int reformId) {
         return dslContext.select()
-                .from(Tables.SESSION_VOTE)
-                .where(Tables.SESSION_VOTE.SESSION_ID.eq(sessionId)).fetch();
+                .from(Tables.REFORM_VOTE)
+                .where(Tables.REFORM_VOTE.REFORM_ID.eq(reformId)).fetch();
     }
 
     public List<Record> getSessionPollVote(int sessionId) {
@@ -130,20 +133,29 @@ public class ReformDAO extends AbstractDAO {
                 .where(Tables.POLL_ANSWER.POLL_ID.eq(pollId)).fetch();
     }
 
-    public Integer getSessionAllVoteCount(int sessionId) {
+    public Integer getReformAllVoteCount(int reformId) {
         return dslContext.
                 selectCount()
-                .from(Tables.SESSION_VOTE)
-                .where(Tables.SESSION_VOTE.SESSION_ID.eq(sessionId))
+                .from(Tables.REFORM_VOTE)
+                .where(Tables.REFORM_VOTE.REFORM_ID.eq(reformId))
                 .fetchOne().into(Integer.class);
     }
 
-    public Integer getSessionVoting(int sessionId, boolean agreed) {
+    public Integer getReformVoting(int reformId, boolean agreed) {
         return dslContext.
                 selectCount()
-                .from(Tables.SESSION_VOTE)
-                .where(Tables.SESSION_VOTE.SESSION_ID.eq(sessionId))
-                .and(Tables.SESSION_VOTE.AGREED.eq(agreed))
+                .from(Tables.REFORM_VOTE)
+                .where(Tables.REFORM_VOTE.REFORM_ID.eq(reformId))
+                .and(Tables.REFORM_VOTE.AGREED.eq(agreed))
+                .fetchOne().into(Integer.class);
+    }
+
+    public Integer getReformVoteByClient(int reformId, String clientGuid) {
+        return dslContext.
+                selectCount()
+                .from(Tables.REFORM_VOTE)
+                .where(Tables.REFORM_VOTE.REFORM_ID.eq(reformId))
+                .and(Tables.REFORM_VOTE.CLIENT_GUID.eq(clientGuid))
                 .fetchOne().into(Integer.class);
     }
 
@@ -169,6 +181,10 @@ public class ReformDAO extends AbstractDAO {
 
     public ReformFileRecord getReformFileObjectById(int id) {
         return (ReformFileRecord) dslContext.fetchOne(Tables.REFORM_FILE, Tables.REFORM_FILE.ID.eq(id));
+    }
+
+    public SessionFileRecord getSessionFileObjectById(int id) {
+        return (SessionFileRecord) dslContext.fetchOne(Tables.SESSION_FILE, Tables.SESSION_FILE.ID.eq(id));
     }
 
     public void deleteReformDetails(int reformId) {

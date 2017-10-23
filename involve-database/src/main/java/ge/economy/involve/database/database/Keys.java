@@ -18,10 +18,11 @@ import ge.economy.involve.database.database.tables.Reform;
 import ge.economy.involve.database.database.tables.ReformDetail;
 import ge.economy.involve.database.database.tables.ReformFile;
 import ge.economy.involve.database.database.tables.ReformType;
+import ge.economy.involve.database.database.tables.ReformVote;
 import ge.economy.involve.database.database.tables.Session;
+import ge.economy.involve.database.database.tables.SessionFile;
 import ge.economy.involve.database.database.tables.SessionPoll;
 import ge.economy.involve.database.database.tables.SessionPollVote;
-import ge.economy.involve.database.database.tables.SessionVote;
 import ge.economy.involve.database.database.tables.Sphere;
 import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
@@ -44,10 +45,11 @@ import ge.economy.involve.database.database.tables.records.ReformDetailRecord;
 import ge.economy.involve.database.database.tables.records.ReformFileRecord;
 import ge.economy.involve.database.database.tables.records.ReformRecord;
 import ge.economy.involve.database.database.tables.records.ReformTypeRecord;
+import ge.economy.involve.database.database.tables.records.ReformVoteRecord;
+import ge.economy.involve.database.database.tables.records.SessionFileRecord;
 import ge.economy.involve.database.database.tables.records.SessionPollRecord;
 import ge.economy.involve.database.database.tables.records.SessionPollVoteRecord;
 import ge.economy.involve.database.database.tables.records.SessionRecord;
-import ge.economy.involve.database.database.tables.records.SessionVoteRecord;
 import ge.economy.involve.database.database.tables.records.SphereRecord;
 import ge.economy.involve.database.database.tables.records.TokenRecord;
 import ge.economy.involve.database.database.tables.records.UserApproveRecord;
@@ -82,16 +84,33 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<FileTypeRecord, Integer> IDENTITY_FILE_TYPE = Identities0.IDENTITY_FILE_TYPE;
 	public static final Identity<GenderRecord, Integer> IDENTITY_GENDER = Identities0.IDENTITY_GENDER;
 	public static final Identity<InitiateRecord, Integer> IDENTITY_INITIATE = Identities0.IDENTITY_INITIATE;
+	public static final Identity<InitiatedIssueRecord, Integer> IDENTITY_INITIATED_ISSUE = Identities0.IDENTITY_INITIATED_ISSUE;
+	public static final Identity<InitiativeVoteRecord, Integer> IDENTITY_INITIATIVE_VOTE = Identities0.IDENTITY_INITIATIVE_VOTE;
 	public static final Identity<PollAnswerRecord, Integer> IDENTITY_POLL_ANSWER = Identities0.IDENTITY_POLL_ANSWER;
+	public static final Identity<PriorityRecord, Integer> IDENTITY_PRIORITY = Identities0.IDENTITY_PRIORITY;
+	public static final Identity<PriorityAnswerRecord, Integer> IDENTITY_PRIORITY_ANSWER = Identities0.IDENTITY_PRIORITY_ANSWER;
+	public static final Identity<PriorityItemRecord, Integer> IDENTITY_PRIORITY_ITEM = Identities0.IDENTITY_PRIORITY_ITEM;
+	public static final Identity<PriorityVoteRecord, Integer> IDENTITY_PRIORITY_VOTE = Identities0.IDENTITY_PRIORITY_VOTE;
 	public static final Identity<ReformRecord, Integer> IDENTITY_REFORM = Identities0.IDENTITY_REFORM;
+	public static final Identity<ReformDetailRecord, Integer> IDENTITY_REFORM_DETAIL = Identities0.IDENTITY_REFORM_DETAIL;
+	public static final Identity<ReformFileRecord, Integer> IDENTITY_REFORM_FILE = Identities0.IDENTITY_REFORM_FILE;
+	public static final Identity<ReformTypeRecord, Integer> IDENTITY_REFORM_TYPE = Identities0.IDENTITY_REFORM_TYPE;
+	public static final Identity<ReformVoteRecord, Integer> IDENTITY_REFORM_VOTE = Identities0.IDENTITY_REFORM_VOTE;
 	public static final Identity<SessionRecord, Integer> IDENTITY_SESSION = Identities0.IDENTITY_SESSION;
+	public static final Identity<SessionFileRecord, Integer> IDENTITY_SESSION_FILE = Identities0.IDENTITY_SESSION_FILE;
 	public static final Identity<SessionPollRecord, Integer> IDENTITY_SESSION_POLL = Identities0.IDENTITY_SESSION_POLL;
+	public static final Identity<SessionPollVoteRecord, Integer> IDENTITY_SESSION_POLL_VOTE = Identities0.IDENTITY_SESSION_POLL_VOTE;
+	public static final Identity<SphereRecord, Integer> IDENTITY_SPHERE = Identities0.IDENTITY_SPHERE;
 	public static final Identity<TokenRecord, Integer> IDENTITY_TOKEN = Identities0.IDENTITY_TOKEN;
+	public static final Identity<UserApproveRecord, Integer> IDENTITY_USER_APPROVE = Identities0.IDENTITY_USER_APPROVE;
+	public static final Identity<UserGroupRecord, Integer> IDENTITY_USER_GROUP = Identities0.IDENTITY_USER_GROUP;
 	public static final Identity<UserRegisterRecord, Integer> IDENTITY_USER_REGISTER = Identities0.IDENTITY_USER_REGISTER;
-	public static final Identity<UserStatusRecord, Integer> IDENTITY_USER_STATUS = Identities0.IDENTITY_USER_STATUS;
 	public static final Identity<UsersRecord, Integer> IDENTITY_USERS = Identities0.IDENTITY_USERS;
+	public static final Identity<UserStatusRecord, Integer> IDENTITY_USER_STATUS = Identities0.IDENTITY_USER_STATUS;
+	public static final Identity<UserTypeRecord, Integer> IDENTITY_USER_TYPE = Identities0.IDENTITY_USER_TYPE;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -111,18 +130,19 @@ public class Keys {
 	public static final UniqueKey<ReformDetailRecord> REFORM_DETAIL_PKEY = UniqueKeys0.REFORM_DETAIL_PKEY;
 	public static final UniqueKey<ReformFileRecord> REFORM_FILE_PKEY = UniqueKeys0.REFORM_FILE_PKEY;
 	public static final UniqueKey<ReformTypeRecord> REFORM_TYPE_PKEY = UniqueKeys0.REFORM_TYPE_PKEY;
+	public static final UniqueKey<ReformVoteRecord> SESSION_VOTE_PKEY = UniqueKeys0.SESSION_VOTE_PKEY;
 	public static final UniqueKey<SessionRecord> SESSION_PKEY = UniqueKeys0.SESSION_PKEY;
-	public static final UniqueKey<SessionPollRecord> SESSION_POLL_PKEY = UniqueKeys0.SESSION_POLL_PKEY;
+	public static final UniqueKey<SessionFileRecord> SESSION_FILE_PKEY = UniqueKeys0.SESSION_FILE_PKEY;
+	public static final UniqueKey<SessionPollRecord> QUESTION_PKEY = UniqueKeys0.QUESTION_PKEY;
 	public static final UniqueKey<SessionPollVoteRecord> SESSION_POLL_VOTE_PKEY = UniqueKeys0.SESSION_POLL_VOTE_PKEY;
-	public static final UniqueKey<SessionVoteRecord> SESSION_VOTE_PKEY = UniqueKeys0.SESSION_VOTE_PKEY;
 	public static final UniqueKey<SphereRecord> SPHERE_PKEY = UniqueKeys0.SPHERE_PKEY;
 	public static final UniqueKey<TokenRecord> TOKEN_PKEY = UniqueKeys0.TOKEN_PKEY;
 	public static final UniqueKey<UserApproveRecord> USER_APPROVE_PKEY = UniqueKeys0.USER_APPROVE_PKEY;
 	public static final UniqueKey<UserGroupRecord> USER_GROUP_PKEY = UniqueKeys0.USER_GROUP_PKEY;
 	public static final UniqueKey<UserRegisterRecord> USER_REGISTER_PKEY = UniqueKeys0.USER_REGISTER_PKEY;
-	public static final UniqueKey<UserStatusRecord> USER_STATUS_PKEY = UniqueKeys0.USER_STATUS_PKEY;
-	public static final UniqueKey<UserTypeRecord> USER_TYPE_PKEY = UniqueKeys0.USER_TYPE_PKEY;
 	public static final UniqueKey<UsersRecord> USERS_PKEY = UniqueKeys0.USERS_PKEY;
+	public static final UniqueKey<UserStatusRecord> STATUS_PKEY = UniqueKeys0.STATUS_PKEY;
+	public static final UniqueKey<UserTypeRecord> USER_TYPE_PKEY = UniqueKeys0.USER_TYPE_PKEY;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
@@ -134,16 +154,33 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	private static class Identities0 extends AbstractKeys {
+		public static Identity<FileTypeRecord, Integer> IDENTITY_FILE_TYPE = createIdentity(FileType.FILE_TYPE, FileType.FILE_TYPE.ID);
 		public static Identity<GenderRecord, Integer> IDENTITY_GENDER = createIdentity(Gender.GENDER, Gender.GENDER.ID);
 		public static Identity<InitiateRecord, Integer> IDENTITY_INITIATE = createIdentity(Initiate.INITIATE, Initiate.INITIATE.ID);
+		public static Identity<InitiatedIssueRecord, Integer> IDENTITY_INITIATED_ISSUE = createIdentity(InitiatedIssue.INITIATED_ISSUE, InitiatedIssue.INITIATED_ISSUE.ID);
+		public static Identity<InitiativeVoteRecord, Integer> IDENTITY_INITIATIVE_VOTE = createIdentity(InitiativeVote.INITIATIVE_VOTE, InitiativeVote.INITIATIVE_VOTE.ID);
 		public static Identity<PollAnswerRecord, Integer> IDENTITY_POLL_ANSWER = createIdentity(PollAnswer.POLL_ANSWER, PollAnswer.POLL_ANSWER.ID);
+		public static Identity<PriorityRecord, Integer> IDENTITY_PRIORITY = createIdentity(Priority.PRIORITY, Priority.PRIORITY.ID);
+		public static Identity<PriorityAnswerRecord, Integer> IDENTITY_PRIORITY_ANSWER = createIdentity(PriorityAnswer.PRIORITY_ANSWER, PriorityAnswer.PRIORITY_ANSWER.ID);
+		public static Identity<PriorityItemRecord, Integer> IDENTITY_PRIORITY_ITEM = createIdentity(PriorityItem.PRIORITY_ITEM, PriorityItem.PRIORITY_ITEM.ID);
+		public static Identity<PriorityVoteRecord, Integer> IDENTITY_PRIORITY_VOTE = createIdentity(PriorityVote.PRIORITY_VOTE, PriorityVote.PRIORITY_VOTE.ID);
 		public static Identity<ReformRecord, Integer> IDENTITY_REFORM = createIdentity(Reform.REFORM, Reform.REFORM.ID);
+		public static Identity<ReformDetailRecord, Integer> IDENTITY_REFORM_DETAIL = createIdentity(ReformDetail.REFORM_DETAIL, ReformDetail.REFORM_DETAIL.ID);
+		public static Identity<ReformFileRecord, Integer> IDENTITY_REFORM_FILE = createIdentity(ReformFile.REFORM_FILE, ReformFile.REFORM_FILE.ID);
+		public static Identity<ReformTypeRecord, Integer> IDENTITY_REFORM_TYPE = createIdentity(ReformType.REFORM_TYPE, ReformType.REFORM_TYPE.ID);
+		public static Identity<ReformVoteRecord, Integer> IDENTITY_REFORM_VOTE = createIdentity(ReformVote.REFORM_VOTE, ReformVote.REFORM_VOTE.ID);
 		public static Identity<SessionRecord, Integer> IDENTITY_SESSION = createIdentity(Session.SESSION, Session.SESSION.ID);
+		public static Identity<SessionFileRecord, Integer> IDENTITY_SESSION_FILE = createIdentity(SessionFile.SESSION_FILE, SessionFile.SESSION_FILE.ID);
 		public static Identity<SessionPollRecord, Integer> IDENTITY_SESSION_POLL = createIdentity(SessionPoll.SESSION_POLL, SessionPoll.SESSION_POLL.ID);
+		public static Identity<SessionPollVoteRecord, Integer> IDENTITY_SESSION_POLL_VOTE = createIdentity(SessionPollVote.SESSION_POLL_VOTE, SessionPollVote.SESSION_POLL_VOTE.ID);
+		public static Identity<SphereRecord, Integer> IDENTITY_SPHERE = createIdentity(Sphere.SPHERE, Sphere.SPHERE.ID);
 		public static Identity<TokenRecord, Integer> IDENTITY_TOKEN = createIdentity(Token.TOKEN, Token.TOKEN.ID);
+		public static Identity<UserApproveRecord, Integer> IDENTITY_USER_APPROVE = createIdentity(UserApprove.USER_APPROVE, UserApprove.USER_APPROVE.ID);
+		public static Identity<UserGroupRecord, Integer> IDENTITY_USER_GROUP = createIdentity(UserGroup.USER_GROUP, UserGroup.USER_GROUP.ID);
 		public static Identity<UserRegisterRecord, Integer> IDENTITY_USER_REGISTER = createIdentity(UserRegister.USER_REGISTER, UserRegister.USER_REGISTER.ID);
-		public static Identity<UserStatusRecord, Integer> IDENTITY_USER_STATUS = createIdentity(UserStatus.USER_STATUS, UserStatus.USER_STATUS.ID);
 		public static Identity<UsersRecord, Integer> IDENTITY_USERS = createIdentity(Users.USERS, Users.USERS.ID);
+		public static Identity<UserStatusRecord, Integer> IDENTITY_USER_STATUS = createIdentity(UserStatus.USER_STATUS, UserStatus.USER_STATUS.ID);
+		public static Identity<UserTypeRecord, Integer> IDENTITY_USER_TYPE = createIdentity(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
@@ -161,17 +198,18 @@ public class Keys {
 		public static final UniqueKey<ReformDetailRecord> REFORM_DETAIL_PKEY = createUniqueKey(ReformDetail.REFORM_DETAIL, ReformDetail.REFORM_DETAIL.ID);
 		public static final UniqueKey<ReformFileRecord> REFORM_FILE_PKEY = createUniqueKey(ReformFile.REFORM_FILE, ReformFile.REFORM_FILE.ID);
 		public static final UniqueKey<ReformTypeRecord> REFORM_TYPE_PKEY = createUniqueKey(ReformType.REFORM_TYPE, ReformType.REFORM_TYPE.ID);
+		public static final UniqueKey<ReformVoteRecord> SESSION_VOTE_PKEY = createUniqueKey(ReformVote.REFORM_VOTE, ReformVote.REFORM_VOTE.ID);
 		public static final UniqueKey<SessionRecord> SESSION_PKEY = createUniqueKey(Session.SESSION, Session.SESSION.ID);
-		public static final UniqueKey<SessionPollRecord> SESSION_POLL_PKEY = createUniqueKey(SessionPoll.SESSION_POLL, SessionPoll.SESSION_POLL.ID);
+		public static final UniqueKey<SessionFileRecord> SESSION_FILE_PKEY = createUniqueKey(SessionFile.SESSION_FILE, SessionFile.SESSION_FILE.ID);
+		public static final UniqueKey<SessionPollRecord> QUESTION_PKEY = createUniqueKey(SessionPoll.SESSION_POLL, SessionPoll.SESSION_POLL.ID);
 		public static final UniqueKey<SessionPollVoteRecord> SESSION_POLL_VOTE_PKEY = createUniqueKey(SessionPollVote.SESSION_POLL_VOTE, SessionPollVote.SESSION_POLL_VOTE.ID);
-		public static final UniqueKey<SessionVoteRecord> SESSION_VOTE_PKEY = createUniqueKey(SessionVote.SESSION_VOTE, SessionVote.SESSION_VOTE.ID);
 		public static final UniqueKey<SphereRecord> SPHERE_PKEY = createUniqueKey(Sphere.SPHERE, Sphere.SPHERE.ID);
 		public static final UniqueKey<TokenRecord> TOKEN_PKEY = createUniqueKey(Token.TOKEN, Token.TOKEN.ID);
 		public static final UniqueKey<UserApproveRecord> USER_APPROVE_PKEY = createUniqueKey(UserApprove.USER_APPROVE, UserApprove.USER_APPROVE.ID);
 		public static final UniqueKey<UserGroupRecord> USER_GROUP_PKEY = createUniqueKey(UserGroup.USER_GROUP, UserGroup.USER_GROUP.ID);
 		public static final UniqueKey<UserRegisterRecord> USER_REGISTER_PKEY = createUniqueKey(UserRegister.USER_REGISTER, UserRegister.USER_REGISTER.ID);
-		public static final UniqueKey<UserStatusRecord> USER_STATUS_PKEY = createUniqueKey(UserStatus.USER_STATUS, UserStatus.USER_STATUS.ID);
-		public static final UniqueKey<UserTypeRecord> USER_TYPE_PKEY = createUniqueKey(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 		public static final UniqueKey<UsersRecord> USERS_PKEY = createUniqueKey(Users.USERS, Users.USERS.ID);
+		public static final UniqueKey<UserStatusRecord> STATUS_PKEY = createUniqueKey(UserStatus.USER_STATUS, UserStatus.USER_STATUS.ID);
+		public static final UniqueKey<UserTypeRecord> USER_TYPE_PKEY = createUniqueKey(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 	}
 }

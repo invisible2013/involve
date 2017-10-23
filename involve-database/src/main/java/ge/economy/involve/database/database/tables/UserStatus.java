@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserStatus extends TableImpl<UserStatusRecord> {
 
-	private static final long serialVersionUID = 1475221858;
+	private static final long serialVersionUID = -699147454;
 
 	/**
 	 * The reference instance of <code>public.user_status</code>
@@ -94,7 +94,7 @@ public class UserStatus extends TableImpl<UserStatusRecord> {
 	 */
 	@Override
 	public UniqueKey<UserStatusRecord> getPrimaryKey() {
-		return Keys.USER_STATUS_PKEY;
+		return Keys.STATUS_PKEY;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class UserStatus extends TableImpl<UserStatusRecord> {
 	 */
 	@Override
 	public List<UniqueKey<UserStatusRecord>> getKeys() {
-		return Arrays.<UniqueKey<UserStatusRecord>>asList(Keys.USER_STATUS_PKEY);
+		return Arrays.<UniqueKey<UserStatusRecord>>asList(Keys.STATUS_PKEY);
 	}
 
 	/**

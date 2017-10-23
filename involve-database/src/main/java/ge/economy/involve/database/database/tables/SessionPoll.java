@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SessionPoll extends TableImpl<SessionPollRecord> {
 
-	private static final long serialVersionUID = -107011936;
+	private static final long serialVersionUID = -615258742;
 
 	/**
 	 * The reference instance of <code>public.session_poll</code>
@@ -50,6 +50,11 @@ public class SessionPoll extends TableImpl<SessionPollRecord> {
 	}
 
 	/**
+	 * The column <code>public.session_poll.id</code>.
+	 */
+	public final TableField<SessionPollRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
+
+	/**
 	 * The column <code>public.session_poll.session_id</code>.
 	 */
 	public final TableField<SessionPollRecord, Integer> SESSION_ID = createField("session_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
@@ -63,11 +68,6 @@ public class SessionPoll extends TableImpl<SessionPollRecord> {
 	 * The column <code>public.session_poll.description</code>.
 	 */
 	public final TableField<SessionPollRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR, this, "");
-
-	/**
-	 * The column <code>public.session_poll.id</code>.
-	 */
-	public final TableField<SessionPollRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.session_poll</code> table reference
@@ -104,7 +104,7 @@ public class SessionPoll extends TableImpl<SessionPollRecord> {
 	 */
 	@Override
 	public UniqueKey<SessionPollRecord> getPrimaryKey() {
-		return Keys.SESSION_POLL_PKEY;
+		return Keys.QUESTION_PKEY;
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class SessionPoll extends TableImpl<SessionPollRecord> {
 	 */
 	@Override
 	public List<UniqueKey<SessionPollRecord>> getKeys() {
-		return Arrays.<UniqueKey<SessionPollRecord>>asList(Keys.SESSION_POLL_PKEY);
+		return Arrays.<UniqueKey<SessionPollRecord>>asList(Keys.QUESTION_PKEY);
 	}
 
 	/**

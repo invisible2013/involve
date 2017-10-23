@@ -140,6 +140,14 @@ public class ReformController {
         return Response.withData(true);
     }
 
+    @RequestMapping({"/add-session-file"})
+    @ResponseBody
+    private Response addSessionFile(@RequestParam int itemId, @RequestParam int fileTypeId, @RequestParam String fileName, @RequestParam("file")
+            MultipartFile multipartFile) {
+        reformService.addSessionFile(itemId, fileTypeId, fileName, multipartFile);
+        return Response.withData(true);
+    }
+
     @RequestMapping({"/save-file-name"})
     @ResponseBody
     private Response saveFileUrl(@RequestBody AddReformFileRequest addReformFileRequest) {
@@ -153,6 +161,19 @@ public class ReformController {
     private Response deleteReformFile(@RequestParam int itemId) {
         this.reformService.deleteReformFile(itemId);
         return Response.withData(true);
+    }
+
+    @RequestMapping({"/delete-session-file"})
+    @ResponseBody
+    private Response deleteSessionFile(@RequestParam int itemId) {
+        this.reformService.deleteSessionFile(itemId);
+        return Response.withData(true);
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-session-files"})
+    public Response getSessionFiles(@RequestParam int itemId) {
+        return Response.withData(reformService.getSessionFiles(itemId));
     }
 
 

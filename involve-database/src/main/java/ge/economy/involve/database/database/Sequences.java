@@ -24,9 +24,19 @@ import org.jooq.impl.SequenceImpl;
 public class Sequences {
 
 	/**
+	 * The sequence <code>public.file_type_id_seq</code>
+	 */
+	public static final Sequence<Long> FILE_TYPE_ID_SEQ = new SequenceImpl<Long>("file_type_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.gender_id_seq</code>
 	 */
 	public static final Sequence<Long> GENDER_ID_SEQ = new SequenceImpl<Long>("gender_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.initiated_issue_id_seq</code>
+	 */
+	public static final Sequence<Long> INITIATED_ISSUE_ID_SEQ = new SequenceImpl<Long>("initiated_issue_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
 	 * The sequence <code>public.initiate_id_seq</code>
@@ -34,14 +44,59 @@ public class Sequences {
 	public static final Sequence<Long> INITIATE_ID_SEQ = new SequenceImpl<Long>("initiate_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
+	 * The sequence <code>public.initiative_vote_id_seq</code>
+	 */
+	public static final Sequence<Long> INITIATIVE_VOTE_ID_SEQ = new SequenceImpl<Long>("initiative_vote_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.poll_answer_id_seq</code>
 	 */
 	public static final Sequence<Long> POLL_ANSWER_ID_SEQ = new SequenceImpl<Long>("poll_answer_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
+	 * The sequence <code>public.priority_answer_id_seq</code>
+	 */
+	public static final Sequence<Long> PRIORITY_ANSWER_ID_SEQ = new SequenceImpl<Long>("priority_answer_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.priority_id_seq</code>
+	 */
+	public static final Sequence<Long> PRIORITY_ID_SEQ = new SequenceImpl<Long>("priority_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.priority_item_id_seq</code>
+	 */
+	public static final Sequence<Long> PRIORITY_ITEM_ID_SEQ = new SequenceImpl<Long>("priority_item_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.priority_vote_id_seq</code>
+	 */
+	public static final Sequence<Long> PRIORITY_VOTE_ID_SEQ = new SequenceImpl<Long>("priority_vote_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.reform_detail_id_seq</code>
+	 */
+	public static final Sequence<Long> REFORM_DETAIL_ID_SEQ = new SequenceImpl<Long>("reform_detail_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.reform_file_id_seq</code>
+	 */
+	public static final Sequence<Long> REFORM_FILE_ID_SEQ = new SequenceImpl<Long>("reform_file_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.reform_id_seq</code>
 	 */
 	public static final Sequence<Long> REFORM_ID_SEQ = new SequenceImpl<Long>("reform_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.reform_type_id_seq</code>
+	 */
+	public static final Sequence<Long> REFORM_TYPE_ID_SEQ = new SequenceImpl<Long>("reform_type_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.session_file_id_seq</code>
+	 */
+	public static final Sequence<Long> SESSION_FILE_ID_SEQ = new SequenceImpl<Long>("session_file_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
 	 * The sequence <code>public.session_id_seq</code>
@@ -54,9 +109,34 @@ public class Sequences {
 	public static final Sequence<Long> SESSION_POLL_ID_SEQ = new SequenceImpl<Long>("session_poll_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
+	 * The sequence <code>public.session_poll_vote_id_seq</code>
+	 */
+	public static final Sequence<Long> SESSION_POLL_VOTE_ID_SEQ = new SequenceImpl<Long>("session_poll_vote_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.session_vote_id_seq</code>
+	 */
+	public static final Sequence<Long> SESSION_VOTE_ID_SEQ = new SequenceImpl<Long>("session_vote_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.sphere_id_seq</code>
+	 */
+	public static final Sequence<Long> SPHERE_ID_SEQ = new SequenceImpl<Long>("sphere_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.token_id_seq</code>
 	 */
 	public static final Sequence<Long> TOKEN_ID_SEQ = new SequenceImpl<Long>("token_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.user_approve_id_seq</code>
+	 */
+	public static final Sequence<Long> USER_APPROVE_ID_SEQ = new SequenceImpl<Long>("user_approve_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.user_group_id_seq</code>
+	 */
+	public static final Sequence<Long> USER_GROUP_ID_SEQ = new SequenceImpl<Long>("user_group_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
 	 * The sequence <code>public.user_register_id_seq</code>
@@ -64,12 +144,17 @@ public class Sequences {
 	public static final Sequence<Long> USER_REGISTER_ID_SEQ = new SequenceImpl<Long>("user_register_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
+	 * The sequence <code>public.users_id_seq</code>
+	 */
+	public static final Sequence<Long> USERS_ID_SEQ = new SequenceImpl<Long>("users_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.user_status_id_seq</code>
 	 */
 	public static final Sequence<Long> USER_STATUS_ID_SEQ = new SequenceImpl<Long>("user_status_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
-	 * The sequence <code>public.users_id_seq</code>
+	 * The sequence <code>public.user_type_id_seq</code>
 	 */
-	public static final Sequence<Long> USERS_ID_SEQ = new SequenceImpl<Long>("users_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+	public static final Sequence<Long> USER_TYPE_ID_SEQ = new SequenceImpl<Long>("user_type_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 }

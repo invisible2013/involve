@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -33,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sphere extends TableImpl<SphereRecord> {
 
-	private static final long serialVersionUID = 796639505;
+	private static final long serialVersionUID = 731070683;
 
 	/**
 	 * The reference instance of <code>public.sphere</code>
@@ -51,7 +52,7 @@ public class Sphere extends TableImpl<SphereRecord> {
 	/**
 	 * The column <code>public.sphere.id</code>.
 	 */
-	public final TableField<SphereRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<SphereRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.sphere.name</code>.
@@ -78,6 +79,14 @@ public class Sphere extends TableImpl<SphereRecord> {
 
 	private Sphere(String alias, Table<SphereRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<SphereRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_SPHERE;
 	}
 
 	/**

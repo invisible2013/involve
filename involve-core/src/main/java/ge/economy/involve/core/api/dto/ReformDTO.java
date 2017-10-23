@@ -19,6 +19,7 @@ public class ReformDTO {
     private int id;
     private String name;
     private String note;
+    private String imageName;
     private Integer reformTypeId;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
@@ -31,15 +32,20 @@ public class ReformDTO {
     private String generalInfo;
     private String experience;
     private String reformTypeName;
+    private Integer yesPercent;
+    private Integer noPercent;
     private List<ReformDetailDTO> reformDetails;
     private List<ReformFileDTO> reformFiles;
     private List<SessionDTO> sessions;
-
+    private Integer statusId;
+    public static final int ACTIVE_REFORM = 1;
+    public static final int CLOSE_REFORM = 2;
 
     public static ReformDTO translate(Record record) {
         ReformDTO dto = new ReformDTO();
         dto.setId(record.getValue(Tables.REFORM.ID));
         dto.setName(record.getValue(Tables.REFORM.NAME));
+        dto.setImageName(record.getValue(Tables.REFORM.IMAGE_NAME));
         dto.setGeneralInfo(record.getValue(Tables.REFORM.GENERAL_INFO));
         dto.setExperience(record.getValue(Tables.REFORM.EXPERIENCE));
         dto.setNote(record.getValue(Tables.REFORM.NOTE));
@@ -58,6 +64,7 @@ public class ReformDTO {
         dto.setReformTypeId(record.getValue(Tables.REFORM.REFORM_TYPE_ID));
         dto.setReformTypeName(record.getValue(Tables.REFORM_TYPE.NAME));
         dto.setCreateDate(record.getValue(Tables.REFORM.CREATE_DATE));
+        dto.setStatusId(record.getValue(Tables.REFORM.STATUS_ID));
         return dto;
     }
 
@@ -206,5 +213,37 @@ public class ReformDTO {
 
     public void setSessions(List<SessionDTO> sessions) {
         this.sessions = sessions;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public Integer getYesPercent() {
+        return yesPercent;
+    }
+
+    public void setYesPercent(Integer yesPercent) {
+        this.yesPercent = yesPercent;
+    }
+
+    public Integer getNoPercent() {
+        return noPercent;
+    }
+
+    public void setNoPercent(Integer noPercent) {
+        this.noPercent = noPercent;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
     }
 }

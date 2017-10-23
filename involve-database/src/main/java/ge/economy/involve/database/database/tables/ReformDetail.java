@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -33,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReformDetail extends TableImpl<ReformDetailRecord> {
 
-	private static final long serialVersionUID = -1554847546;
+	private static final long serialVersionUID = -1655671171;
 
 	/**
 	 * The reference instance of <code>public.reform_detail</code>
@@ -51,7 +52,7 @@ public class ReformDetail extends TableImpl<ReformDetailRecord> {
 	/**
 	 * The column <code>public.reform_detail.id</code>.
 	 */
-	public final TableField<ReformDetailRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<ReformDetailRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.reform_detail.reform_id</code>.
@@ -93,6 +94,14 @@ public class ReformDetail extends TableImpl<ReformDetailRecord> {
 
 	private ReformDetail(String alias, Table<ReformDetailRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<ReformDetailRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_REFORM_DETAIL;
 	}
 
 	/**

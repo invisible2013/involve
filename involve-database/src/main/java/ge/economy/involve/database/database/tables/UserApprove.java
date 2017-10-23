@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserApprove extends TableImpl<UserApproveRecord> {
 
-	private static final long serialVersionUID = 1620605224;
+	private static final long serialVersionUID = 933251707;
 
 	/**
 	 * The reference instance of <code>public.user_approve</code>
@@ -53,7 +54,7 @@ public class UserApprove extends TableImpl<UserApproveRecord> {
 	/**
 	 * The column <code>public.user_approve.id</code>.
 	 */
-	public final TableField<UserApproveRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<UserApproveRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.user_approve.key</code>.
@@ -95,6 +96,14 @@ public class UserApprove extends TableImpl<UserApproveRecord> {
 
 	private UserApprove(String alias, Table<UserApproveRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<UserApproveRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_USER_APPROVE;
 	}
 
 	/**

@@ -77,11 +77,14 @@
         $scope.size = 0;
         $scope.loadCount = 0;
         $scope.types = [];
+        $scope.sessionFileTypes = [];
         $scope.type = "details";
         $scope.pollRows = [1];
         $scope.sessionPolls = [];
         $scope.poll = {};
         $scope.poll.answers = [];
+        $scope.selectedSessionId = 0;
+        $scope.sessionFileTypeId = 0;
 
         $scope.reform = {
             'reformTypeId': 1,
@@ -110,9 +113,11 @@
         }
         var a = {id: '1', name: 'სურათი'};
         var b = {id: '2', name: 'ვიდეო'};
+        var c = {id: '3', name: 'დოკუმენტი'};
         $scope.types.push(a);
         $scope.types.push(b);
-
+        $scope.types.push(c);
+        $scope.sessionFileTypes.push(c);
 
         if ($scope.selectedItemId > 0) {
             function getSuccessReform(res) {
@@ -266,6 +271,32 @@
         };
 
 
+        $scope.saveSessionFile = function () {
+            if (parseInt($scope.fileTypeId) != 2 && $('#sessionfileId')[0].files[0]) {
+                var sessionFileForm = new FormData();
+                sessionFileForm.append("itemId", $scope.selectedSessionId);
+                sessionFileForm.append("fileTypeId", $scope.sessionFileTypeId);
+                sessionFileForm.append("fileName", "");
+                sessionFileForm.append("file", $('#sessionfileId')[0].files[0]);
+                $.ajax({
+                    url: 'reform/add-session-file',
+                    data: sessionFileForm,
+                    dataType: 'text',
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    success: function (data) {
+                        $scope.fileItem($scope.selectedSessionId);
+                    }
+                }).success(function (data) {
+                    $scope.fileItem($scope.selectedSessionId);
+                }).error(function (data, status, headers, config) {
+                    $scope.fileItem($scope.selectedSessionId);
+                });
+            }
+        };
+
+
         $scope.editItem = function (itemId) {
             if (itemId != undefined) {
                 var selected = $filter('filter')($scope.items, {id: itemId}, true);
@@ -286,6 +317,18 @@
                 ajaxCall($http, "reform/get-session-polls?itemId=" + itemId, null, getSuccessSessionPoll);
             }
         };
+        $scope.fileItem = function (itemId) {
+            if (itemId != undefined) {
+                sessionfileId.value = "";
+                $scope.selectedSessionId = itemId;
+                function getSuccessSessionFiles(res) {
+                    $scope.sessionFiles = res.data;
+                }
+
+                ajaxCall($http, "reform/get-session-files?itemId=" + itemId, null, getSuccessSessionFiles);
+            }
+        };
+
         $scope.addPollItem = function () {
             console.log($scope.poll);
             function saveSuccessPoll(res) {
@@ -338,6 +381,14 @@
             if (confirm("დარწმუნებული ხართ რომ გსურთ წაშლა?")) {
                 if (itemId != undefined) {
                     ajaxCall($http, "reform/delete-reform-file?itemId=" + itemId, null, reload);
+                }
+            }
+        };
+
+        $scope.deleteSessionFile = function (itemId) {
+            if (confirm("დარწმუნებული ხართ რომ გსურთ წაშლა?")) {
+                if (itemId != undefined) {
+                    ajaxCall($http, "reform/delete-session-file?itemId=" + itemId, null, reload);
                 }
             }
         };
@@ -515,6 +566,80 @@
         </div>
     </div>
 
+    <div class="modal fade" id="fileModal" tabindex="-1" role="dialog"
+         aria-labelledby="fileModalLabel"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="fileModalLabel">ფაილების დამატება</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form id="fileForm">
+                            <div class="form-group col-md-8">
+                                <label class="control-label">ფაილის ტიპი</label>
+                                <select class="form-control input-sm" ng-model="sessionFileTypeId">
+                                    <option ng-repeat="r in sessionFileTypes" value="{{r.id}}">{{r.name}}</option>
+                                </select>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="form-group col-sm-8">
+                                <label class="control-label">აირჩიეთ</label>
+                                <input type="file" id="sessionfileId" name="file"
+                                       class="form-control upload-file">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group col-md-8 text-right">
+                                <button class="btn btn-success" ng-click="saveSessionFile();">შენახვა</button>
+                            </div>
+                        </form>
+
+                        <div class="col-md-12" ng-show="sessionFiles.length>0">
+                            <table class="table table-striped table-hover" id="fileList">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>ტიპი</th>
+                                    <th>ფაილი</th>
+                                    <th style="width: 50%">მისამართი</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tr ng-repeat="s in sessionFiles">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{s.fileTypeId==1? "სურათი":(s.fileTypeId==2?"ვიდეო":"დოკუმენტი")}}
+                                    </td>
+                                    <td><a class="btn btn-xs" ng-click="open(s.fileName);"
+                                           ng-show="s.fileTypeId==1">
+                                        <img src="upload/get-file?identifier={{s.fileName}}"
+                                             class="img-thumbnail"
+                                             style="height: 60px;" height="60">
+                                    </a></td>
+                                    <td><span ng-show="s.fileTypeId==1">{{s.fileName}}</span>
+                                        <a ng-show="s.fileTypeId==2" href="{{s.fileName}}" target="_blank">{{s.fileName}}</a>
+                                        <a ng-show="s.fileTypeId==3" class="btn btn-xs" ng-click="open(s.fileName);">
+                                            {{s.fileName}}</a>
+                                    </td>
+                                    <td style="min-width: 75px;">
+                                        <a ng-click="deleteSessionFile(s.id)"
+                                           class="btn btn-danger btn-xs"><i
+                                                class="fa fa-trash-o"></i> წაშლა</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="">
         <div class="page-title">
@@ -552,8 +677,6 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-
-
                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                             <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                                 <li id="detailsTab" role="presentation" class="active"><a href="#details" id="home-tab"
@@ -648,12 +771,13 @@
                                                            class="form-control input-sm">
                                                 </div>
                                                 <div class="col-md-5 form-group">
-                                                    <textarea data-ng-model="reform.reformDetails[d - 1].value" rows="3" placeholder="მნიშვნელობა" data-ck-editor></textarea>
-                                                   <%-- <textarea id="ckNote{{d-1}}" rows="3"
-                                                              ng-model="reform.reformDetails[d - 1].value"
-                                                              placeholder="მნიშვნელობა"
-                                                              class="form-control ng-pristine ng-valid editors">
-                                                    </textarea>--%>
+                                                    <textarea data-ng-model="reform.reformDetails[d - 1].value" rows="3"
+                                                              placeholder="მნიშვნელობა" data-ck-editor></textarea>
+                                                    <%-- <textarea id="ckNote{{d-1}}" rows="3"
+                                                               ng-model="reform.reformDetails[d - 1].value"
+                                                               placeholder="მნიშვნელობა"
+                                                               class="form-control ng-pristine ng-valid editors">
+                                                     </textarea>--%>
                                                 </div>
                                                 <div class="col-md-1 form-group" ng-show="$index == 0">
                                                     <a class="btn btn-xs">
@@ -687,7 +811,7 @@
                                             </select>
                                         </div>
                                         <div class="clear"></div>
-                                        <div class="form-group col-sm-6" ng-show="fileTypeId==1">
+                                        <div class="form-group col-sm-6" ng-show="fileTypeId==1||fileTypeId==3">
                                             <label class="control-label">აირჩიეთ</label>
                                             <input type="file" id="reformfileId" name="file"
                                                    class="form-control upload-file">
@@ -716,7 +840,8 @@
                                             </thead>
                                             <tr ng-repeat="s in files">
                                                 <td>{{$index+1}}</td>
-                                                <td>{{s.fileTypeId==1? "სურათი":"ვიდეო"}}</td>
+                                                <td>{{s.fileTypeId==1? "სურათი":(s.fileTypeId==2?"ვიდეო":"დოკუმენტი")}}
+                                                </td>
                                                 <td><a class="btn btn-xs" ng-click="open(s.fileName);"
                                                        ng-show="s.fileTypeId==1">
                                                     <img src="upload/get-file?identifier={{s.fileName}}"
@@ -747,12 +872,12 @@
                                         <thead>
                                         <tr>
                                             <th style="width: 1%">#</th>
-                                            <th style="width: 20%">დასახელება</th>
-                                            <th>ლოგო</th>
-                                            <th>აღწერა</th>
+                                            <th style="width: 15%">დასახელება</th>
+                                            <th style="width: 10%">ლოგო</th>
+                                            <th style="width: 400px;">აღწერა</th>
                                             <th>გასული დრო</th>
                                             <th>შესრულებული სამუშაო</th>
-                                            <th style="width: 20%">#Edit</th>
+                                            <th style="width: 335px;">#Edit</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -769,7 +894,7 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-xs" ng-click="open(r.imageName);"
-                                                   ng-show="r.imageName.length>0">
+                                                >
                                                     <img src="upload/get-file?identifier={{r.imageName}}"
                                                          class="img-thumbnail"
                                                          style="height: 60px;" height="60">
@@ -803,6 +928,10 @@
                                                    ng-click="questionItem(r.id)"
                                                    class="btn btn-default btn-xs"><i class="fa fa-area-chart"></i>
                                                     კითხვარი</a>
+                                                <a data-toggle="modal" data-target="#fileModal"
+                                                   ng-click="fileItem(r.id)"
+                                                   class="btn btn-default btn-xs"><i class="fa fa-file"></i>
+                                                    ფაილები</a>
                                             </td>
                                         </tr>
                                         </tbody>

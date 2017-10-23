@@ -3,15 +3,15 @@ package ge.economy.involve.core.api.request;
 /**
  * Created by nl on 7/20/2016.
  */
-public class AddSessionVoteRequest {
+public class AddReformVoteRequest {
 
     private Integer id;
-    private Integer sessionVoteId;
-    private Integer sessionId;
+    private Integer reformId;
     private Integer userId;
     private String mail;
     private Boolean agreed;
     private int rangeId;
+    private String clientUID;
     private String profession;
     private String fieldOfActivity;
 
@@ -22,14 +22,6 @@ public class AddSessionVoteRequest {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(Integer sessionId) {
-        this.sessionId = sessionId;
     }
 
     public Integer getUserId() {
@@ -80,11 +72,19 @@ public class AddSessionVoteRequest {
         this.fieldOfActivity = fieldOfActivity;
     }
 
-    public Integer getSessionVoteId() {
-        return sessionVoteId;
+    public Integer getReformId() {
+        return reformId;
     }
 
-    public void setSessionVoteId(Integer sessionVoteId) {
-        this.sessionVoteId = sessionVoteId;
+    public void setReformId(Integer reformId) {
+        this.reformId = reformId;
+    }
+
+    public String getClientUID() {
+        return clientUID;
+    }
+
+    public void setClientUID(String clientUID) {
+        this.clientUID = clientUID;
     }
 }

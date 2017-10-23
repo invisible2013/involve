@@ -18,10 +18,11 @@ import ge.economy.involve.database.database.tables.Reform;
 import ge.economy.involve.database.database.tables.ReformDetail;
 import ge.economy.involve.database.database.tables.ReformFile;
 import ge.economy.involve.database.database.tables.ReformType;
+import ge.economy.involve.database.database.tables.ReformVote;
 import ge.economy.involve.database.database.tables.Session;
+import ge.economy.involve.database.database.tables.SessionFile;
 import ge.economy.involve.database.database.tables.SessionPoll;
 import ge.economy.involve.database.database.tables.SessionPollVote;
-import ge.economy.involve.database.database.tables.SessionVote;
 import ge.economy.involve.database.database.tables.Sphere;
 import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
@@ -118,9 +119,19 @@ public class Tables {
 	public static final ReformType REFORM_TYPE = ge.economy.involve.database.database.tables.ReformType.REFORM_TYPE;
 
 	/**
+	 * The table public.reform_vote
+	 */
+	public static final ReformVote REFORM_VOTE = ge.economy.involve.database.database.tables.ReformVote.REFORM_VOTE;
+
+	/**
 	 * The table public.session
 	 */
 	public static final Session SESSION = ge.economy.involve.database.database.tables.Session.SESSION;
+
+	/**
+	 * The table public.session_file
+	 */
+	public static final SessionFile SESSION_FILE = ge.economy.involve.database.database.tables.SessionFile.SESSION_FILE;
 
 	/**
 	 * The table public.session_poll
@@ -131,11 +142,6 @@ public class Tables {
 	 * The table public.session_poll_vote
 	 */
 	public static final SessionPollVote SESSION_POLL_VOTE = ge.economy.involve.database.database.tables.SessionPollVote.SESSION_POLL_VOTE;
-
-	/**
-	 * The table public.session_vote
-	 */
-	public static final SessionVote SESSION_VOTE = ge.economy.involve.database.database.tables.SessionVote.SESSION_VOTE;
 
 	/**
 	 * The table public.sphere
@@ -163,6 +169,11 @@ public class Tables {
 	public static final UserRegister USER_REGISTER = ge.economy.involve.database.database.tables.UserRegister.USER_REGISTER;
 
 	/**
+	 * The table public.users
+	 */
+	public static final Users USERS = ge.economy.involve.database.database.tables.Users.USERS;
+
+	/**
 	 * The table public.user_status
 	 */
 	public static final UserStatus USER_STATUS = ge.economy.involve.database.database.tables.UserStatus.USER_STATUS;
@@ -171,9 +182,4 @@ public class Tables {
 	 * The table public.user_type
 	 */
 	public static final UserType USER_TYPE = ge.economy.involve.database.database.tables.UserType.USER_TYPE;
-
-	/**
-	 * The table public.users
-	 */
-	public static final Users USERS = ge.economy.involve.database.database.tables.Users.USERS;
 }

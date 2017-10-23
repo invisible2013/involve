@@ -2,8 +2,8 @@ package ge.economy.involve.core.dao;
 
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.records.InitiatedIssueRecord;
+import ge.economy.involve.database.database.tables.records.ReformVoteRecord;
 import ge.economy.involve.database.database.tables.records.SessionPollVoteRecord;
-import ge.economy.involve.database.database.tables.records.SessionVoteRecord;
 import org.jooq.Record;
 import org.jooq.SelectOnConditionStep;
 import org.springframework.stereotype.Repository;
@@ -16,10 +16,8 @@ public class VoteDAO extends AbstractDAO {
 
     public HashMap<String, Object> getVotes(int start, int limit) {
         SelectOnConditionStep<Record> selectConditionStep =
-                dslContext.select()
-                        .from(Tables.SESSION_POLL_VOTE)
-                        .join(Tables.SESSION_VOTE)
-                        .on(Tables.SESSION_POLL_VOTE.SESSION_VOTE_ID.eq(Tables.SESSION_VOTE.ID));
+                (SelectOnConditionStep<Record>) dslContext.select()
+                        .from(Tables.SESSION_POLL_VOTE);
 
         selectConditionStep.where();
         SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
@@ -36,19 +34,12 @@ public class VoteDAO extends AbstractDAO {
         return dslContext.fetchOne(Tables.SESSION_POLL_VOTE, Tables.SESSION_POLL_VOTE.ID.eq(id));
     }
 
-    public SessionVoteRecord getSessionVoteObjectById(int id) {
-        return dslContext.fetchOne(Tables.SESSION_VOTE, Tables.SESSION_VOTE.ID.eq(id));
+    public ReformVoteRecord getReformVoteObjectById(int id) {
+        return dslContext.fetchOne(Tables.REFORM_VOTE, Tables.REFORM_VOTE.ID.eq(id));
     }
 
     public void deleteSessionPollVote(int itemId) {
         dslContext.deleteFrom(Tables.SESSION_POLL_VOTE).where(Tables.SESSION_POLL_VOTE.ID.eq(itemId)).execute();
-    }
-
-    public void updateSessionPollVote(int oldSessionVoteId, int sessionVoteId) {
-        dslContext.update(Tables.SESSION_POLL_VOTE).
-                set(Tables.SESSION_POLL_VOTE.SESSION_VOTE_ID, sessionVoteId).
-                where(Tables.SESSION_POLL_VOTE.SESSION_VOTE_ID.eq(oldSessionVoteId)).
-                execute();
     }
 
 

@@ -31,7 +31,6 @@ public class SessionPollVoteDTO {
         dto.setQuestionId(record.getValue(Tables.SESSION_POLL_VOTE.QUESTION_ID));
         dto.setAnswerId(record.getValue(Tables.SESSION_POLL_VOTE.ANSWER_ID));
         dto.setAnswerNote(record.getValue(Tables.SESSION_POLL_VOTE.ANSWER_NOTE));
-        dto.setSessionVoteId(record.getValue(Tables.SESSION_POLL_VOTE.SESSION_VOTE_ID));
         dto.setUserId(record.getValue(Tables.SESSION_POLL_VOTE.USER_ID));
         dto.setIpAddress(record.getValue(Tables.SESSION_POLL_VOTE.IP_ADDRESS));
         dto.setClientUID(record.getValue(Tables.SESSION_POLL_VOTE.CLIENT_UID));

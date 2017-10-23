@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Session extends TableImpl<SessionRecord> {
 
-	private static final long serialVersionUID = -1040886011;
+	private static final long serialVersionUID = 1251837284;
 
 	/**
 	 * The reference instance of <code>public.session</code>
@@ -50,6 +50,11 @@ public class Session extends TableImpl<SessionRecord> {
 	public Class<SessionRecord> getRecordType() {
 		return SessionRecord.class;
 	}
+
+	/**
+	 * The column <code>public.session.id</code>.
+	 */
+	public final TableField<SessionRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.session.reform_id</code>.
@@ -79,7 +84,7 @@ public class Session extends TableImpl<SessionRecord> {
 	/**
 	 * The column <code>public.session.create_date</code>.
 	 */
-	public final TableField<SessionRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
+	public final TableField<SessionRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "", new TimestampConverter());
 
 	/**
 	 * The column <code>public.session.creator_id</code>.
@@ -90,11 +95,6 @@ public class Session extends TableImpl<SessionRecord> {
 	 * The column <code>public.session.work_percent</code>.
 	 */
 	public final TableField<SessionRecord, Integer> WORK_PERCENT = createField("work_percent", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>public.session.id</code>.
-	 */
-	public final TableField<SessionRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.session.note</code>.

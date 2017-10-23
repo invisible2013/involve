@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InitiatedIssue extends TableImpl<InitiatedIssueRecord> {
 
-	private static final long serialVersionUID = 124331736;
+	private static final long serialVersionUID = -2108756204;
 
 	/**
 	 * The reference instance of <code>public.initiated_issue</code>
@@ -53,7 +54,7 @@ public class InitiatedIssue extends TableImpl<InitiatedIssueRecord> {
 	/**
 	 * The column <code>public.initiated_issue.id</code>.
 	 */
-	public final TableField<InitiatedIssueRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<InitiatedIssueRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.initiated_issue.description</code>.
@@ -63,7 +64,7 @@ public class InitiatedIssue extends TableImpl<InitiatedIssueRecord> {
 	/**
 	 * The column <code>public.initiated_issue.create_date</code>.
 	 */
-	public final TableField<InitiatedIssueRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
+	public final TableField<InitiatedIssueRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "", new TimestampConverter());
 
 	/**
 	 * The column <code>public.initiated_issue.creator_id</code>.
@@ -90,6 +91,14 @@ public class InitiatedIssue extends TableImpl<InitiatedIssueRecord> {
 
 	private InitiatedIssue(String alias, Table<InitiatedIssueRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<InitiatedIssueRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_INITIATED_ISSUE;
 	}
 
 	/**

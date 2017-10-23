@@ -9,36 +9,38 @@ import java.util.List;
 /**
  * Created by nl on 7/25/2016.
  */
-public class SessionVoteDTO {
+public class ReformVoteDTO {
 
     private Integer id;
-    private Integer sessionId;
+    private Integer reformId;
     private Integer userId;
     private String mail;
     private Boolean agreed;
     private Integer rangeId;
     private String profession;
     private String fieldOfActivity;
+    private String clientUid;
 
 
-    public static SessionVoteDTO translate(Record record) {
-        SessionVoteDTO dto = new SessionVoteDTO();
-        dto.setId(record.getValue(Tables.SESSION_VOTE.ID));
-        dto.setSessionId(record.getValue(Tables.SESSION_VOTE.SESSION_ID));
-        dto.setUserId(record.getValue(Tables.SESSION_VOTE.SESSION_ID));
-        dto.setMail(record.getValue(Tables.SESSION_VOTE.MAIL));
-        dto.setAgreed(record.getValue(Tables.SESSION_VOTE.AGREED));
-        dto.setRangeId(record.getValue(Tables.SESSION_VOTE.RANGE_ID));
-        dto.setProfession(record.getValue(Tables.SESSION_VOTE.PROFESSION));
-        dto.setFieldOfActivity(record.getValue(Tables.SESSION_VOTE.FIELD_OF_ACTIVITY));
+    public static ReformVoteDTO translate(Record record) {
+        ReformVoteDTO dto = new ReformVoteDTO();
+        dto.setId(record.getValue(Tables.REFORM_VOTE.ID));
+        dto.setReformId(record.getValue(Tables.REFORM_VOTE.REFORM_ID));
+        dto.setUserId(record.getValue(Tables.REFORM_VOTE.USER_ID));
+        dto.setClientUid(record.getValue(Tables.REFORM_VOTE.CLIENT_GUID));
+        dto.setMail(record.getValue(Tables.REFORM_VOTE.MAIL));
+        dto.setAgreed(record.getValue(Tables.REFORM_VOTE.AGREED));
+        dto.setRangeId(record.getValue(Tables.REFORM_VOTE.RANGE_ID));
+        dto.setProfession(record.getValue(Tables.REFORM_VOTE.PROFESSION));
+        dto.setFieldOfActivity(record.getValue(Tables.REFORM_VOTE.FIELD_OF_ACTIVITY));
         return dto;
     }
 
 
-    public static List<SessionVoteDTO> translateArray(List<Record> records) {
-        ArrayList<SessionVoteDTO> list = new ArrayList<SessionVoteDTO>();
+    public static List<ReformVoteDTO> translateArray(List<Record> records) {
+        ArrayList<ReformVoteDTO> list = new ArrayList<ReformVoteDTO>();
         for (Record record : records) {
-            list.add(SessionVoteDTO.translate(record));
+            list.add(ReformVoteDTO.translate(record));
         }
         return list;
     }
@@ -51,12 +53,20 @@ public class SessionVoteDTO {
         this.id = id;
     }
 
-    public Integer getSessionId() {
-        return sessionId;
+    public Integer getReformId() {
+        return reformId;
     }
 
-    public void setSessionId(Integer sessionId) {
-        this.sessionId = sessionId;
+    public void setReformId(Integer reformId) {
+        this.reformId = reformId;
+    }
+
+    public String getClientUid() {
+        return clientUid;
+    }
+
+    public void setClientUid(String clientUid) {
+        this.clientUid = clientUid;
     }
 
     public Integer getUserId() {

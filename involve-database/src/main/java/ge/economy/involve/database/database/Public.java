@@ -18,10 +18,11 @@ import ge.economy.involve.database.database.tables.Reform;
 import ge.economy.involve.database.database.tables.ReformDetail;
 import ge.economy.involve.database.database.tables.ReformFile;
 import ge.economy.involve.database.database.tables.ReformType;
+import ge.economy.involve.database.database.tables.ReformVote;
 import ge.economy.involve.database.database.tables.Session;
+import ge.economy.involve.database.database.tables.SessionFile;
 import ge.economy.involve.database.database.tables.SessionPoll;
 import ge.economy.involve.database.database.tables.SessionPollVote;
-import ge.economy.involve.database.database.tables.SessionVote;
 import ge.economy.involve.database.database.tables.Sphere;
 import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
@@ -55,7 +56,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -1529412023;
+	private static final long serialVersionUID = -2015227249;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -78,16 +79,33 @@ public class Public extends SchemaImpl {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
+			Sequences.FILE_TYPE_ID_SEQ,
 			Sequences.GENDER_ID_SEQ,
+			Sequences.INITIATED_ISSUE_ID_SEQ,
 			Sequences.INITIATE_ID_SEQ,
+			Sequences.INITIATIVE_VOTE_ID_SEQ,
 			Sequences.POLL_ANSWER_ID_SEQ,
+			Sequences.PRIORITY_ANSWER_ID_SEQ,
+			Sequences.PRIORITY_ID_SEQ,
+			Sequences.PRIORITY_ITEM_ID_SEQ,
+			Sequences.PRIORITY_VOTE_ID_SEQ,
+			Sequences.REFORM_DETAIL_ID_SEQ,
+			Sequences.REFORM_FILE_ID_SEQ,
 			Sequences.REFORM_ID_SEQ,
+			Sequences.REFORM_TYPE_ID_SEQ,
+			Sequences.SESSION_FILE_ID_SEQ,
 			Sequences.SESSION_ID_SEQ,
 			Sequences.SESSION_POLL_ID_SEQ,
+			Sequences.SESSION_POLL_VOTE_ID_SEQ,
+			Sequences.SESSION_VOTE_ID_SEQ,
+			Sequences.SPHERE_ID_SEQ,
 			Sequences.TOKEN_ID_SEQ,
+			Sequences.USER_APPROVE_ID_SEQ,
+			Sequences.USER_GROUP_ID_SEQ,
 			Sequences.USER_REGISTER_ID_SEQ,
+			Sequences.USERS_ID_SEQ,
 			Sequences.USER_STATUS_ID_SEQ,
-			Sequences.USERS_ID_SEQ);
+			Sequences.USER_TYPE_ID_SEQ);
 	}
 
 	@Override
@@ -113,17 +131,18 @@ public class Public extends SchemaImpl {
 			ReformDetail.REFORM_DETAIL,
 			ReformFile.REFORM_FILE,
 			ReformType.REFORM_TYPE,
+			ReformVote.REFORM_VOTE,
 			Session.SESSION,
+			SessionFile.SESSION_FILE,
 			SessionPoll.SESSION_POLL,
 			SessionPollVote.SESSION_POLL_VOTE,
-			SessionVote.SESSION_VOTE,
 			Sphere.SPHERE,
 			Token.TOKEN,
 			UserApprove.USER_APPROVE,
 			UserGroup.USER_GROUP,
 			UserRegister.USER_REGISTER,
+			Users.USERS,
 			UserStatus.USER_STATUS,
-			UserType.USER_TYPE,
-			Users.USERS);
+			UserType.USER_TYPE);
 	}
 }

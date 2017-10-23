@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserRegister extends TableImpl<UserRegisterRecord> {
 
-	private static final long serialVersionUID = 310053855;
+	private static final long serialVersionUID = 1374306820;
 
 	/**
 	 * The reference instance of <code>public.user_register</code>
@@ -79,7 +79,7 @@ public class UserRegister extends TableImpl<UserRegisterRecord> {
 	/**
 	 * The column <code>public.user_register.create_date</code>.
 	 */
-	public final TableField<UserRegisterRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
+	public final TableField<UserRegisterRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "", new TimestampConverter());
 
 	/**
 	 * Create a <code>public.user_register</code> table reference

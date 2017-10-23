@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Priority extends TableImpl<PriorityRecord> {
 
-	private static final long serialVersionUID = -1650286770;
+	private static final long serialVersionUID = -1714447714;
 
 	/**
 	 * The reference instance of <code>public.priority</code>
@@ -53,7 +54,7 @@ public class Priority extends TableImpl<PriorityRecord> {
 	/**
 	 * The column <code>public.priority.id</code>.
 	 */
-	public final TableField<PriorityRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<PriorityRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.priority.name</code>.
@@ -95,6 +96,14 @@ public class Priority extends TableImpl<PriorityRecord> {
 
 	private Priority(String alias, Table<PriorityRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<PriorityRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_PRIORITY;
 	}
 
 	/**

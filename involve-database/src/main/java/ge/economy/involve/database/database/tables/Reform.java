@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Reform extends TableImpl<ReformRecord> {
 
-	private static final long serialVersionUID = 276420152;
+	private static final long serialVersionUID = -2003775936;
 
 	/**
 	 * The reference instance of <code>public.reform</code>
@@ -50,6 +50,11 @@ public class Reform extends TableImpl<ReformRecord> {
 	public Class<ReformRecord> getRecordType() {
 		return ReformRecord.class;
 	}
+
+	/**
+	 * The column <code>public.reform.id</code>.
+	 */
+	public final TableField<ReformRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.reform.name</code>.
@@ -104,7 +109,7 @@ public class Reform extends TableImpl<ReformRecord> {
 	/**
 	 * The column <code>public.reform.create_date</code>.
 	 */
-	public final TableField<ReformRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
+	public final TableField<ReformRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "", new TimestampConverter());
 
 	/**
 	 * The column <code>public.reform.creator_id</code>.
@@ -112,14 +117,19 @@ public class Reform extends TableImpl<ReformRecord> {
 	public final TableField<ReformRecord, Integer> CREATOR_ID = createField("creator_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
-	 * The column <code>public.reform.id</code>.
-	 */
-	public final TableField<ReformRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
-
-	/**
 	 * The column <code>public.reform.note</code>.
 	 */
 	public final TableField<ReformRecord, String> NOTE = createField("note", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+	/**
+	 * The column <code>public.reform.image_name</code>.
+	 */
+	public final TableField<ReformRecord, String> IMAGE_NAME = createField("image_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+	/**
+	 * The column <code>public.reform.status_id</code>.
+	 */
+	public final TableField<ReformRecord, Integer> STATUS_ID = createField("status_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>public.reform</code> table reference

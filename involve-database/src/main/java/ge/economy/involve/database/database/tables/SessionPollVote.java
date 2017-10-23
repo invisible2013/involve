@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SessionPollVote extends TableImpl<SessionPollVoteRecord> {
 
-	private static final long serialVersionUID = 1640819933;
+	private static final long serialVersionUID = -65124299;
 
 	/**
 	 * The reference instance of <code>public.session_poll_vote</code>
@@ -53,7 +54,7 @@ public class SessionPollVote extends TableImpl<SessionPollVoteRecord> {
 	/**
 	 * The column <code>public.session_poll_vote.id</code>.
 	 */
-	public final TableField<SessionPollVoteRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<SessionPollVoteRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.session_poll_vote.reform_id</code>.
@@ -79,11 +80,6 @@ public class SessionPollVote extends TableImpl<SessionPollVoteRecord> {
 	 * The column <code>public.session_poll_vote.answer_note</code>.
 	 */
 	public final TableField<SessionPollVoteRecord, String> ANSWER_NOTE = createField("answer_note", org.jooq.impl.SQLDataType.VARCHAR, this, "");
-
-	/**
-	 * The column <code>public.session_poll_vote.session_vote_id</code>.
-	 */
-	public final TableField<SessionPollVoteRecord, Integer> SESSION_VOTE_ID = createField("session_vote_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.session_poll_vote.user_id</code>.
@@ -125,6 +121,14 @@ public class SessionPollVote extends TableImpl<SessionPollVoteRecord> {
 
 	private SessionPollVote(String alias, Table<SessionPollVoteRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<SessionPollVoteRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_SESSION_POLL_VOTE;
 	}
 
 	/**

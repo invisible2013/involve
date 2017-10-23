@@ -2,7 +2,7 @@ package ge.economy.involve.core.services;
 
 import ge.economy.involve.core.api.dto.*;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
-import ge.economy.involve.core.api.request.AddSessionVoteRequest;
+import ge.economy.involve.core.api.request.AddReformVoteRequest;
 import ge.economy.involve.core.api.request.AddVoteRequest;
 import ge.economy.involve.core.dao.InitiateDAO;
 import ge.economy.involve.core.dao.ReformDAO;
@@ -11,8 +11,8 @@ import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.SessionPollVote;
 import ge.economy.involve.database.database.tables.records.InitiateRecord;
 import ge.economy.involve.database.database.tables.records.InitiatedIssueRecord;
+import ge.economy.involve.database.database.tables.records.ReformVoteRecord;
 import ge.economy.involve.database.database.tables.records.SessionPollVoteRecord;
-import ge.economy.involve.database.database.tables.records.SessionVoteRecord;
 import org.apache.log4j.Logger;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,6 @@ public class VoteService {
             record.setQuestionId(q.getQuestionId());
             record.setAnswerId(q.getAnswerId());
             record.setAnswerNote(q.getAnswerNote());
-            record.setSessionVoteId(request.getSessionVoteId());
             record.setIpAddress(request.getIpAddress());
             record.setClientUid(request.getClientUID());
             record.setCreateDate(new Date());
@@ -57,31 +56,28 @@ public class VoteService {
                 pojo.setSessionVoteId(record.getId());
                 index++;
             }
-            if (request.getSessionVoteId() == 0) {
-                record.setSessionVoteId(pojo.getSessionVoteId());
-                record.update();
-            }
         }
         return pojo;
     }
 
 
-    public ParamPojo saveSessionVote(AddSessionVoteRequest request) {
+    public ParamPojo saveReformVote(AddReformVoteRequest request) {
         boolean newRecord = false;
-        SessionVoteRecord record = null;
+        ReformVoteRecord record = null;
         if (request.getId() != null) {
-            record = voteDAO.getSessionVoteObjectById(request.getId());
+            record = voteDAO.getReformVoteObjectById(request.getId());
         }
 
         if (record == null) {
-            record = (SessionVoteRecord) dslContext.newRecord(Tables.SESSION_VOTE);
+            record = (ReformVoteRecord) dslContext.newRecord(Tables.REFORM_VOTE);
             newRecord = true;
         }
 
         record.setUserId(request.getUserId());
-        record.setSessionId(request.getSessionId());
+        record.setReformId(request.getReformId());
         record.setAgreed(request.getAgreed());
         record.setUserId(request.getUserId());
+        record.setClientGuid(request.getClientUID());
         if (newRecord) {
             record.setCreateDate(new Date());
             record.store();
@@ -90,14 +86,15 @@ public class VoteService {
         }
         ParamPojo pojo = new ParamPojo();
         pojo.setSessionVoteId(record.getId());
-        if (request.getSessionVoteId() > 0) {
-            voteDAO.updateSessionPollVote(request.getSessionVoteId(), record.getId());
-        }
-        float allCount = reformDAO.getSessionAllVoteCount(request.getSessionId());
-        float yesCount = reformDAO.getSessionVoting(request.getSessionId(), true);
+        float allCount = reformDAO.getReformAllVoteCount(request.getReformId());
+        float yesCount = reformDAO.getReformVoting(request.getReformId(), true);
         pojo.setYesPercent((int) (yesCount / allCount * 100));
         pojo.setNoPercent(100 - pojo.getYesPercent());
         return pojo;
+    }
+
+    public boolean getReformVoteByClientGuid(int reformId, String clientGuid) {
+        return (reformDAO.getReformVoteByClient(reformId, clientGuid) > 0) ? true : false;
     }
 
     public HashMap<String, Object> getVotes(int start, int limit) {

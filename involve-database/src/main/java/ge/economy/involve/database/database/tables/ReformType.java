@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -33,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReformType extends TableImpl<ReformTypeRecord> {
 
-	private static final long serialVersionUID = 182221147;
+	private static final long serialVersionUID = 178011794;
 
 	/**
 	 * The reference instance of <code>public.reform_type</code>
@@ -51,7 +52,7 @@ public class ReformType extends TableImpl<ReformTypeRecord> {
 	/**
 	 * The column <code>public.reform_type.id</code>.
 	 */
-	public final TableField<ReformTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<ReformTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.reform_type.name</code>.
@@ -78,6 +79,14 @@ public class ReformType extends TableImpl<ReformTypeRecord> {
 
 	private ReformType(String alias, Table<ReformTypeRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<ReformTypeRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_REFORM_TYPE;
 	}
 
 	/**

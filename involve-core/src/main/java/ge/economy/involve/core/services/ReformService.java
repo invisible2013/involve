@@ -46,6 +46,7 @@ public class ReformService {
         if (record == null) {
             record = (ReformRecord) this.dslContext.newRecord(Tables.REFORM);
             newRecord = true;
+            record.setStatusId(ReformDTO.ACTIVE_REFORM);
         }
 
         record.setName(request.getName());
@@ -148,6 +149,10 @@ public class ReformService {
         return ReformFileDTO.translateArray(reformDAO.getReformFiles(reformId));
     }
 
+    public List<ReformFileDTO> getSessionFiles(int sessionId) {
+        return ReformFileDTO.translateArray(reformDAO.getSessionFiles(sessionId));
+    }
+
     public List<SessionDTO> getReformSessions(int reformId) {
         return SessionDTO.translateArray(reformDAO.getReformSessions(reformId));
     }
@@ -183,10 +188,12 @@ public class ReformService {
         List<SessionDTO> items = SessionDTO.translateArray((List) map.get("list"));
         for (SessionDTO s : items) {
             s.setReform(getReform(s.getReformId()));
-            float allCount = reformDAO.getSessionAllVoteCount(s.getId());
-            float yesCount = reformDAO.getSessionVoting(s.getId(), true);
-            s.setYesPercent((int) (yesCount / allCount * 100));
-            s.setNoPercent(100 - s.getYesPercent());
+            float allCount = reformDAO.getReformAllVoteCount(s.getReformId());
+            if (allCount > 0) {
+                float yesCount = reformDAO.getReformVoting(s.getReformId(), true);
+                s.setYesPercent((int) (yesCount / allCount * 100));
+                s.setNoPercent(100 - s.getYesPercent());
+            }
         }
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
@@ -201,10 +208,12 @@ public class ReformService {
         resultMap.put("list", items);
         for (SessionDTO s : items) {
             s.setReform(getReform(s.getReformId()));
-            float allCount = reformDAO.getSessionAllVoteCount(s.getId());
-            float yesCount = reformDAO.getSessionVoting(s.getId(), true);
-            s.setYesPercent((int) (yesCount / allCount * 100));
-            s.setNoPercent(100 - s.getYesPercent());
+            float allCount = reformDAO.getReformAllVoteCount(s.getReformId());
+            if (allCount > 0) {
+                float yesCount = reformDAO.getReformVoting(s.getReformId(), true);
+                s.setYesPercent((int) (yesCount / allCount * 100));
+                s.setNoPercent(100 - s.getYesPercent());
+            }
         }
         resultMap.put("size", map.get("size"));
         return resultMap;
@@ -229,6 +238,10 @@ public class ReformService {
         List<ReformDTO> items = ReformDTO.translateArray((List) map.get("list"));
         for (ReformDTO item : items) {
             item.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(item.getId())));
+            float allCount = reformDAO.getReformAllVoteCount(item.getId());
+            float yesCount = reformDAO.getReformVoting(item.getId(), true);
+            item.setYesPercent((int) (yesCount / allCount * 100));
+            item.setNoPercent(100 - item.getYesPercent());
         }
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
@@ -237,6 +250,12 @@ public class ReformService {
 
     public ReformDTO getReform(int reformId) {
         ReformDTO reform = ReformDTO.translate(reformDAO.getReformById(reformId));
+        float allCount = reformDAO.getReformAllVoteCount(reform.getId());
+        if (allCount > 0) {
+            float yesCount = reformDAO.getReformVoting(reform.getId(), true);
+            reform.setYesPercent((int) (yesCount / allCount * 100));
+            reform.setNoPercent(100 - reform.getYesPercent());
+        }
         reform.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(reform.getId())));
         reform.setReformFiles(ReformFileDTO.translateArray(reformDAO.getReformFiles(reformId)));
         reform.setSessions(SessionDTO.translateArray(reformDAO.getReformSessions(reformId)));
@@ -247,10 +266,12 @@ public class ReformService {
         SessionDTO session = SessionDTO.translate(reformDAO.getSessionById(sessionId));
         if (session != null) {
             session.setPolls(SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId)));
-            float allCount = reformDAO.getSessionAllVoteCount(sessionId);
-            float yesCount = reformDAO.getSessionVoting(sessionId, true);
-            session.setYesPercent((int) (yesCount / allCount * 100));
-            session.setNoPercent(100 - session.getYesPercent());
+            float allCount = reformDAO.getReformAllVoteCount(session.getReformId());
+            if (allCount > 0) {
+                float yesCount = reformDAO.getReformVoting(session.getReformId(), true);
+                session.setYesPercent((int) (yesCount / allCount * 100));
+                session.setNoPercent(100 - session.getYesPercent());
+            }
             List<SessionPollDTO> polls = SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId));
             for (SessionPollDTO s : polls) {
                 s.setAnswers(PollAnswerDTO.translateArray(reformDAO.getPollAnswers(s.getId())));
@@ -328,12 +349,31 @@ public class ReformService {
                 record.setReformId(itemId);
                 record.setFileName(fileName);
                 record.setFileTypeId(fileTypeId);
-                record.store();
+                record.update();
             }
         } catch (Exception ex) {
 
         }
 
+    }
+
+    public void addSessionFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
+        String fileName = originalFileName;
+        if (fileTypeId != FileTypes.VIDEO.id()) {
+            fileName = this.fileService.saveFile(file, itemId + "_11_");
+        }
+
+        try {
+            if (fileName != null && !fileName.isEmpty() || fileTypeId == FileTypes.VIDEO.id()) {
+                SessionFileRecord record = (SessionFileRecord) this.dslContext.newRecord(Tables.SESSION_FILE);
+                record.setSessionId(itemId);
+                record.setFileName(fileName);
+                record.setFileTypeId(fileTypeId);
+                record.store();
+            }
+        } catch (Exception ex) {
+
+        }
     }
 
     public void deleteReformFile(int itemId) {
@@ -345,13 +385,21 @@ public class ReformService {
         this.reformDAO.deleteReformFile(itemId);
     }
 
+    public void deleteSessionFile(int itemId) {
+        SessionFileRecord record = reformDAO.getSessionFileObjectById(itemId);
+        if (record != null) {
+            this.fileService.deleteFile(record.getFileName());
+        }
+        this.reformDAO.deleteReformFile(itemId);
+    }
+
     public void addSessionImage(int itemId, MultipartFile file) {
         String fileName = this.fileService.saveFile(file, itemId + "_2_");
         try {
             if (fileName != null && !fileName.isEmpty()) {
                 SessionRecord record = reformDAO.getSessionObjectById(itemId);
                 record.setImageName(fileName);
-                record.store();
+                record.update();
             }
         } catch (Exception ex) {
 

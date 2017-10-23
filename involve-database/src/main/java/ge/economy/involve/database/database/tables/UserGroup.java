@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -33,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserGroup extends TableImpl<UserGroupRecord> {
 
-	private static final long serialVersionUID = -783951893;
+	private static final long serialVersionUID = -191967764;
 
 	/**
 	 * The reference instance of <code>public.user_group</code>
@@ -51,7 +52,7 @@ public class UserGroup extends TableImpl<UserGroupRecord> {
 	/**
 	 * The column <code>public.user_group.id</code>.
 	 */
-	public final TableField<UserGroupRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+	public final TableField<UserGroupRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.user_group.name</code>.
@@ -78,6 +79,14 @@ public class UserGroup extends TableImpl<UserGroupRecord> {
 
 	private UserGroup(String alias, Table<UserGroupRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<UserGroupRecord, Integer> getIdentity() {
+		return Keys.IDENTITY_USER_GROUP;
 	}
 
 	/**

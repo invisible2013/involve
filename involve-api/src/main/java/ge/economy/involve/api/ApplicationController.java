@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ge.economy.involve.core.api.dto.QuestionAnswer;
 import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.request.AddInitiateRequest;
-import ge.economy.involve.core.api.request.AddSessionVoteRequest;
+import ge.economy.involve.core.api.request.AddReformVoteRequest;
 import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.api.request.AddVoteRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
@@ -149,15 +149,21 @@ public class ApplicationController {
     }
 
     @ResponseBody
-    @RequestMapping({"/save-session-vote"})
-    public Response saveSessionVote(@RequestParam int sessionId, @RequestParam boolean agreed, @RequestParam(required = false, defaultValue = "0") int userId,
-                                    @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false) String clientUID) {
-        AddSessionVoteRequest request = new AddSessionVoteRequest();
-        request.setSessionId(sessionId);
-        request.setSessionVoteId(sessionVoteId);
+    @RequestMapping({"/save-reform-vote"})
+    public Response saveReformVote(@RequestParam int reformId, @RequestParam boolean agreed, @RequestParam(required = false, defaultValue = "0") int userId,
+                                   @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false) String clientUID) {
+        AddReformVoteRequest request = new AddReformVoteRequest();
+        request.setReformId(reformId);
         request.setUserId(userId);
         request.setAgreed(agreed);
-        return Response.withData(voteService.saveSessionVote(request));
+        request.setClientUID(clientUID);
+        return Response.withData(voteService.saveReformVote(request));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-reform-vote-by-client"})
+    public Response saveReformVote(@RequestParam int reformId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam String clientUID) {
+        return Response.withData(voteService.getReformVoteByClientGuid(reformId, clientUID));
     }
 
     @ResponseBody
