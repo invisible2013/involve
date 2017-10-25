@@ -130,7 +130,13 @@ public class ReformController {
     @ResponseBody
     private Response addReformImage(@RequestParam int itemId, @RequestParam int fileTypeId, @RequestParam String fileName, @RequestParam("file")
             MultipartFile multipartFile) {
-        reformService.addReformImage(itemId, fileTypeId, fileName, multipartFile);
+        reformService.addReformFile(itemId, fileTypeId, fileName, multipartFile);
+        return Response.withData(true);
+    }
+
+    @RequestMapping({"/add-reform-image"})
+    private Response addReformImage(@RequestParam int itemId, @RequestParam("file") MultipartFile multipartFile) {
+        reformService.addReformImage(itemId, multipartFile);
         return Response.withData(true);
     }
 
@@ -151,7 +157,7 @@ public class ReformController {
     @RequestMapping({"/save-file-name"})
     @ResponseBody
     private Response saveFileUrl(@RequestBody AddReformFileRequest addReformFileRequest) {
-        reformService.addReformImage(addReformFileRequest.getItemId(), addReformFileRequest.getFileTypeId(), addReformFileRequest.getFileName(), null);
+        reformService.addReformFile(addReformFileRequest.getItemId(), addReformFileRequest.getFileTypeId(), addReformFileRequest.getFileName(), null);
         return Response.withData(true);
     }
 

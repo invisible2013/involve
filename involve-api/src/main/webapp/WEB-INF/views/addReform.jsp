@@ -166,10 +166,38 @@
             console.log($scope.reform);
             function saveSuccessReform(res) {
                 if ($scope.selectedItemId > 0) {
-                    location.reload();
+                    uploadLogo();
                 } else {
-                    var newItemId = res.data.id;
-                    window.location = "addReform?reformId=" + newItemId;
+                    $scope.selectedItemId = res.data.id;
+                    uploadLogo();
+                    //window.location = "addReform?reformId=" + newItemId;
+                }
+
+                function uploadLogo() {
+                    if ($('#reformLogoId')[0].files[0] != undefined) {
+                        var oMyForm = new FormData();
+                        oMyForm.append("itemId", $scope.selectedItemId);
+                        oMyForm.append("file", $('#reformLogoId')[0].files[0]);
+                        $.ajax({
+                            url: 'reform/add-reform-image',
+                            data: oMyForm,
+                            dataType: 'text',
+                            processData: false,
+                            contentType: false,
+                            type: 'POST',
+                            success: function (data) {
+                                //location.reload();
+                                window.location = "addReform?reformId=" + $scope.selectedItemId;
+                            }
+                        }).success(function (data) {
+                            //location.reload();
+                            window.location = "addReform?reformId=" + $scope.selectedItemId;
+                        }).error(function (data, status, headers, config) {
+                            //location.reload();
+                            window.location = "addReform?reformId=" + $scope.selectedItemId;
+                        });
+                    }
+                    window.location = "addReform?reformId=" + $scope.selectedItemId;
                 }
             };
             ajaxCall($http, "reform/save-reform", angular.toJson($scope.reform), saveSuccessReform);
@@ -703,6 +731,11 @@
                                         <label class="control-label">დასახელება</label>
                                         <input type="text" id="name" ng-model="reform.name"
                                                class="form-control ng-pristine ng-valid">
+                                    </div>
+                                    <div class="form-group col-sm-10">
+                                        <label class="control-label">ლოგო</label>
+                                        <input type="file" id="reformLogoId" name="file"
+                                               class="form-control upload-file">
                                     </div>
                                     <div class="form-group col-md-10">
                                         <label class="control-label">რეფორმის ტიპი</label>

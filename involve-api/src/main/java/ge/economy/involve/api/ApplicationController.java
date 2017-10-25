@@ -9,9 +9,7 @@ import ge.economy.involve.core.api.request.AddReformVoteRequest;
 import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.api.request.AddVoteRequest;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
-import ge.economy.involve.core.execptions.IncorectUserCredentialsException;
-import ge.economy.involve.core.execptions.MailAlreadyUsedException;
-import ge.economy.involve.core.execptions.UserNotFoundWithKeyException;
+import ge.economy.involve.core.execptions.*;
 import ge.economy.involve.core.response.Response;
 import ge.economy.involve.core.services.*;
 
@@ -152,12 +150,16 @@ public class ApplicationController {
     @RequestMapping({"/save-reform-vote"})
     public Response saveReformVote(@RequestParam int reformId, @RequestParam boolean agreed, @RequestParam(required = false, defaultValue = "0") int userId,
                                    @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false) String clientUID) {
-        AddReformVoteRequest request = new AddReformVoteRequest();
-        request.setReformId(reformId);
-        request.setUserId(userId);
-        request.setAgreed(agreed);
-        request.setClientUID(clientUID);
-        return Response.withData(voteService.saveReformVote(request));
+        try {
+            AddReformVoteRequest request = new AddReformVoteRequest();
+            request.setReformId(reformId);
+            request.setUserId(userId);
+            request.setAgreed(agreed);
+            request.setClientUID(clientUID);
+            return Response.withData(voteService.saveReformVote(request));
+        } catch (ReformHasVoteAlreadyException ex) {
+            return Response.withError(ex.getMessage());
+        }
     }
 
     @ResponseBody
@@ -170,22 +172,24 @@ public class ApplicationController {
     @RequestMapping({"/save-poll-vote"})
     public Response savePollVote(@RequestParam int reformId, @RequestParam int sessionId, @RequestParam String questionAnswerList, @RequestParam(required = false) String answerNote,
                                  @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam(required = false) String ipAddress, @RequestParam(required = false) String clientUID) throws IOException {
-
-
-        ObjectMapper mapper = new ObjectMapper();
-        QuestionAnswer[] questionAnswers = mapper.readValue(questionAnswerList, QuestionAnswer[].class);
-        if (questionAnswers.length > 0) {
-            AddVoteRequest request = new AddVoteRequest();
-            request.setReformId(reformId);
-            request.setSessionId(sessionId);
-            request.setQuestionAnswerList(Arrays.asList(questionAnswers));
-            request.setAnswerNote(answerNote);
-            request.setSessionVoteId(sessionVoteId);
-            request.setUserId(userId);
-            request.setIpAddress(ipAddress);
-            request.setClientUID(clientUID);
-            return Response.withData(voteService.saveSessionPollVote(request));
-        } else return Response.withError("polls is empty");
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            QuestionAnswer[] questionAnswers = mapper.readValue(questionAnswerList, QuestionAnswer[].class);
+            if (questionAnswers.length > 0) {
+                AddVoteRequest request = new AddVoteRequest();
+                request.setReformId(reformId);
+                request.setSessionId(sessionId);
+                request.setQuestionAnswerList(Arrays.asList(questionAnswers));
+                request.setAnswerNote(answerNote);
+                request.setSessionVoteId(sessionVoteId);
+                request.setUserId(userId);
+                request.setIpAddress(ipAddress);
+                request.setClientUID(clientUID);
+                return Response.withData(voteService.saveSessionPollVote(request));
+            } else return Response.withError("polls is empty");
+        } catch (SessionAlreadyHasVoteException ex) {
+            return Response.withError(ex.getMessage());
+        }
     }
 
 

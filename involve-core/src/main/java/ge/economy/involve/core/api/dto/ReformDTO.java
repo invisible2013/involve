@@ -32,8 +32,8 @@ public class ReformDTO {
     private String generalInfo;
     private String experience;
     private String reformTypeName;
-    private Integer yesPercent;
-    private Integer noPercent;
+    private int yesPercent;
+    private int noPercent;
     private List<ReformDetailDTO> reformDetails;
     private List<ReformFileDTO> reformFiles;
     private List<SessionDTO> sessions;
@@ -223,19 +223,19 @@ public class ReformDTO {
         this.imageName = imageName;
     }
 
-    public Integer getYesPercent() {
+    public int getYesPercent() {
         return yesPercent;
     }
 
-    public void setYesPercent(Integer yesPercent) {
+    public void setYesPercent(int yesPercent) {
         this.yesPercent = yesPercent;
     }
 
-    public Integer getNoPercent() {
+    public int getNoPercent() {
         return noPercent;
     }
 
-    public void setNoPercent(Integer noPercent) {
+    public void setNoPercent(int noPercent) {
         this.noPercent = noPercent;
     }
 

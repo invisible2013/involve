@@ -7,6 +7,8 @@ import ge.economy.involve.core.api.request.AddVoteRequest;
 import ge.economy.involve.core.dao.InitiateDAO;
 import ge.economy.involve.core.dao.ReformDAO;
 import ge.economy.involve.core.dao.VoteDAO;
+import ge.economy.involve.core.execptions.ReformHasVoteAlreadyException;
+import ge.economy.involve.core.execptions.SessionAlreadyHasVoteException;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.SessionPollVote;
 import ge.economy.involve.database.database.tables.records.InitiateRecord;
@@ -35,8 +37,11 @@ public class VoteService {
 
     private Logger logger = Logger.getLogger(VoteService.class);
 
-    public ParamPojo saveSessionPollVote(AddVoteRequest request) {
-
+    public ParamPojo saveSessionPollVote(AddVoteRequest request) throws SessionAlreadyHasVoteException {
+        boolean hastPollVote = getSessionPollVoteByClientGuid(request.getSessionId(), request.getClientUID());
+        if (hastPollVote) {
+            throw new SessionAlreadyHasVoteException("თქვენ სესსის კითხვარი უკვე შევსებული გაქვთ");
+        }
         ParamPojo pojo = new ParamPojo();
         int index = 0;
         for (QuestionAnswer q : request.getQuestionAnswerList()) {
@@ -61,7 +66,11 @@ public class VoteService {
     }
 
 
-    public ParamPojo saveReformVote(AddReformVoteRequest request) {
+    public ParamPojo saveReformVote(AddReformVoteRequest request) throws ReformHasVoteAlreadyException {
+        boolean hasVote = getReformVoteByClientGuid(request.getReformId(), request.getClientUID());
+        if (hasVote) {
+            throw new ReformHasVoteAlreadyException("თქვენ ამ რეფორმაზე ხმა უკვე მიცემული გაქვთ");
+        }
         boolean newRecord = false;
         ReformVoteRecord record = null;
         if (request.getId() != null) {
@@ -95,6 +104,10 @@ public class VoteService {
 
     public boolean getReformVoteByClientGuid(int reformId, String clientGuid) {
         return (reformDAO.getReformVoteByClient(reformId, clientGuid) > 0) ? true : false;
+    }
+
+    public boolean getSessionPollVoteByClientGuid(int sessionId, String clientGuid) {
+        return (reformDAO.getSessionPollVoteByClient(sessionId, clientGuid) > 0) ? true : false;
     }
 
     public HashMap<String, Object> getVotes(int start, int limit) {

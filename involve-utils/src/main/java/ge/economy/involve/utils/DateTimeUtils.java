@@ -18,7 +18,7 @@ public class DateTimeUtils {
         double allDays = daysBetween(startDate.getTime(), endDate.getTime());
         double pastDays = daysBetween(startDate.getTime(), new Date().getTime());
         int pastTimePercent = ((int) ((pastDays / allDays) * 100));
-        return pastTimePercent < 0 ? 0 : pastTimePercent;
+        return pastTimePercent < 0 ? 0 : (pastTimePercent > 100 ? 100 : pastTimePercent);
     }
 
     public static Date addDays(Date startDate, int dayNumber) {

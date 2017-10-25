@@ -159,6 +159,15 @@ public class ReformDAO extends AbstractDAO {
                 .fetchOne().into(Integer.class);
     }
 
+    public Integer getSessionPollVoteByClient(int sessionId, String clientGuid) {
+        return dslContext.
+                selectCount()
+                .from(Tables.SESSION_POLL_VOTE)
+                .where(Tables.SESSION_POLL_VOTE.SESSION_ID.eq(sessionId))
+                .and(Tables.SESSION_POLL_VOTE.CLIENT_UID.eq(clientGuid))
+                .fetchOne().into(Integer.class);
+    }
+
 
     public List<Record> getReformTypes() {
         return dslContext.select()

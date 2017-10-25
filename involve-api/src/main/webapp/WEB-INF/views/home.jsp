@@ -145,13 +145,10 @@
             window.location = "addReform?reformId=" + itemId;
         };
 
+        $scope.open = function (name) {
+            window.open('upload/get-file?identifier=' + name);
+        };
 
-        $scope.setNoteAsHtml = function (text) {
-            CKEDITOR.instances.ckNote.setData(text);
-        };
-        $scope.getNoteAsHtml = function () {
-            return CKEDITOR.instances.ckNote.getData();
-        };
     });
 </script>
 
@@ -365,6 +362,7 @@
                             <tr>
                                 <th style="width: 1%">#</th>
                                 <th style="width: 20%">დასახელება</th>
+                                <th>ლოგო</th>
                                 <th>ტიპი</th>
                                 <th>1 პროგრეს ბარი</th>
                                 <th>2 პროგრეს ბარი</th>
@@ -382,6 +380,12 @@
                                     <a>{{r.name}}</a>
                                     <br/>
                                     <small>თარიღი: {{r.createDate}}</small>
+                                </td>
+                                <td>
+                                    <a class="btn btn-xs" ng-click="open(r.imageName);" ng-show="r.imageName.length>0">
+                                        <img src="upload/get-file?identifier={{r.imageName}}" class="img-thumbnail"
+                                             style="height: 60px;" height="60">
+                                    </a>
                                 </td>
                                 <td>
                                     {{r.reformTypeName}}

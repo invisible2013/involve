@@ -165,6 +165,12 @@ public class ReformService {
         for (ReformDTO item : items) {
             item.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(item.getId())));
             item.setReformFiles(ReformFileDTO.translateArray(reformDAO.getReformFiles(item.getId())));
+            float allCount = reformDAO.getReformAllVoteCount(item.getId());
+            if (allCount > 0) {
+                float yesCount = reformDAO.getReformVoting(item.getId(), true);
+                item.setYesPercent((int) (yesCount / allCount * 100));
+                item.setNoPercent(100 - item.getYesPercent());
+            }
         }
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
@@ -337,7 +343,7 @@ public class ReformService {
     }
 
 
-    public void addReformImage(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
+    public void addReformFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
         String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
             fileName = this.fileService.saveFile(file, itemId + "_1_");
@@ -404,7 +410,19 @@ public class ReformService {
         } catch (Exception ex) {
 
         }
+    }
 
+    public void addReformImage(int itemId, MultipartFile file) {
+        String fileName = this.fileService.saveFile(file, itemId + "_3_");
+        try {
+            if (fileName != null && !fileName.isEmpty()) {
+                ReformRecord record = reformDAO.getReformObjectById(itemId);
+                record.setImageName(fileName);
+                record.update();
+            }
+        } catch (Exception ex) {
+
+        }
     }
 
 }

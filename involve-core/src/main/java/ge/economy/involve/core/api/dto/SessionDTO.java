@@ -30,8 +30,8 @@ public class SessionDTO {
     private Date createDate;
     private List<SessionPollDTO> polls;
     private ReformDTO reform;
-    private Integer yesPercent;
-    private Integer noPercent;
+    private int yesPercent;
+    private int noPercent;
     private int statusId;
     public static final int ACTIVE_SESSION = 1;
     public static final int CLOSE_SESSION = 2;
@@ -152,19 +152,19 @@ public class SessionDTO {
         this.reform = reform;
     }
 
-    public Integer getYesPercent() {
+    public int getYesPercent() {
         return yesPercent;
     }
 
-    public void setYesPercent(Integer yesPercent) {
+    public void setYesPercent(int yesPercent) {
         this.yesPercent = yesPercent;
     }
 
-    public Integer getNoPercent() {
+    public int getNoPercent() {
         return noPercent;
     }
 
-    public void setNoPercent(Integer noPercent) {
+    public void setNoPercent(int noPercent) {
         this.noPercent = noPercent;
     }
 
