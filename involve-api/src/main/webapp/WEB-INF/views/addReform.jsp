@@ -751,16 +751,16 @@
                             </textarea>
                                     </div>
                                     <div class="form-group col-sm-10">
-                                        <label class="control-label">ზოგადი ინფორმაცია</label>
-                                        <textarea rows="4" ng-model="reform.generalInfo"
-                                                  class="form-control ng-pristine ng-valid">
-                            </textarea>
+                                        <label class="control-label">რეფორმის საჭიროება</label>
+                                        <textarea data-ng-model="reform.generalInfo" rows="2"
+                                                  placeholder="მნიშვნელობა" data-ck-editor
+                                                  class="form-control"></textarea>
                                     </div>
                                     <div class="form-group col-sm-10">
                                         <label class="control-label">საერთაშორისო გამოცდილება</label>
-                                        <textarea rows="4" ng-model="reform.experience"
-                                                  class="form-control ng-pristine ng-valid">
-                            </textarea>
+                                        <textarea data-ng-model="reform.experience" rows="2"
+                                                  placeholder="მნიშვნელობა" data-ck-editor
+                                                  class="form-control"></textarea>
                                     </div>
 
                                     <div class="form-group col-sm-5">

@@ -82,7 +82,8 @@
                             <br />
 
                             <div>
-                                <h1><i class="fa fa-paw"></i> Join Reform</h1>
+                                <h1><img src="resources/imgs/logo.png" style="width:40px"></h1>
+                                <h1><span>Your Involvement</span></h1>
                                 <p>©2017 All Rights Reserved. Economy.ge</p>
                             </div>
                         </div>
