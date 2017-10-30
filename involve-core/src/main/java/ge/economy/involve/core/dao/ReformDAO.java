@@ -220,6 +220,10 @@ public class ReformDAO extends AbstractDAO {
         dslContext.deleteFrom(Tables.REFORM_FILE).where(Tables.REFORM_FILE.ID.eq(itemId)).execute();
     }
 
+    public void deleteSessionFile(int itemId) {
+        dslContext.deleteFrom(Tables.SESSION_FILE).where(Tables.SESSION_FILE.ID.eq(itemId)).execute();
+    }
+
  /*   public HashMap<String, Object> searchSportsmans(String name, String firstLetter, int sportTypeId, int genderId, int regionId, int cityId, int start, int limit) {
         SelectOnConditionStep<Record> selectConditionStep = this.dslContext.select(new SelectField[0]).from(Tables.SPORTSMAN).join(Tables.REGION).on(new Condition[]{Tables.SPORTSMAN.REGION_ID.eq(Tables.REGION.ID)}).join(Tables.CITY).on(new Condition[]{Tables.SPORTSMAN.CITY_ID.eq(Tables.CITY.ID)}).join(Tables.SPORT_TYPE).on(new Condition[]{Tables.SPORTSMAN.SPORT_TYPE_ID.eq(Tables.SPORT_TYPE.ID)}).join(Tables.GENDER).on(new Condition[]{Tables.SPORTSMAN.GENDER_ID.eq(Tables.GENDER.ID)}).join(Tables.SPORTSMAN_RANK).on(new Condition[]{Tables.SPORTSMAN.RANK_ID.eq(Tables.SPORTSMAN_RANK.ID)});
 

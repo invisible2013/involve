@@ -46,15 +46,12 @@
         return {
             require: '?ngModel',
             link: function ($scope, elm, attr, ngModel) {
-
                 var ck = CKEDITOR.replace(elm[0]);
-
                 ck.on('pasteState', function () {
                     $scope.$apply(function () {
                         ngModel.$setViewValue(ck.getData());
                     });
                 });
-
                 ngModel.$render = function (value) {
                     ck.setData(ngModel.$modelValue);
                 };
@@ -413,10 +410,14 @@
             }
         };
 
-        $scope.deleteSessionFile = function (itemId) {
+        $scope.deleteSessionFile = function (itemId, sessionId) {
             if (confirm("დარწმუნებული ხართ რომ გსურთ წაშლა?")) {
+                function reloadFile() {
+                    $scope.fileItem(sessionId);
+                }
+
                 if (itemId != undefined) {
-                    ajaxCall($http, "reform/delete-session-file?itemId=" + itemId, null, reload);
+                    ajaxCall($http, "reform/delete-session-file?itemId=" + itemId, null, reloadFile);
                 }
             }
         };
@@ -652,7 +653,7 @@
                                             {{s.fileName}}</a>
                                     </td>
                                     <td style="min-width: 75px;">
-                                        <a ng-click="deleteSessionFile(s.id)"
+                                        <a ng-click="deleteSessionFile(s.id,s.sessionId)"
                                            class="btn btn-danger btn-xs"><i
                                                 class="fa fa-trash-o"></i> წაშლა</a>
                                     </td>

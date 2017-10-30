@@ -149,8 +149,8 @@ public class ReformService {
         return ReformFileDTO.translateArray(reformDAO.getReformFiles(reformId));
     }
 
-    public List<ReformFileDTO> getSessionFiles(int sessionId) {
-        return ReformFileDTO.translateArray(reformDAO.getSessionFiles(sessionId));
+    public List<SessionFileDTO> getSessionFiles(int sessionId) {
+        return SessionFileDTO.translateArray(reformDAO.getSessionFiles(sessionId));
     }
 
     public List<SessionDTO> getReformSessions(int reformId) {
@@ -346,12 +346,12 @@ public class ReformService {
     public void addReformFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
         String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
-            fileName = this.fileService.saveFile(file, itemId + "_1_");
+            fileName = fileService.saveFile(file, itemId + "_1_");
         }
 
         try {
             if (fileName != null && !fileName.isEmpty() || fileTypeId == FileTypes.VIDEO.id()) {
-                ReformFileRecord record = (ReformFileRecord) this.dslContext.newRecord(Tables.REFORM_FILE);
+                ReformFileRecord record = (ReformFileRecord) dslContext.newRecord(Tables.REFORM_FILE);
                 record.setReformId(itemId);
                 record.setFileName(fileName);
                 record.setFileTypeId(fileTypeId);
@@ -366,12 +366,12 @@ public class ReformService {
     public void addSessionFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
         String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
-            fileName = this.fileService.saveFile(file, itemId + "_11_");
+            fileName = fileService.saveFile(file, itemId + "_11_");
         }
 
         try {
             if (fileName != null && !fileName.isEmpty() || fileTypeId == FileTypes.VIDEO.id()) {
-                SessionFileRecord record = (SessionFileRecord) this.dslContext.newRecord(Tables.SESSION_FILE);
+                SessionFileRecord record = (SessionFileRecord) dslContext.newRecord(Tables.SESSION_FILE);
                 record.setSessionId(itemId);
                 record.setFileName(fileName);
                 record.setFileTypeId(fileTypeId);
@@ -383,20 +383,19 @@ public class ReformService {
     }
 
     public void deleteReformFile(int itemId) {
-        ReformFileRecord record = this.reformDAO.getReformFileObjectById(itemId);
+        ReformFileRecord record = reformDAO.getReformFileObjectById(itemId);
         if (record != null) {
-            this.fileService.deleteFile(record.getFileName());
+            fileService.deleteFile(record.getFileName());
         }
-
-        this.reformDAO.deleteReformFile(itemId);
+        reformDAO.deleteReformFile(itemId);
     }
 
     public void deleteSessionFile(int itemId) {
         SessionFileRecord record = reformDAO.getSessionFileObjectById(itemId);
         if (record != null) {
-            this.fileService.deleteFile(record.getFileName());
+            fileService.deleteFile(record.getFileName());
         }
-        this.reformDAO.deleteReformFile(itemId);
+        reformDAO.deleteSessionFile(itemId);
     }
 
     public void addSessionImage(int itemId, MultipartFile file) {
