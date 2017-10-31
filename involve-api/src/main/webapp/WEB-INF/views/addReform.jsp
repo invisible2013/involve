@@ -882,8 +882,12 @@
                                                          class="img-thumbnail"
                                                          style="height: 60px;" height="60">
                                                 </a></td>
-                                                <td><span ng-show="s.fileTypeId==1">{{s.fileName}}</span> <a
-                                                        ng-show="s.fileTypeId==2" href="{{s.fileName}}" target="_blank">{{s.fileName}}</a>
+                                                <td><span ng-show="s.fileTypeId==1">{{s.fileName}}</span>
+                                                    <a ng-show="s.fileTypeId==2" href="{{s.fileName}}"
+                                                       target="_blank">{{s.fileName}}</a>
+                                                    <a ng-show="s.fileTypeId==3" class="btn btn-xs"
+                                                       ng-click="open(s.fileName);">
+                                                        {{s.fileName}}</a>
                                                 </td>
                                                 <td style="min-width: 75px;">
                                                     <a ng-click="deleteReformFile(s.id)"

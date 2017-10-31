@@ -355,12 +355,11 @@ public class ReformService {
                 record.setReformId(itemId);
                 record.setFileName(fileName);
                 record.setFileTypeId(fileTypeId);
-                record.update();
+                record.store();
             }
         } catch (Exception ex) {
 
         }
-
     }
 
     public void addSessionFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
