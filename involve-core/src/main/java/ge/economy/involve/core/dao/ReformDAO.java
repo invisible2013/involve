@@ -103,6 +103,37 @@ public class ReformDAO extends AbstractDAO {
                 .where(Tables.REFORM_VOTE.REFORM_ID.eq(reformId)).fetch();
     }
 
+    public HashMap<String, Object> getReformVotes(int reformId, int start, int limit) {
+        SelectOnConditionStep<Record> selectConditionStep = this.dslContext.select()
+                .from(Tables.REFORM_VOTE)
+                .join(Tables.REFORM).on(Tables.REFORM.ID.eq(Tables.REFORM_VOTE.REFORM_ID));
+        selectConditionStep.where(Tables.REFORM_VOTE.REFORM_ID.eq(reformId));
+        SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
+        int recordSize = selectConditionStepSize.fetch().size();
+        selectConditionStep.orderBy(Tables.REFORM_VOTE.ID.desc()).limit(limit).offset(start);
+        HashMap<String, Object> map = new HashMap();
+        map.put("list", selectConditionStep.fetch());
+        map.put("size", Integer.valueOf(recordSize));
+        return map;
+    }
+
+    public HashMap<String, Object> getSessionVotes(int sessionId, int start, int limit) {
+        SelectOnConditionStep<Record> selectConditionStep = (SelectOnConditionStep<Record>)
+                dslContext.select()
+                        .from(Tables.SESSION_POLL_VOTE)
+                        .join(Tables.SESSION_POLL).on(Tables.SESSION_POLL_VOTE.QUESTION_ID.eq(Tables.SESSION_POLL.ID))
+                        .join(Tables.POLL_ANSWER).on(Tables.SESSION_POLL_VOTE.ANSWER_ID.eq(Tables.POLL_ANSWER.ID))
+                        .where(Tables.SESSION_POLL_VOTE.SESSION_ID.eq(sessionId));
+
+        SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
+        int recordSize = selectConditionStepSize.fetch().size();
+        selectConditionStep.orderBy(Tables.SESSION_POLL_VOTE.ID.desc()).limit(limit).offset(start);
+        HashMap<String, Object> map = new HashMap();
+        map.put("list", selectConditionStep.fetch());
+        map.put("size", Integer.valueOf(recordSize));
+        return map;
+    }
+
     public List<Record> getSessionPollVote(int sessionId) {
         return dslContext.select()
                 .from(Tables.SESSION_POLL_VOTE)

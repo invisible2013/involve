@@ -42,6 +42,9 @@ public class VoteService {
         if (hastPollVote) {
             throw new SessionAlreadyHasVoteException("თქვენ სესსის კითხვარი უკვე შევსებული გაქვთ");
         }
+        if (!checkIsValidUID(request.getClientUID())) {
+            throw new SessionAlreadyHasVoteException("თქვენ სესსის კითხვარი უკვე შევსებული გაქვთ!");
+        }
         ParamPojo pojo = new ParamPojo();
         int index = 0;
         for (QuestionAnswer q : request.getQuestionAnswerList()) {
@@ -70,6 +73,9 @@ public class VoteService {
         boolean hasVote = getReformVoteByClientGuid(request.getReformId(), request.getClientUID());
         if (hasVote) {
             throw new ReformHasVoteAlreadyException("თქვენ ამ რეფორმაზე ხმა უკვე მიცემული გაქვთ");
+        }
+        if (!checkIsValidUID(request.getClientUID())) {
+            throw new ReformHasVoteAlreadyException("თქვენ ამ რეფორმაზე ხმა უკვე მიცემული გაქვთ!");
         }
         boolean newRecord = false;
         ReformVoteRecord record = null;
@@ -100,6 +106,17 @@ public class VoteService {
         pojo.setYesPercent((int) (yesCount / allCount * 100));
         pojo.setNoPercent(100 - pojo.getYesPercent());
         return pojo;
+    }
+
+    public boolean checkIsValidUID(String uid) {
+        if (uid.length() != 32) return false;
+        for (int i = 0; i < uid.length(); i++) {
+            char ch = uid.charAt(i);
+            if ((!Character.isLetter(ch)) && (!Character.isDigit(ch))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean getReformVoteByClientGuid(int reformId, String clientGuid) {

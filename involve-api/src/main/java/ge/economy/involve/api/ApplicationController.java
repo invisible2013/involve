@@ -192,6 +192,12 @@ public class ApplicationController {
         }
     }
 
+    /*@ResponseBody
+    @RequestMapping({"/test"})
+    public Response test(@RequestParam String uid) {
+       return Response.withData(voteService.checkIsValidUID(uid));
+    }
+*/
 
  /*
     @ResponseBody

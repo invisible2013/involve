@@ -11,9 +11,7 @@
         $scope.types = [];
         if (absUrl.split("?")[1]) {
             if (absUrl.split("?")[1].split("=")[1]) {
-
                 $scope.selectedItemId = absUrl.split("?")[1].split("=")[1];
-
             }
         }
         var a = {id: '1', name: 'სურათი'};

@@ -1,9 +1,12 @@
 package ge.economy.involve.core.api.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import ge.economy.involve.core.jsonhelper.JsonDateSerializeSupport;
 import ge.economy.involve.database.database.Tables;
 import org.jooq.Record;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,12 +18,16 @@ public class SessionPollVoteDTO {
     private Integer reformId;
     private Integer sessionId;
     private Integer questionId;
+    private String questionName;
     private Integer answerId;
+    private String answerName;
     private String answerNote;
     private Integer sessionVoteId;
     private Integer userId;
     private String ipAddress;
     private String clientUID;
+    @JsonSerialize(using = JsonDateSerializeSupport.class)
+    private Date createDate;
 
 
     public static SessionPollVoteDTO translate(Record record) {
@@ -29,11 +36,14 @@ public class SessionPollVoteDTO {
         dto.setSessionId(record.getValue(Tables.SESSION_POLL_VOTE.SESSION_ID));
         dto.setReformId(record.getValue(Tables.SESSION_POLL_VOTE.REFORM_ID));
         dto.setQuestionId(record.getValue(Tables.SESSION_POLL_VOTE.QUESTION_ID));
+        dto.setQuestionName(record.getValue(Tables.SESSION_POLL.NAME));
         dto.setAnswerId(record.getValue(Tables.SESSION_POLL_VOTE.ANSWER_ID));
+        dto.setAnswerName(record.getValue(Tables.POLL_ANSWER.VALUE));
         dto.setAnswerNote(record.getValue(Tables.SESSION_POLL_VOTE.ANSWER_NOTE));
         dto.setUserId(record.getValue(Tables.SESSION_POLL_VOTE.USER_ID));
         dto.setIpAddress(record.getValue(Tables.SESSION_POLL_VOTE.IP_ADDRESS));
         dto.setClientUID(record.getValue(Tables.SESSION_POLL_VOTE.CLIENT_UID));
+        dto.setCreateDate(record.getValue(Tables.SESSION_POLL_VOTE.CREATE_DATE));
         return dto;
     }
 
@@ -124,5 +134,29 @@ public class SessionPollVoteDTO {
 
     public void setClientUID(String clientUID) {
         this.clientUID = clientUID;
+    }
+
+    public String getQuestionName() {
+        return questionName;
+    }
+
+    public void setQuestionName(String questionName) {
+        this.questionName = questionName;
+    }
+
+    public String getAnswerName() {
+        return answerName;
+    }
+
+    public void setAnswerName(String answerName) {
+        this.answerName = answerName;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

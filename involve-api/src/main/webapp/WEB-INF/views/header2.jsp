@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Involve</title>
-
+    <link rel="shortcut icon" href="resources/imgs/favicon.ico">
     <!-- Bootstrap -->
     <link href="resources/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -30,6 +30,7 @@
     <!-- Custom Theme Style -->
     <link href="resources/gentelella/build/css/custom.min.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/css/jquery-ui.css"/>
+
     <script type="text/javascript" src="resources/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="resources/js/jquery-ui.js"></script>
     <script type="text/javascript" src="resources/js/angular.min.js"></script>
@@ -52,7 +53,8 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="home" class="site_title"><img src="resources/imgs/logo_tetri.png" style="width:40px"> <span> Involvement</span></a>
+                    <a href="home" class="site_title"><img src="resources/imgs/logo_tetri.png" style="width:40px">
+                        <span> Involvement</span></a>
                 </div>
 
                 <div class="clearfix"></div>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,9 +39,35 @@ public class ReformController {
     }
 
     @ResponseBody
+    @RequestMapping({"/get-reform-votes"})
+    public Response getReformVotes(@RequestParam int reformId, @RequestParam int start, @RequestParam int limit, HttpServletRequest request) {
+        String remoteAddr = "";
+
+        if (request != null) {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+            if (remoteAddr == null || "".equals(remoteAddr)) {
+                remoteAddr = request.getRemoteAddr();
+            }
+        }
+        return Response.withData(reformService.getReformVotes(reformId, start, limit));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-session-votes"})
+    public Response getSessionVotes(@RequestParam int sessionId, @RequestParam int start, @RequestParam int limit) {
+        return Response.withData(reformService.getSessionVotes(sessionId, start, limit));
+    }
+
+    @ResponseBody
     @RequestMapping({"/get-reform"})
     public Response getReform(@RequestParam int itemId) {
         return Response.withData(reformService.getReform(itemId));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-session"})
+    public Response getSession(@RequestParam int itemId) {
+        return Response.withData(reformService.getSession(itemId));
     }
 
     @ResponseBody

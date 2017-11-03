@@ -209,6 +209,10 @@
                 $scope.poll.answers.splice(index, 1);
             }
         };
+        $scope.sessionVote = function (itemId) {
+            window.location = "sessionVote?sessionId=" + itemId;
+        };
+
 
         $scope.open = function (name) {
             window.open('upload/get-file?identifier=' + name);
@@ -492,6 +496,8 @@
                                             class="fa fa-trash-o"></i> წაშლა</a>
                                     <a data-toggle="modal" data-target="#questionModal" ng-click="questionItem(r.id)"
                                        class="btn btn-default btn-xs"><i class="fa fa-area-chart"></i> კითხვარი</a>
+                                    <a ng-click="sessionVote(r.id)" class="btn btn-success btn-xs"><i
+                                            class="fa fa-info"></i> ხმები</a>
                                 </td>
                             </tr>
                             </tbody>

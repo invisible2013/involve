@@ -144,6 +144,9 @@
         $scope.editLink = function (itemId) {
             window.location = "addReform?reformId=" + itemId;
         };
+        $scope.reformVote = function (itemId) {
+            window.location = "reformVote?reformId=" + itemId;
+        };
 
         $scope.open = function (name) {
             window.open('upload/get-file?identifier=' + name);
@@ -367,7 +370,7 @@
                                 <th>1 პროგრეს ბარი</th>
                                 <th>2 პროგრეს ბარი</th>
                                 <th>3 პროგრეს ბარი</th>
-                                <th style="width: 165px;">#Edit</th>
+                                <th style="width: 225px;">#Edit</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -423,6 +426,8 @@
                                        class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
                                     <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
                                             class="fa fa-trash-o"></i> წაშლა</a>
+                                        <a ng-click="reformVote(r.id)" class="btn btn-success btn-xs"><i
+                                                class="fa fa-info"></i> ხმები</a>
                                     <%--     <a ng-click="itemFiles(r.id)" class="btn btn-dark btn-xs"><i class="fa fa-file"></i>
                                              ფაილი</a>
                                          <a ng-click="itemSession(r.id)" class="btn btn-primary btn-xs"><i

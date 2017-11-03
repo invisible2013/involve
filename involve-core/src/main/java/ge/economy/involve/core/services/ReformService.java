@@ -8,6 +8,7 @@ import ge.economy.involve.core.api.request.AddSportsmanRequest;
 import ge.economy.involve.core.dao.ReformDAO;
 import ge.economy.involve.core.execptions.MainObjectNotFoundException;
 import ge.economy.involve.database.database.Tables;
+import ge.economy.involve.database.database.tables.ReformVote;
 import ge.economy.involve.database.database.tables.records.*;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -240,7 +241,7 @@ public class ReformService {
     public HashMap<String, Object> getReforms(int start, int limit) {
         new HashMap();
         HashMap<String, Object> resultMap = new HashMap();
-        HashMap<String, Object> map = this.reformDAO.getReforms(start, limit);
+        HashMap<String, Object> map = reformDAO.getReforms(start, limit);
         List<ReformDTO> items = ReformDTO.translateArray((List) map.get("list"));
         for (ReformDTO item : items) {
             item.setReformDetails(ReformDetailDTO.translateArray(reformDAO.getReformDetails(item.getId())));
@@ -249,6 +250,26 @@ public class ReformService {
             item.setYesPercent((int) (yesCount / allCount * 100));
             item.setNoPercent(100 - item.getYesPercent());
         }
+        resultMap.put("list", items);
+        resultMap.put("size", map.get("size"));
+        return resultMap;
+    }
+
+    public HashMap<String, Object> getReformVotes(int reformId, int start, int limit) {
+        new HashMap();
+        HashMap<String, Object> resultMap = new HashMap();
+        HashMap<String, Object> map = reformDAO.getReformVotes(reformId, start, limit);
+        List<ReformDTO> items = ReformVoteDTO.translateArray2((List) map.get("list"));
+        resultMap.put("list", items);
+        resultMap.put("size", map.get("size"));
+        return resultMap;
+    }
+
+    public HashMap<String, Object> getSessionVotes(int sessionId, int start, int limit) {
+        new HashMap();
+        HashMap<String, Object> resultMap = new HashMap();
+        HashMap<String, Object> map = reformDAO.getSessionVotes(sessionId, start, limit);
+        List<ReformDTO> items = SessionPollVoteDTO.translateArray((List) map.get("list"));
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
         return resultMap;
@@ -346,7 +367,7 @@ public class ReformService {
     public void addReformFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
         String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
-            fileName = fileService.saveFile(file, itemId + "_1_");
+            fileName = fileService.saveFile(file, itemId + "_1");
         }
 
         try {
@@ -365,7 +386,7 @@ public class ReformService {
     public void addSessionFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
         String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
-            fileName = fileService.saveFile(file, itemId + "_11_");
+            fileName = fileService.saveFile(file, itemId + "_11");
         }
 
         try {
@@ -398,7 +419,7 @@ public class ReformService {
     }
 
     public void addSessionImage(int itemId, MultipartFile file) {
-        String fileName = this.fileService.saveFile(file, itemId + "_2_");
+        String fileName = this.fileService.saveFile(file, itemId + "_2");
         try {
             if (fileName != null && !fileName.isEmpty()) {
                 SessionRecord record = reformDAO.getSessionObjectById(itemId);
@@ -411,7 +432,7 @@ public class ReformService {
     }
 
     public void addReformImage(int itemId, MultipartFile file) {
-        String fileName = this.fileService.saveFile(file, itemId + "_3_");
+        String fileName = this.fileService.saveFile(file, itemId + "_3");
         try {
             if (fileName != null && !fileName.isEmpty()) {
                 ReformRecord record = reformDAO.getReformObjectById(itemId);
