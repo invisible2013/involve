@@ -68,4 +68,10 @@ public class InitiateDAO extends AbstractDAO {
         dslContext.deleteFrom(Tables.INITIATED_ISSUE).where(Tables.INITIATED_ISSUE.ID.eq(itemId)).execute();
     }
 
+
+    public List<Record> getSpheres() {
+        return dslContext.select()
+                .from(Tables.SPHERE)
+                .orderBy(Tables.SPHERE.ID.desc()).fetch();
+    }
 }

@@ -92,7 +92,8 @@ public class VoteService {
         record.setReformId(request.getReformId());
         record.setAgreed(request.getAgreed());
         record.setUserId(request.getUserId());
-        record.setClientGuid(request.getClientUID());
+        record.setClientUid(request.getClientUID());
+        record.setIpAddress(request.getIpAddress());
         if (newRecord) {
             record.setCreateDate(new Date());
             record.store();

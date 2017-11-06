@@ -35,7 +35,7 @@ public class InitiateController {
     @ResponseBody
     @RequestMapping({"/get-initiates"})
     public Response getInitiate(@RequestParam("start") int start, @RequestParam("limit") int limit) {
-        return Response.withData(initiateService.getInitiate(start, limit));
+        return Response.withData(initiateService.getInitiates(start, limit));
     }
 
 

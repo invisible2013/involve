@@ -9,12 +9,14 @@ import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.InitiatedIssue;
 import ge.economy.involve.database.database.tables.records.InitiateRecord;
 import ge.economy.involve.database.database.tables.records.InitiatedIssueRecord;
+import javafx.scene.shape.Sphere;
 import org.apache.log4j.Logger;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,9 +45,10 @@ public class InitiateService {
         record.setUserId(request.getUserId());
         record.setGroupId(request.getGroupId());
         record.setSphereId(request.getSphereId());
-
+        record.setIpAddress(request.getIpAddress());
+        record.setClientUid(request.getClientUID());
         if (newRecord) {
-            // record.setCreateDate(new Date());
+            record.setCreateDate(new Date());
             record.store();
         } else {
             record.update();
@@ -54,11 +57,11 @@ public class InitiateService {
         return null;
     }
 
-    public HashMap<String, Object> getInitiate(int start, int limit) {
+    public HashMap<String, Object> getInitiates(int start, int limit) {
         new HashMap();
         HashMap<String, Object> resultMap = new HashMap();
         HashMap<String, Object> map = initiateDAO.getInitiate(start, limit);
-        List<InitiateDTO> items = InitiateDTO.translateArray((List) map.get("list"));
+        List<InitiateDTO>  items = InitiateDTO.translateArray((List) map.get("list"));
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
         return resultMap;
@@ -107,5 +110,9 @@ public class InitiateService {
 
     public void deleteIssue(int itemId) {
         initiateDAO.deleteIssue(itemId);
+    }
+
+    public List<SphereDTO> getSpheres() {
+        return SphereDTO.translateArray(initiateDAO.getSpheres());
     }
 }

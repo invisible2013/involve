@@ -15,6 +15,8 @@ public class AddInitiateRequest {
     private Integer groupId;
     private Integer sphereId;
     private String description;
+    private String ipAddress;
+    private String clientUID;
 
 
     public Integer getId() {
@@ -55,5 +57,21 @@ public class AddInitiateRequest {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public String getClientUID() {
+        return clientUID;
+    }
+
+    public void setClientUID(String clientUID) {
+        this.clientUID = clientUID;
     }
 }

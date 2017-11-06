@@ -58,12 +58,21 @@ public class ApplicationController {
 
     @ResponseBody
     @RequestMapping({"/save-initiate"})
-    public Response saveInitiate(@RequestParam int sphereId, @RequestParam String description) {
+    public Response saveInitiate(@RequestParam int sphereId, @RequestParam String description, @RequestParam String ipAddress,
+                                 @RequestParam String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
         AddInitiateRequest request = new AddInitiateRequest();
-        request.setUserId(1);
+        request.setUserId(userId);
         request.setSphereId(sphereId);
         request.setDescription(description);
+        request.setIpAddress(description);
+        request.setClientUID(clientUID);
         return Response.withData(initiateService.saveInitiate(request));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-initates"})
+    public Response getInitiate(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam int limit) {
+        return Response.withData(initiateService.getInitiates(start, limit));
     }
 
 
@@ -149,7 +158,7 @@ public class ApplicationController {
     @ResponseBody
     @RequestMapping({"/save-reform-vote"})
     public Response saveReformVote(@RequestParam int reformId, @RequestParam boolean agreed, @RequestParam(required = false, defaultValue = "0") int userId,
-                                   @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false) String clientUID) {
+                                   @RequestParam(required = false) String clientUID) {
         try {
             AddReformVoteRequest request = new AddReformVoteRequest();
             request.setReformId(reformId);
@@ -171,7 +180,8 @@ public class ApplicationController {
     @ResponseBody
     @RequestMapping({"/save-poll-vote"})
     public Response savePollVote(@RequestParam int reformId, @RequestParam int sessionId, @RequestParam String questionAnswerList, @RequestParam(required = false) String answerNote,
-                                 @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId, @RequestParam(required = false) String ipAddress, @RequestParam(required = false) String clientUID) throws IOException {
+                                 @RequestParam(required = false, defaultValue = "0") int sessionVoteId, @RequestParam(required = false, defaultValue = "0") int userId,
+                                 @RequestParam(required = false) String ipAddress, @RequestParam(required = false) String clientUID) throws IOException {
         try {
             ObjectMapper mapper = new ObjectMapper();
             QuestionAnswer[] questionAnswers = mapper.readValue(questionAnswerList, QuestionAnswer[].class);
@@ -190,6 +200,12 @@ public class ApplicationController {
         } catch (SessionAlreadyHasVoteException ex) {
             return Response.withError(ex.getMessage());
         }
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-spheres"})
+    public Response getSpheres() {
+        return Response.withData(initiateService.getSpheres());
     }
 
     /*@ResponseBody

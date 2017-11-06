@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReformVote extends TableImpl<ReformVoteRecord> {
 
-	private static final long serialVersionUID = 553235428;
+	private static final long serialVersionUID = -634516819;
 
 	/**
 	 * The reference instance of <code>public.reform_vote</code>
@@ -97,9 +97,14 @@ public class ReformVote extends TableImpl<ReformVoteRecord> {
 	public final TableField<ReformVoteRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
 
 	/**
-	 * The column <code>public.reform_vote.client_guid</code>.
+	 * The column <code>public.reform_vote.client_uid</code>.
 	 */
-	public final TableField<ReformVoteRecord, String> CLIENT_GUID = createField("client_guid", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+	public final TableField<ReformVoteRecord, String> CLIENT_UID = createField("client_uid", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+	/**
+	 * The column <code>public.reform_vote.ip_address</code>.
+	 */
+	public final TableField<ReformVoteRecord, String> IP_ADDRESS = createField("ip_address", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * Create a <code>public.reform_vote</code> table reference

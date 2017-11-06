@@ -12,6 +12,7 @@ public class AddReformVoteRequest {
     private Boolean agreed;
     private int rangeId;
     private String clientUID;
+    private String ipAddress;
     private String profession;
     private String fieldOfActivity;
 
@@ -86,5 +87,13 @@ public class AddReformVoteRequest {
 
     public void setClientUID(String clientUID) {
         this.clientUID = clientUID;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 }

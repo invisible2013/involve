@@ -124,11 +124,11 @@
                                     {{r.clientUid}}
                                 </td>
                                 <td>
-                                    {{r.agreed}}
+                                    {{r.agreed==true ? "კი" : "არა"}}
                                 </td>
                                 <td>
-                                   <%-- <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
-                                            class="fa fa-trash-o"></i> წაშლა</a>--%>
+                                    <%-- <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
+                                             class="fa fa-trash-o"></i> წაშლა</a>--%>
                                 </td>
                             </tr>
                             </tbody>

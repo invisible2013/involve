@@ -181,12 +181,12 @@ public class ReformDAO extends AbstractDAO {
                 .fetchOne().into(Integer.class);
     }
 
-    public Integer getReformVoteByClient(int reformId, String clientGuid) {
+    public Integer getReformVoteByClient(int reformId, String clientUid) {
         return dslContext.
                 selectCount()
                 .from(Tables.REFORM_VOTE)
                 .where(Tables.REFORM_VOTE.REFORM_ID.eq(reformId))
-                .and(Tables.REFORM_VOTE.CLIENT_GUID.eq(clientGuid))
+                .and(Tables.REFORM_VOTE.CLIENT_UID.eq(clientUid))
                 .fetchOne().into(Integer.class);
     }
 

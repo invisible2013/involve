@@ -32,7 +32,7 @@ public class ReformVoteDTO {
         dto.setId(record.getValue(Tables.REFORM_VOTE.ID));
         dto.setReformId(record.getValue(Tables.REFORM_VOTE.REFORM_ID));
         dto.setUserId(record.getValue(Tables.REFORM_VOTE.USER_ID));
-        dto.setClientUid(record.getValue(Tables.REFORM_VOTE.CLIENT_GUID));
+        dto.setClientUid(record.getValue(Tables.REFORM_VOTE.CLIENT_UID));
         dto.setMail(record.getValue(Tables.REFORM_VOTE.MAIL));
         dto.setAgreed(record.getValue(Tables.REFORM_VOTE.AGREED));
         dto.setRangeId(record.getValue(Tables.REFORM_VOTE.RANGE_ID));
@@ -47,7 +47,7 @@ public class ReformVoteDTO {
         dto.setId(record.getValue(Tables.REFORM_VOTE.ID));
         dto.setReformId(record.getValue(Tables.REFORM_VOTE.REFORM_ID));
         dto.setUserId(record.getValue(Tables.REFORM_VOTE.USER_ID));
-        dto.setClientUid(record.getValue(Tables.REFORM_VOTE.CLIENT_GUID));
+        dto.setClientUid(record.getValue(Tables.REFORM_VOTE.CLIENT_UID));
         dto.setMail(record.getValue(Tables.REFORM_VOTE.MAIL));
         dto.setAgreed(record.getValue(Tables.REFORM_VOTE.AGREED));
         dto.setRangeId(record.getValue(Tables.REFORM_VOTE.RANGE_ID));

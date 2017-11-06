@@ -23,6 +23,7 @@ public class InitiateDTO {
     private String userName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
+    private int yesCount;
 
 
     public static InitiateDTO translate(Record record) {
@@ -108,5 +109,13 @@ public class InitiateDTO {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public int getYesCount() {
+        return yesCount;
+    }
+
+    public void setYesCount(int yesCount) {
+        this.yesCount = yesCount;
     }
 }

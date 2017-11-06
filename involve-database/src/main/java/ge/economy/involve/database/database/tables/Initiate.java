@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Initiate extends TableImpl<InitiateRecord> {
 
-	private static final long serialVersionUID = 772648036;
+	private static final long serialVersionUID = -1391213244;
 
 	/**
 	 * The reference instance of <code>public.initiate</code>
@@ -80,6 +80,16 @@ public class Initiate extends TableImpl<InitiateRecord> {
 	 * The column <code>public.initiate.create_date</code>.
 	 */
 	public final TableField<InitiateRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP.defaulted(true), this, "", new TimestampConverter());
+
+	/**
+	 * The column <code>public.initiate.client_uid</code>.
+	 */
+	public final TableField<InitiateRecord, String> CLIENT_UID = createField("client_uid", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+	/**
+	 * The column <code>public.initiate.ip_address</code>.
+	 */
+	public final TableField<InitiateRecord, String> IP_ADDRESS = createField("ip_address", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * Create a <code>public.initiate</code> table reference
