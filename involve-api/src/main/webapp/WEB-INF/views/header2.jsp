@@ -85,6 +85,7 @@
                                     <li><a href="session">სესიები</a></li>
                                     <li><a href="initiate">ინიციატივები</a></li>
                                     <li><a href="initiatedIssue">ინიცირებული საკითხები</a></li>
+                                    <li><a href="priority">პრიორიტეტულობა</a></li>
                                 </ul>
                             </li>
                         </ul>

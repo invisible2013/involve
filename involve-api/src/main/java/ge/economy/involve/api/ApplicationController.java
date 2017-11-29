@@ -36,6 +36,8 @@ public class ApplicationController {
     @Autowired
     private InitiateService initiateService;
     @Autowired
+    private PriorityService priorityService;
+    @Autowired
     private VoteService voteService;
     @Autowired
     private FileService fileService;
@@ -70,9 +72,36 @@ public class ApplicationController {
     }
 
     @ResponseBody
-    @RequestMapping({"/get-initates"})
-    public Response getInitiate(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam int limit) {
+    @RequestMapping({"/save-priority"})
+    public Response savePriority(@RequestParam int priorityId, @RequestParam int answerId, @RequestParam String ipAddress,
+                                 @RequestParam String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
+        return Response.withData(true);
+    }
+
+    @ResponseBody
+    @RequestMapping({"/save-initiate-issue"})
+    public Response saveInitiateIssue(@RequestParam int initiateIssueId, @RequestParam int answerId, @RequestParam String ipAddress,
+                                      @RequestParam String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
+        return Response.withData(true);
+    }
+
+
+    @ResponseBody
+    @RequestMapping({"/get-initiates"})
+    public Response getInitiates(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam int limit) {
         return Response.withData(initiateService.getInitiates(start, limit));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-initiate-issues"})
+    public Response getInitiateIssues(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam int limit) {
+        return Response.withData(initiateService.getIssues(start, limit));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-priorities"})
+    public Response getPriorities(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam int limit) {
+        return Response.withData(priorityService.getPriorities(start, limit));
     }
 
 

@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Priority extends TableImpl<PriorityRecord> {
 
-	private static final long serialVersionUID = -1714447714;
+	private static final long serialVersionUID = 1470155919;
 
 	/**
 	 * The reference instance of <code>public.priority</code>
@@ -67,9 +67,9 @@ public class Priority extends TableImpl<PriorityRecord> {
 	public final TableField<PriorityRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
-	 * The column <code>public.priority.type_id</code>.
+	 * The column <code>public.priority.user_id</code>.
 	 */
-	public final TableField<PriorityRecord, Integer> TYPE_ID = createField("type_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+	public final TableField<PriorityRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>public.priority.create_date</code>.

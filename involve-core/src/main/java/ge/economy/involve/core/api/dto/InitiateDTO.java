@@ -33,7 +33,7 @@ public class InitiateDTO {
         dto.setGroupId(record.getValue(Tables.INITIATE.GROUP_ID));
         dto.setSphereId(record.getValue(Tables.INITIATE.SPHERE_ID));
         dto.setDescription(record.getValue(Tables.INITIATE.DESCRIPTION));
-        dto.setUserName(record.getValue(Tables.USERS.FIRST_NAME) + " " + record.getValue(Tables.USERS.LAST_NAME) + " " + record.getValue(Tables.USERS.ORG_NAME));
+        dto.setUserName(record.getValue(Tables.USERS.ORG_NAME) == null ? record.getValue(Tables.USERS.FIRST_NAME) + " " + record.getValue(Tables.USERS.LAST_NAME) : record.getValue(Tables.USERS.ORG_NAME));
         dto.setCreateDate(record.getValue(Tables.INITIATE.CREATE_DATE));
         return dto;
     }

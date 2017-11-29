@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PriorityRecord extends UpdatableRecordImpl<PriorityRecord> implements Record5<Integer, String, String, Integer, Date> {
 
-	private static final long serialVersionUID = 1867872281;
+	private static final long serialVersionUID = -382674520;
 
 	/**
 	 * Setter for <code>public.priority.id</code>.
@@ -75,16 +75,16 @@ public class PriorityRecord extends UpdatableRecordImpl<PriorityRecord> implemen
 	}
 
 	/**
-	 * Setter for <code>public.priority.type_id</code>.
+	 * Setter for <code>public.priority.user_id</code>.
 	 */
-	public void setTypeId(Integer value) {
+	public void setUserId(Integer value) {
 		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>public.priority.type_id</code>.
+	 * Getter for <code>public.priority.user_id</code>.
 	 */
-	public Integer getTypeId() {
+	public Integer getUserId() {
 		return (Integer) getValue(3);
 	}
 
@@ -163,7 +163,7 @@ public class PriorityRecord extends UpdatableRecordImpl<PriorityRecord> implemen
 	 */
 	@Override
 	public Field<Integer> field4() {
-		return Priority.PRIORITY.TYPE_ID;
+		return Priority.PRIORITY.USER_ID;
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class PriorityRecord extends UpdatableRecordImpl<PriorityRecord> implemen
 	 */
 	@Override
 	public Integer value4() {
-		return getTypeId();
+		return getUserId();
 	}
 
 	/**
@@ -246,7 +246,7 @@ public class PriorityRecord extends UpdatableRecordImpl<PriorityRecord> implemen
 	 */
 	@Override
 	public PriorityRecord value4(Integer value) {
-		setTypeId(value);
+		setUserId(value);
 		return this;
 	}
 
@@ -286,13 +286,13 @@ public class PriorityRecord extends UpdatableRecordImpl<PriorityRecord> implemen
 	/**
 	 * Create a detached, initialised PriorityRecord
 	 */
-	public PriorityRecord(Integer id, String name, String description, Integer typeId, Date createDate) {
+	public PriorityRecord(Integer id, String name, String description, Integer userId, Date createDate) {
 		super(Priority.PRIORITY);
 
 		setValue(0, id);
 		setValue(1, name);
 		setValue(2, description);
-		setValue(3, typeId);
+		setValue(3, userId);
 		setValue(4, createDate);
 	}
 }
