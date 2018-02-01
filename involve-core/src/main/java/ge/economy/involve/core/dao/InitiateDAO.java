@@ -20,7 +20,7 @@ public class InitiateDAO extends AbstractDAO {
                         .from(Tables.INITIATE)
                         .join(Tables.SPHERE)
                         .on(Tables.INITIATE.SPHERE_ID.eq(Tables.SPHERE.ID))
-                        .join(Tables.USERS)
+                        .leftJoin(Tables.USERS)
                         .on(Tables.INITIATE.USER_ID.eq(Tables.USERS.ID));
 
         selectConditionStep.where();
@@ -60,8 +60,24 @@ public class InitiateDAO extends AbstractDAO {
         return map;
     }
 
+    public int getInitiatedIssueVoteCount(int initiatedIssueId) {
+        return dslContext.selectCount().
+                from(Tables.INITIATIVE_VOTE).
+                where(Tables.INITIATIVE_VOTE.INITIATED_ISSUE_ID.eq(initiatedIssueId)).
+                and(Tables.INITIATIVE_VOTE.AGREED.eq(true)).
+                fetchOne().into(Integer.class);
+    }
+
     public InitiatedIssueRecord getInitiatedIssueObjectById(int id) {
         return dslContext.fetchOne(Tables.INITIATED_ISSUE, Tables.INITIATED_ISSUE.ID.eq(id));
+    }
+
+    public InitiativeVoteRecord getInitiativeVoteObjectById(int id) {
+        return dslContext.fetchOne(Tables.INITIATIVE_VOTE, Tables.INITIATIVE_VOTE.ID.eq(id));
+    }
+
+    public PriorityVoteRecord getPriorityVoteObjectById(int id) {
+        return dslContext.fetchOne(Tables.PRIORITY_VOTE, Tables.PRIORITY_VOTE.ID.eq(id));
     }
 
     public void deleteIssue(int itemId) {
@@ -72,6 +88,6 @@ public class InitiateDAO extends AbstractDAO {
     public List<Record> getSpheres() {
         return dslContext.select()
                 .from(Tables.SPHERE)
-                .orderBy(Tables.SPHERE.ID.desc()).fetch();
+                .orderBy(Tables.SPHERE.ID).fetch();
     }
 }

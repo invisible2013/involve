@@ -1,7 +1,7 @@
 <!-- footer content -->
 <footer>
     <div class="pull-right">
-        Chaerte.ge All Right Reserved. Economy.ge 2017
+       You.gov.ge All Right Reserved. Economy.ge 2017
     </div>
     <div class="clearfix"></div>
 </footer>

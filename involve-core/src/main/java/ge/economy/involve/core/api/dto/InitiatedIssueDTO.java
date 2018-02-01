@@ -19,16 +19,19 @@ public class InitiatedIssueDTO {
     private Integer groupId;
     private Integer sphereId;
     private String sphereName;
+    private String name;
     private String description;
     private String userName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
+    private Integer voteCount;
 
 
     public static InitiatedIssueDTO translate(Record record) {
         InitiatedIssueDTO dto = new InitiatedIssueDTO();
         dto.setId(record.getValue(Tables.INITIATED_ISSUE.ID));
         dto.setUserId(record.getValue(Tables.INITIATED_ISSUE.CREATOR_ID));
+        dto.setName(record.getValue(Tables.INITIATED_ISSUE.NAME));
         dto.setDescription(record.getValue(Tables.INITIATED_ISSUE.DESCRIPTION));
         dto.setUserName(record.getValue(Tables.USERS.ORG_NAME) == null ? record.getValue(Tables.USERS.FIRST_NAME) + " " + record.getValue(Tables.USERS.LAST_NAME) : record.getValue(Tables.USERS.ORG_NAME));
         dto.setCreateDate(record.getValue(Tables.INITIATED_ISSUE.CREATE_DATE));
@@ -106,5 +109,21 @@ public class InitiatedIssueDTO {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
     }
 }

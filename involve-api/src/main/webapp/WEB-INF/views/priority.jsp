@@ -15,6 +15,7 @@
         $scope.limit = 20;
         $scope.size = 0;
         $scope.loadCount = 0;
+        $scope.selectedPriorityName = "";
 
 
         function getSuccessSportsmans(res) {
@@ -61,6 +62,14 @@
                 if (itemId != undefined) {
                     ajaxCall($http, "priority/delete-priority?itemId=" + itemId, null, reload);
                 }
+            }
+        };
+
+        $scope.voteItem = function (item) {
+            if (item != undefined) {
+                $scope.voteResult = item.priorityVoteResult;
+                $scope.votes = item.priorityVotes;
+                $scope.selectedPriorityName = item.name;
             }
         };
 
@@ -111,52 +120,54 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="reformViewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+    <div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
          aria-hidden="true" style="display: none;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="viewModalLabel">რეფორმის დეტალური ინფორმაცია</h4>
+                    <h4 class="modal-title" id="voteModalLabel">დეტალური ინფორმაცია</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-
-                        <table class="table table-striped">
+                        <h5>დასახელება: {{selectedPriorityName}}</h5>
+                        <table class="table table-striped table-hover">
+                            <thead>
                             <tr>
-                                <th class="col-md-4 text-right">რეფორმის დასახელება :</th>
-                                <td>{{reform.name}}</td>
+                                <th>ვარსკვლავების რაოდენობა</th>
+                                <th>ხმები</th>
                             </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="r in voteResult">
+                                <td>
+                                    {{r.answerId}}
+                                </td>
+                                <td>
+                                    <a>{{r.answerCount}}</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <h5>მომხმარებლების შედეგი</h5>
+                        <table class="table table-striped table-hover">
+                            <thead>
                             <tr>
-                                <th class="col-md-4 text-right">რეფორმის ტიპი :</th>
-                                <td>{{reform.reformTypeName}}</td>
+                                <th>მომხმარებელი</th>
+                                <th>ვარსკვლავი</th>
                             </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">ზოგადი ინფორმაცია :</th>
-                                <td>{{reform.generalInfo}}</td>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="r in votes">
+                                <td>
+                                    {{r.clientUID}}
+                                </td>
+                                <td>
+                                    <a>{{r.answerId}}</a>
+                                </td>
                             </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">საერთაშორისო გამოცდილება :</th>
-                                <td>{{reform.experience}}</td>
-                            </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">1 პროგრეს ბარი :</th>
-                                <td>{{reform.progressBarName1}} {{reform.progressBarPercent1}}%</td>
-                            </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">2 პროგრეს ბარი :</th>
-                                <td>{{reform.progressBarName2}} {{reform.progressBarPercent2}}%</td>
-                            </tr>
-                            <tr ng-show="reform.progressBarPercent3>0">
-                                <th class="col-md-4 text-right">3 პროგრეს ბარი :</th>
-                                <td>{{reform.progressBarName3}} {{reform.progressBarPercent3}}%</td>
-                            </tr>
-                            <tr ng-repeat="d in reform.reformDetails">
-                                <th class="col-md-4 text-right">{{d.name}} :</th>
-                                <td>{{d.value}}</td>
-                            </tr>
+                            </tbody>
                         </table>
 
                     </div>
@@ -243,6 +254,8 @@
                                             class="fa fa-pencil"></i> შეცვლა</a>
                                     <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
                                             class="fa fa-trash-o"></i> წაშლა</a>
+                                    <a data-toggle="modal" data-target="#voteModal" ng-click="voteItem(r)"
+                                       class="btn btn-default btn-xs"><i class="fa fa-info"></i> ხმები</a>
                                 </td>
                             </tr>
                             </tbody>

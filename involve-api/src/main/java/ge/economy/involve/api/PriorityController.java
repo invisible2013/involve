@@ -28,7 +28,7 @@ public class PriorityController {
     @ResponseBody
     @RequestMapping({"/get-priorities"})
     public Response getPriorities(@RequestParam("start") int start, @RequestParam("limit") int limit) {
-        return Response.withData(priorityService.getPriorities(start, limit));
+        return Response.withData(priorityService.getPrioritiesWithResult(start, limit));
     }
 
 

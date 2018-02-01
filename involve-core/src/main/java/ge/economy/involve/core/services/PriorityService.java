@@ -1,6 +1,8 @@
 package ge.economy.involve.core.services;
 
 import ge.economy.involve.core.api.dto.PriorityDTO;
+import ge.economy.involve.core.api.dto.PriorityVoteDTO;
+import ge.economy.involve.core.api.dto.PriorityVotePojo;
 import ge.economy.involve.core.api.request.AddPriorityRequest;
 import ge.economy.involve.core.dao.PriorityDAO;
 import ge.economy.involve.database.database.Tables;
@@ -43,11 +45,42 @@ public class PriorityService {
         return null;
     }
 
+    public void getPriorityVoteResult(List<PriorityDTO> items) {
+        for (PriorityDTO item : items) {
+            List<PriorityVotePojo> votes = priorityDAO.getPriorityVoteResult(item.getId());
+            double sumScores = 0;
+            double sumVotes = 0;
+            for (PriorityVotePojo pojo : votes) {
+                sumScores += pojo.getAnswerId() * pojo.getAnswerCount();
+                sumVotes += pojo.getAnswerCount();
+            }
+            if (sumVotes > 0) {
+                item.setAnswerId((int) Math.ceil(sumScores / sumVotes));
+            }
+        }
+    }
+
     public HashMap<String, Object> getPriorities(int start, int limit) {
         new HashMap();
         HashMap<String, Object> resultMap = new HashMap();
         HashMap<String, Object> map = priorityDAO.getPriorities(start, limit);
         List<PriorityDTO> items = PriorityDTO.translateArray((List) map.get("list"));
+        getPriorityVoteResult(items);
+        resultMap.put("list", items);
+        resultMap.put("size", map.get("size"));
+        return resultMap;
+    }
+
+    public HashMap<String, Object> getPrioritiesWithResult(int start, int limit) {
+        new HashMap();
+        HashMap<String, Object> resultMap = new HashMap();
+        HashMap<String, Object> map = priorityDAO.getPriorities(start, limit);
+        List<PriorityDTO> items = PriorityDTO.translateArray((List) map.get("list"));
+        getPriorityVoteResult(items);
+        for (PriorityDTO item : items) {
+            item.setPriorityVotes(PriorityVoteDTO.translateArray(priorityDAO.getPriorityVotes(item.getId())));
+            item.setPriorityVoteResult(priorityDAO.getPriorityVoteResult(item.getId()));
+        }
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
         return resultMap;

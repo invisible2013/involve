@@ -4,6 +4,7 @@
 package ge.economy.involve.database.database;
 
 
+import ge.economy.involve.database.database.tables.AgeRange;
 import ge.economy.involve.database.database.tables.FileType;
 import ge.economy.involve.database.database.tables.Gender;
 import ge.economy.involve.database.database.tables.Initiate;
@@ -47,6 +48,11 @@ import javax.annotation.Generated;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+	/**
+	 * The table public.age_range
+	 */
+	public static final AgeRange AGE_RANGE = ge.economy.involve.database.database.tables.AgeRange.AGE_RANGE;
 
 	/**
 	 * The table public.file_type

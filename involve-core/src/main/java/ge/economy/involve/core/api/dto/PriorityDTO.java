@@ -16,9 +16,12 @@ public class PriorityDTO {
 
     private Integer id;
     private Integer userId;
+    private Integer answerId;
     private String name;
     private String userName;
     private String description;
+    private List<PriorityVotePojo> priorityVoteResult;
+    private List<PriorityVoteDTO> priorityVotes;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
 
@@ -89,5 +92,29 @@ public class PriorityDTO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Integer getAnswerId() {
+        return answerId;
+    }
+
+    public void setAnswerId(Integer answerId) {
+        this.answerId = answerId;
+    }
+
+    public List<PriorityVotePojo> getPriorityVoteResult() {
+        return priorityVoteResult;
+    }
+
+    public void setPriorityVoteResult(List<PriorityVotePojo> priorityVoteResult) {
+        this.priorityVoteResult = priorityVoteResult;
+    }
+
+    public List<PriorityVoteDTO> getPriorityVotes() {
+        return priorityVotes;
+    }
+
+    public void setPriorityVotes(List<PriorityVoteDTO> priorityVotes) {
+        this.priorityVotes = priorityVotes;
     }
 }

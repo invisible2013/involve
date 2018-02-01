@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ge.economy.involve.core.jsonhelper.JsonDateSerializeSupport;
 import ge.economy.involve.database.database.Tables;
 import org.jooq.Record;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +20,10 @@ public class InitiateDTO {
     private Integer groupId;
     private Integer sphereId;
     private String sphereName;
+    private String name;
     private String description;
+    private String necessity;
+    private String advantages;
     private String userName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
@@ -32,8 +36,14 @@ public class InitiateDTO {
         dto.setUserId(record.getValue(Tables.INITIATE.USER_ID));
         dto.setGroupId(record.getValue(Tables.INITIATE.GROUP_ID));
         dto.setSphereId(record.getValue(Tables.INITIATE.SPHERE_ID));
+        dto.setSphereName(record.getValue(Tables.SPHERE.NAME));
+        dto.setName(record.getValue(Tables.INITIATE.NAME));
         dto.setDescription(record.getValue(Tables.INITIATE.DESCRIPTION));
-        dto.setUserName(record.getValue(Tables.USERS.ORG_NAME) == null ? record.getValue(Tables.USERS.FIRST_NAME) + " " + record.getValue(Tables.USERS.LAST_NAME) : record.getValue(Tables.USERS.ORG_NAME));
+        dto.setAdvantages(record.getValue(Tables.INITIATE.ADVANTAGES));
+        dto.setNecessity(record.getValue(Tables.INITIATE.NECESSITY));
+        if (dto.getUserId() != null && dto.getUserId() != 0 && Tables.USERS != null) {
+            dto.setUserName(record.getValue(Tables.USERS.ORG_NAME) == null ? record.getValue(Tables.USERS.FIRST_NAME) + " " + record.getValue(Tables.USERS.LAST_NAME) : record.getValue(Tables.USERS.ORG_NAME));
+        }
         dto.setCreateDate(record.getValue(Tables.INITIATE.CREATE_DATE));
         return dto;
     }
@@ -117,5 +127,29 @@ public class InitiateDTO {
 
     public void setYesCount(int yesCount) {
         this.yesCount = yesCount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNecessity() {
+        return necessity;
+    }
+
+    public void setNecessity(String necessity) {
+        this.necessity = necessity;
+    }
+
+    public String getAdvantages() {
+        return advantages;
+    }
+
+    public void setAdvantages(String advantages) {
+        this.advantages = advantages;
     }
 }

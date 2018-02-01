@@ -22,6 +22,8 @@ public class AddUserRequest {
     private int statusId;
     private int groupId;
     private int genderId;
+    private int ageRangeId;
+    private int sphereId;
     private boolean isApproved;
 
     public Integer getId() {
@@ -126,5 +128,21 @@ public class AddUserRequest {
 
     public void setApproved(boolean approved) {
         isApproved = approved;
+    }
+
+    public int getAgeRangeId() {
+        return ageRangeId;
+    }
+
+    public void setAgeRangeId(int ageRangeId) {
+        this.ageRangeId = ageRangeId;
+    }
+
+    public int getSphereId() {
+        return sphereId;
+    }
+
+    public void setSphereId(int sphereId) {
+        this.sphereId = sphereId;
     }
 }

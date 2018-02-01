@@ -4,6 +4,7 @@
 package ge.economy.involve.database.database;
 
 
+import ge.economy.involve.database.database.tables.AgeRange;
 import ge.economy.involve.database.database.tables.FileType;
 import ge.economy.involve.database.database.tables.Gender;
 import ge.economy.involve.database.database.tables.Initiate;
@@ -31,6 +32,7 @@ import ge.economy.involve.database.database.tables.UserRegister;
 import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
+import ge.economy.involve.database.database.tables.records.AgeRangeRecord;
 import ge.economy.involve.database.database.tables.records.FileTypeRecord;
 import ge.economy.involve.database.database.tables.records.GenderRecord;
 import ge.economy.involve.database.database.tables.records.InitiateRecord;
@@ -84,6 +86,7 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<AgeRangeRecord, Integer> IDENTITY_AGE_RANGE = Identities0.IDENTITY_AGE_RANGE;
 	public static final Identity<FileTypeRecord, Integer> IDENTITY_FILE_TYPE = Identities0.IDENTITY_FILE_TYPE;
 	public static final Identity<GenderRecord, Integer> IDENTITY_GENDER = Identities0.IDENTITY_GENDER;
 	public static final Identity<InitiateRecord, Integer> IDENTITY_INITIATE = Identities0.IDENTITY_INITIATE;
@@ -116,6 +119,7 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final UniqueKey<AgeRangeRecord> AGE_RANGE_PKEY = UniqueKeys0.AGE_RANGE_PKEY;
 	public static final UniqueKey<FileTypeRecord> FILE_TYPE_PKEY = UniqueKeys0.FILE_TYPE_PKEY;
 	public static final UniqueKey<GenderRecord> GENDER_PKEY = UniqueKeys0.GENDER_PKEY;
 	public static final UniqueKey<InitiateRecord> INITIATE_PKEY = UniqueKeys0.INITIATE_PKEY;
@@ -154,6 +158,7 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	private static class Identities0 extends AbstractKeys {
+		public static Identity<AgeRangeRecord, Integer> IDENTITY_AGE_RANGE = createIdentity(AgeRange.AGE_RANGE, AgeRange.AGE_RANGE.ID);
 		public static Identity<FileTypeRecord, Integer> IDENTITY_FILE_TYPE = createIdentity(FileType.FILE_TYPE, FileType.FILE_TYPE.ID);
 		public static Identity<GenderRecord, Integer> IDENTITY_GENDER = createIdentity(Gender.GENDER, Gender.GENDER.ID);
 		public static Identity<InitiateRecord, Integer> IDENTITY_INITIATE = createIdentity(Initiate.INITIATE, Initiate.INITIATE.ID);
@@ -184,6 +189,7 @@ public class Keys {
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
+		public static final UniqueKey<AgeRangeRecord> AGE_RANGE_PKEY = createUniqueKey(AgeRange.AGE_RANGE, AgeRange.AGE_RANGE.ID);
 		public static final UniqueKey<FileTypeRecord> FILE_TYPE_PKEY = createUniqueKey(FileType.FILE_TYPE, FileType.FILE_TYPE.ID);
 		public static final UniqueKey<GenderRecord> GENDER_PKEY = createUniqueKey(Gender.GENDER, Gender.GENDER.ID);
 		public static final UniqueKey<InitiateRecord> INITIATE_PKEY = createUniqueKey(Initiate.INITIATE, Initiate.INITIATE.ID);

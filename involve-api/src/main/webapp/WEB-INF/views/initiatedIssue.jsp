@@ -97,6 +97,11 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-sm-12">
+                            <label class="control-label">დასახელება</label>
+                            <textarea rows="4" ng-model="item.name" class="form-control ng-pristine ng-valid">
+                            </textarea>
+                        </div>
+                        <div class="form-group col-sm-12">
                             <label class="control-label">აღწერა</label>
                             <textarea rows="4" ng-model="item.description" class="form-control ng-pristine ng-valid">
                             </textarea>
@@ -112,61 +117,6 @@
     </div>
 
 
-    <div class="modal fade" id="reformViewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
-         aria-hidden="true" style="display: none;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="viewModalLabel">რეფორმის დეტალური ინფორმაცია</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-
-                        <table class="table table-striped">
-                            <tr>
-                                <th class="col-md-4 text-right">რეფორმის დასახელება :</th>
-                                <td>{{reform.name}}</td>
-                            </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">რეფორმის ტიპი :</th>
-                                <td>{{reform.reformTypeName}}</td>
-                            </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">ზოგადი ინფორმაცია :</th>
-                                <td>{{reform.generalInfo}}</td>
-                            </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">საერთაშორისო გამოცდილება :</th>
-                                <td>{{reform.experience}}</td>
-                            </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">1 პროგრეს ბარი :</th>
-                                <td>{{reform.progressBarName1}} {{reform.progressBarPercent1}}%</td>
-                            </tr>
-                            <tr>
-                                <th class="col-md-4 text-right">2 პროგრეს ბარი :</th>
-                                <td>{{reform.progressBarName2}} {{reform.progressBarPercent2}}%</td>
-                            </tr>
-                            <tr ng-show="reform.progressBarPercent3>0">
-                                <th class="col-md-4 text-right">3 პროგრეს ბარი :</th>
-                                <td>{{reform.progressBarName3}} {{reform.progressBarPercent3}}%</td>
-                            </tr>
-                            <tr ng-repeat="d in reform.reformDetails">
-                                <th class="col-md-4 text-right">{{d.name}} :</th>
-                                <td>{{d.value}}</td>
-                            </tr>
-                        </table>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="">
         <div class="page-title">
@@ -215,7 +165,7 @@
                             <tr>
                                 <th style="width: 1%">#</th>
                                 <th>ადმინისტრატორი</th>
-                                <th>სფერო</th>
+                                <th>დასახელება</th>
                                 <th>აღწერა</th>
                                 <th style="width: 23%">#Edit</th>
                             </tr>
@@ -232,7 +182,7 @@
                                     <small>თარიღი: {{r.createDate}}</small>
                                 </td>
                                 <td>
-                                    {{r.sphereName}}
+                                    {{r.name}}
                                 </td>
                                 <td>
                                     {{r.description}}

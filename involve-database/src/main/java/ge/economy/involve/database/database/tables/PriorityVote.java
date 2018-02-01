@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PriorityVote extends TableImpl<PriorityVoteRecord> {
 
-	private static final long serialVersionUID = 106061321;
+	private static final long serialVersionUID = -530115963;
 
 	/**
 	 * The reference instance of <code>public.priority_vote</code>
@@ -85,6 +85,16 @@ public class PriorityVote extends TableImpl<PriorityVoteRecord> {
 	 * The column <code>public.priority_vote.create_date</code>.
 	 */
 	public final TableField<PriorityVoteRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
+
+	/**
+	 * The column <code>public.priority_vote.client_uid</code>.
+	 */
+	public final TableField<PriorityVoteRecord, String> CLIENT_UID = createField("client_uid", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+	/**
+	 * The column <code>public.priority_vote.ip_address</code>.
+	 */
+	public final TableField<PriorityVoteRecord, String> IP_ADDRESS = createField("ip_address", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * Create a <code>public.priority_vote</code> table reference

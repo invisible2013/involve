@@ -14,6 +14,9 @@ public class AddInitiateRequest {
     private Integer userId;
     private Integer groupId;
     private Integer sphereId;
+    private String name;
+    private String necessity;
+    private String advantages;
     private String description;
     private String ipAddress;
     private String clientUID;
@@ -73,5 +76,29 @@ public class AddInitiateRequest {
 
     public void setClientUID(String clientUID) {
         this.clientUID = clientUID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNecessity() {
+        return necessity;
+    }
+
+    public void setNecessity(String necessity) {
+        this.necessity = necessity;
+    }
+
+    public String getAdvantages() {
+        return advantages;
+    }
+
+    public void setAdvantages(String advantages) {
+        this.advantages = advantages;
     }
 }

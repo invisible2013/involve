@@ -1,7 +1,7 @@
 package ge.economy.involve.utils.email;
 
 /**
- * Created by mindia on 6/30/16.
+ * Created by nino on 6/30/16.
  */
 
 import org.apache.log4j.Logger;
@@ -22,17 +22,21 @@ import java.util.Properties;
 
 public class SendEmailWithAttachment {
 
-    private String from = "chaertege@gmail.com";
+    private String from = "info@you.gov.ge";
     private String to = "";
     private List<FileAttachment> fileUrls = new ArrayList<>();
-    private String subject = "CHAERTE";
+    private String subject = "YOU.GOV.GE Registration";
     private String body = "";
     private String auth = "true";
-    private String host = "smtp.gmail.com";
-    private String port = "587";
+    //private String host = "smtp.gmail.com";
+    private String host = "mail.economy.ge";
+    //private String port = "587";
+    private String port = "443";
     private String starttls = "true";
-    private String username = "chaertege@gmail.com";
-    private String password = "chaertege@";
+    //private String username = "chaertege@gmail.com";
+    //private String password = "chaertege@";
+    private String username = "info@you.gov.ge";
+    private String password = "4rfv%TGB";
 
     private static final Logger logger = Logger.getLogger(SendEmailWithAttachment.class);
 
@@ -255,8 +259,8 @@ public class SendEmailWithAttachment {
 
         SendEmailWithAttachment attachment = new SendEmailWithAttachment();
         attachment.body = "test body";
-        attachment.to = "javagc12@gmail.com";
-//        attachment.fileUrls = Arrays.asList("/Users/mindia/Desktop/app_icon_1024.png", "/Users/mindia/Desktop/Homework.pages");
+        attachment.to = "nino.lomineisvili@gmail.com";
+//        attachment.fileUrls = Arrays.asList("/Users/nino/Desktop/app_icon_1024.png", "/Users/nino/Desktop/Homework.pages");
         attachment.send();
     }
 }

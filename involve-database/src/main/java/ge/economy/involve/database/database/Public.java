@@ -4,6 +4,7 @@
 package ge.economy.involve.database.database;
 
 
+import ge.economy.involve.database.database.tables.AgeRange;
 import ge.economy.involve.database.database.tables.FileType;
 import ge.economy.involve.database.database.tables.Gender;
 import ge.economy.involve.database.database.tables.Initiate;
@@ -56,7 +57,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -2015227249;
+	private static final long serialVersionUID = -1550206419;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -79,6 +80,7 @@ public class Public extends SchemaImpl {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
+			Sequences.AGE_RANGE_ID_SEQ,
 			Sequences.FILE_TYPE_ID_SEQ,
 			Sequences.GENDER_ID_SEQ,
 			Sequences.INITIATED_ISSUE_ID_SEQ,
@@ -117,6 +119,7 @@ public class Public extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
+			AgeRange.AGE_RANGE,
 			FileType.FILE_TYPE,
 			Gender.GENDER,
 			Initiate.INITIATE,

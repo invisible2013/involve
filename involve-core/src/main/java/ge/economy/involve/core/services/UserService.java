@@ -8,6 +8,7 @@ import ge.economy.involve.core.api.request.AddUserRequest;
 import ge.economy.involve.core.dao.UserDAO;
 import ge.economy.involve.core.execptions.IncorectUserCredentialsException;
 import ge.economy.involve.core.execptions.MailAlreadyUsedException;
+import ge.economy.involve.core.execptions.MissingParameterException;
 import ge.economy.involve.core.execptions.UserNotFoundWithKeyException;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.UserRegister;
@@ -17,6 +18,7 @@ import ge.economy.involve.database.database.tables.records.UsersRecord;
 import ge.economy.involve.utils.DateTimeUtils;
 import ge.economy.involve.utils.MD5Provider;
 import ge.economy.involve.utils.email.EmailNotSentException;
+import ge.economy.involve.utils.email.SendEmail;
 import ge.economy.involve.utils.email.SendEmailWithAttachment;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -40,10 +42,29 @@ public class UserService {
     private DSLContext dslContext;
 
 
-    public void registrationUser(AddUserRequest request) throws EmailNotSentException, MailAlreadyUsedException {
+    public void registrationUser(AddUserRequest request) throws EmailNotSentException, MailAlreadyUsedException, MissingParameterException {
         UsersRecord oldUser = userDAO.getUserByMail(request.getEmail());
         if (oldUser != null) {
             throw new MailAlreadyUsedException();
+        }
+        if (request.getTypeId() == UserDTO.USER_PHISICAL) {
+            if (request.getFirstName() == null || request.getFirstName().length() < 1) {
+                throw new MissingParameterException();
+            }
+            if (request.getLastName() == null || request.getLastName().length() < 1) {
+                throw new MissingParameterException();
+            }
+        }
+        if (request.getTypeId() == UserDTO.USER_JURIDICAL) {
+            if (request.getOrgName() == null || request.getOrgName().length() < 1) {
+                throw new MissingParameterException();
+            }
+        }
+        if (request.getPhone() == null || request.getPhone().length() < 1) {
+            throw new MissingParameterException();
+        }
+        if (request.getPassword() == null || request.getPassword().length() < 1) {
+            throw new MissingParameterException();
         }
         request.setApproved(false);
         request.setGroupId(UserDTO.USER_GROUP_USER);
@@ -55,21 +76,21 @@ public class UserService {
         record.setKey(UUID.randomUUID().toString());
         record.setIsExpired(false);
         record.store();
-        SendEmailWithAttachment mailSender = new SendEmailWithAttachment();
+        SendEmail mailSender = new SendEmail();
         mailSender.setTo(user.getEmail());
-        mailSender.setBody("                         <p>მოგესალმებით <b>" + user.getName() + "</b></p>\n" +
-                "                                    <p>ეს არის აქტივაციის ლინკი თქვენი მომხმარებლისთვის საიტზე chaerte.ge \n" +
-                "                                    <p></p>\n" +
-                "                                    <p>თქვენი ანგარიში არის: <b>" + user.getEmail() + "</b></p>\n" +
-                "                                    <p></p>\n" +
-                "                                    <p>აქტივაციის ლინკი:</p>\n" +
-                "                                    <p></p>\n" +
-                "                                    <p>http://chaerte.ge/activate.php?activateId=" + record.getKey() + "</p>\n" +
-                "                                    <p></p>\n" +
-                "                                    <p>იმედი გვაქვს რომ მალე გიხილავთ!</p>\n" +
-                "                                    <br/>\n" +
-                "                                    <p>მადლობა,</p>\n" +
-                "                                    <p>ეკონომიკის და მდგრადი განვითარების სამინისტრო</p>\n");
+        mailSender.setBody("მოგესალმებით " + user.getName() + "\n" +
+                "ეს არის აქტივაციის ლინკი თქვენი მომხმარებლისთვის საიტზე you.gov.ge \n" +
+                "\n" +
+                "თქვენი ანგარიში არის: " + user.getEmail() + "\n" +
+                "                                    \n" +
+                "აქტივაციის ლინკი:\n" +
+                "                                    \n" +
+                "http://www.you.gov.ge/?pg=activate&activateId=" + record.getKey() + "\n" +
+                "                                    \n" +
+                "იმედი გვაქვს რომ მალე გიხილავთ!\n" +
+                "                                    \n" +
+                "მადლობა,\n" +
+                "ეკონომიკის და მდგრადი განვითარების სამინისტრო\n");
         mailSender.send();
     }
 
@@ -79,7 +100,7 @@ public class UserService {
             userDAO.updateUserActivation(user.getUserId());
             userDAO.updateUserRegistration(user.getId());
         } else {
-            throw new UserNotFoundWithKeyException("აქტივაციის კოდი უკვე არ არსებობს, თავიდან გაიარეთ რეგისტრაცია");
+            throw new UserNotFoundWithKeyException("აქტივაციის კოდი არ არსებობს, თავიდან გაიარეთ რეგისტრაცია");
         }
     }
 
@@ -100,6 +121,7 @@ public class UserService {
             record.setFirstName(request.getFirstName());
             record.setLastName(request.getLastName());
             record.setGenderId(request.getGenderId());
+            record.setAgeRangeId(request.getAgeRangeId());
         } else {
             record.setOrgName(request.getOrgName());
         }
@@ -109,6 +131,7 @@ public class UserService {
         record.setUserTypeId(request.getTypeId());
         record.setUserGroupId(request.getGroupId());
         record.setStatusId(request.getStatusId());
+        record.setSphereId(request.getSphereId());
         if (request.getPassword() != null) {
             record.setPassword(MD5Provider.doubleMd5(request.getPassword()));
         }
@@ -116,8 +139,8 @@ public class UserService {
             record.setIsApproved(true);
         }
 
-
         if (newRecord) {
+            record.setCreateDate(new Date());
             record.store();
         } else {
             record.update();
@@ -175,6 +198,10 @@ public class UserService {
 
     public List<GenderDTO> getGenders() {
         return GenderDTO.translateArray(userDAO.getGenders());
+    }
+
+    public List<GenderDTO> getAgeRanges() {
+        return GenderDTO.translateArray(userDAO.getAgeRanges());
     }
 
     public void deleteUser(int itemId) {

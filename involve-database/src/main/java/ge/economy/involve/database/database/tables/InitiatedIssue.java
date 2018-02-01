@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InitiatedIssue extends TableImpl<InitiatedIssueRecord> {
 
-	private static final long serialVersionUID = -2108756204;
+	private static final long serialVersionUID = 1244860769;
 
 	/**
 	 * The reference instance of <code>public.initiated_issue</code>
@@ -70,6 +70,11 @@ public class InitiatedIssue extends TableImpl<InitiatedIssueRecord> {
 	 * The column <code>public.initiated_issue.creator_id</code>.
 	 */
 	public final TableField<InitiatedIssueRecord, Integer> CREATOR_ID = createField("creator_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>public.initiated_issue.name</code>.
+	 */
+	public final TableField<InitiatedIssueRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * Create a <code>public.initiated_issue</code> table reference

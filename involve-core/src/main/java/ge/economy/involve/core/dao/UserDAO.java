@@ -72,6 +72,14 @@ public class UserDAO extends AbstractDAO {
                 fetch();
     }
 
+    public List<Record> getAgeRanges() {
+        return dslContext.
+                select().
+                from(Tables.AGE_RANGE).
+                orderBy(Tables.AGE_RANGE.ID).
+                fetch();
+    }
+
     public List<UsersRecord> search(String userName) {
 
         SelectConditionStep<Record> selectConditionStep =

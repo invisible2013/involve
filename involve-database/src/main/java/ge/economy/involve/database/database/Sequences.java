@@ -24,6 +24,11 @@ import org.jooq.impl.SequenceImpl;
 public class Sequences {
 
 	/**
+	 * The sequence <code>public.age_range_id_seq</code>
+	 */
+	public static final Sequence<Long> AGE_RANGE_ID_SEQ = new SequenceImpl<Long>("age_range_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.file_type_id_seq</code>
 	 */
 	public static final Sequence<Long> FILE_TYPE_ID_SEQ = new SequenceImpl<Long>("file_type_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));

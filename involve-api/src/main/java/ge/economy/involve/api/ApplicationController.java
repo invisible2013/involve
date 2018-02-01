@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ge.economy.involve.core.api.dto.QuestionAnswer;
 import ge.economy.involve.core.api.dto.UserDTO;
-import ge.economy.involve.core.api.request.AddInitiateRequest;
-import ge.economy.involve.core.api.request.AddReformVoteRequest;
-import ge.economy.involve.core.api.request.AddUserRequest;
-import ge.economy.involve.core.api.request.AddVoteRequest;
+import ge.economy.involve.core.api.request.*;
 import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
 import ge.economy.involve.core.execptions.*;
 import ge.economy.involve.core.response.Response;
@@ -60,13 +57,16 @@ public class ApplicationController {
 
     @ResponseBody
     @RequestMapping({"/save-initiate"})
-    public Response saveInitiate(@RequestParam int sphereId, @RequestParam String description, @RequestParam String ipAddress,
-                                 @RequestParam String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
+    public Response saveInitiate(@RequestParam int sphereId, @RequestParam String name, @RequestParam String description, @RequestParam String necessity, @RequestParam String advantages,
+                                 @RequestParam String ipAddress, @RequestParam(required = false, defaultValue = "") String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
         AddInitiateRequest request = new AddInitiateRequest();
         request.setUserId(userId);
         request.setSphereId(sphereId);
+        request.setName(name);
         request.setDescription(description);
-        request.setIpAddress(description);
+        request.setNecessity(necessity);
+        request.setAdvantages(advantages);
+        request.setIpAddress(ipAddress);
         request.setClientUID(clientUID);
         return Response.withData(initiateService.saveInitiate(request));
     }
@@ -75,14 +75,26 @@ public class ApplicationController {
     @RequestMapping({"/save-priority"})
     public Response savePriority(@RequestParam int priorityId, @RequestParam int answerId, @RequestParam String ipAddress,
                                  @RequestParam String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
-        return Response.withData(true);
+        AddPriorityVoteRequest request = new AddPriorityVoteRequest();
+        request.setUserId(userId);
+        request.setPriorityId(priorityId);
+        request.setAnswerId(answerId);
+        request.setIpAddress(ipAddress);
+        request.setClientUID(clientUID);
+        return Response.withData(initiateService.savePriorityVote(request));
     }
 
     @ResponseBody
     @RequestMapping({"/save-initiate-issue"})
-    public Response saveInitiateIssue(@RequestParam int initiateIssueId, @RequestParam int answerId, @RequestParam String ipAddress,
+    public Response saveInitiateIssue(@RequestParam int initiateIssueId, @RequestParam boolean agreed, @RequestParam String ipAddress,
                                       @RequestParam String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
-        return Response.withData(true);
+        AddInitiativeVoteRequest request = new AddInitiativeVoteRequest();
+        request.setUserId(userId);
+        request.setInitiatedIssueId(initiateIssueId);
+        request.setAgreed(agreed);
+        request.setIpAddress(ipAddress);
+        request.setClientUID(clientUID);
+        return Response.withData(initiateService.saveInitiativeIssueVote(request));
     }
 
 
@@ -114,13 +126,16 @@ public class ApplicationController {
 
     @ResponseBody
     @RequestMapping({"/registration"})
-    public Response registration(@RequestParam Integer userTypeId, @RequestParam String firstName, @RequestParam String lastName, @RequestParam Integer genderId, @RequestParam String orgName,
+    public Response registration(@RequestParam Integer userTypeId, @RequestParam String firstName, @RequestParam String lastName, @RequestParam Integer genderId,
+                                 @RequestParam Integer ageRangeId, @RequestParam Integer sphereId, @RequestParam String orgName,
                                  @RequestParam String idNumber, @RequestParam String phone, @RequestParam String email, @RequestParam String password) {
         AddUserRequest request = new AddUserRequest();
         request.setFirstName(firstName);
         request.setLastName(lastName);
         request.setTypeId(userTypeId);
         request.setGenderId(genderId);
+        request.setAgeRangeId(ageRangeId);
+        request.setSphereId(sphereId);
         request.setOrgName(orgName);
         request.setIdNumber(idNumber);
         request.setPhone(phone);
@@ -131,6 +146,8 @@ public class ApplicationController {
         } catch (EmailNotSentException ex) {
             return Response.withError("ემაილის გაგზავნა მითითებულ მაილზე არ სრულდება, გთხოვთ სწორად შეიყვანოთ მაილი");
         } catch (MailAlreadyUsedException e) {
+            return Response.withError(e.getMessage());
+        } catch (MissingParameterException e) {
             return Response.withError(e.getMessage());
         }
         return Response.ok();
@@ -235,6 +252,12 @@ public class ApplicationController {
     @RequestMapping({"/get-spheres"})
     public Response getSpheres() {
         return Response.withData(initiateService.getSpheres());
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-age-ranges"})
+    public Response getAgeRanges() {
+        return Response.withData(userService.getAgeRanges());
     }
 
     /*@ResponseBody

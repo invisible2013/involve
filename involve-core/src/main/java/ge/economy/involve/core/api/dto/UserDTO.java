@@ -39,6 +39,7 @@ public class UserDTO {
     public static Integer TOKEN_VALID_DAY_NUMBER = 365;
 
     public static Integer USER_PHISICAL = 1;
+    public static Integer USER_JURIDICAL = 2;
 
     public static Integer USER_GROUP_ADMIN = 1;
     public static Integer USER_GROUP_USER = 2;
