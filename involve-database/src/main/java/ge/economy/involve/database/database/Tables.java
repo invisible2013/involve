@@ -4,7 +4,10 @@
 package ge.economy.involve.database.database;
 
 
+import ge.economy.involve.database.database.tables.ActivitySphere;
 import ge.economy.involve.database.database.tables.AgeRange;
+import ge.economy.involve.database.database.tables.EducationLevel;
+import ge.economy.involve.database.database.tables.EnterpriseSize;
 import ge.economy.involve.database.database.tables.FileType;
 import ge.economy.involve.database.database.tables.Gender;
 import ge.economy.involve.database.database.tables.Initiate;
@@ -29,6 +32,7 @@ import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
 import ge.economy.involve.database.database.tables.UserGroup;
 import ge.economy.involve.database.database.tables.UserRegister;
+import ge.economy.involve.database.database.tables.UserResetPassword;
 import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
@@ -50,9 +54,24 @@ import javax.annotation.Generated;
 public class Tables {
 
 	/**
+	 * The table public.activity_sphere
+	 */
+	public static final ActivitySphere ACTIVITY_SPHERE = ge.economy.involve.database.database.tables.ActivitySphere.ACTIVITY_SPHERE;
+
+	/**
 	 * The table public.age_range
 	 */
 	public static final AgeRange AGE_RANGE = ge.economy.involve.database.database.tables.AgeRange.AGE_RANGE;
+
+	/**
+	 * The table public.education_level
+	 */
+	public static final EducationLevel EDUCATION_LEVEL = ge.economy.involve.database.database.tables.EducationLevel.EDUCATION_LEVEL;
+
+	/**
+	 * The table public.enterprise_size
+	 */
+	public static final EnterpriseSize ENTERPRISE_SIZE = ge.economy.involve.database.database.tables.EnterpriseSize.ENTERPRISE_SIZE;
 
 	/**
 	 * The table public.file_type
@@ -173,6 +192,11 @@ public class Tables {
 	 * The table public.user_register
 	 */
 	public static final UserRegister USER_REGISTER = ge.economy.involve.database.database.tables.UserRegister.USER_REGISTER;
+
+	/**
+	 * The table public.user_reset_password
+	 */
+	public static final UserResetPassword USER_RESET_PASSWORD = ge.economy.involve.database.database.tables.UserResetPassword.USER_RESET_PASSWORD;
 
 	/**
 	 * The table public.users

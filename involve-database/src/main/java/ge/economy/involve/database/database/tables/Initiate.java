@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Initiate extends TableImpl<InitiateRecord> {
 
-	private static final long serialVersionUID = -1392798189;
+	private static final long serialVersionUID = -112040768;
 
 	/**
 	 * The reference instance of <code>public.initiate</code>
@@ -105,6 +105,11 @@ public class Initiate extends TableImpl<InitiateRecord> {
 	 * The column <code>public.initiate.advantages</code>.
 	 */
 	public final TableField<InitiateRecord, String> ADVANTAGES = createField("advantages", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+	/**
+	 * The column <code>public.initiate.other_sphere_name</code>.
+	 */
+	public final TableField<InitiateRecord, String> OTHER_SPHERE_NAME = createField("other_sphere_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * Create a <code>public.initiate</code> table reference

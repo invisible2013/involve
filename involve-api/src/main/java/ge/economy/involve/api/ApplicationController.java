@@ -58,7 +58,8 @@ public class ApplicationController {
     @ResponseBody
     @RequestMapping({"/save-initiate"})
     public Response saveInitiate(@RequestParam int sphereId, @RequestParam String name, @RequestParam String description, @RequestParam String necessity, @RequestParam String advantages,
-                                 @RequestParam String ipAddress, @RequestParam(required = false, defaultValue = "") String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
+                                 @RequestParam String ipAddress, @RequestParam(required = false, defaultValue = "") String clientUID, @RequestParam(required = false, defaultValue = "0") int userId,
+                                 @RequestParam(required = false, defaultValue = "") String otherSphereName) {
         AddInitiateRequest request = new AddInitiateRequest();
         request.setUserId(userId);
         request.setSphereId(sphereId);
@@ -128,7 +129,8 @@ public class ApplicationController {
     @RequestMapping({"/registration"})
     public Response registration(@RequestParam Integer userTypeId, @RequestParam String firstName, @RequestParam String lastName, @RequestParam Integer genderId,
                                  @RequestParam Integer ageRangeId, @RequestParam Integer sphereId, @RequestParam String orgName,
-                                 @RequestParam String idNumber, @RequestParam String phone, @RequestParam String email, @RequestParam String password) {
+                                 @RequestParam String idNumber, @RequestParam String phone, @RequestParam String email, @RequestParam String password,
+                                 @RequestParam(required = false, defaultValue = "") String otherSphereName, @RequestParam(required = false, defaultValue = "") Integer educationLevelId) {
         AddUserRequest request = new AddUserRequest();
         request.setFirstName(firstName);
         request.setLastName(lastName);
@@ -164,6 +166,27 @@ public class ApplicationController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping({"/reset-password-request"})
+    public Response resetPasswordRequest(@RequestParam String mail) {
+        try {
+            userService.resetPasswordRequest(mail);
+            return Response.ok();
+        } catch (UserNotFoundWithKeyException e) {
+            return Response.withError(e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping({"/reset-user-password"})
+    public Response resetUserPassword(@RequestParam String key, @RequestParam String newPassword) {
+        try {
+            userService.resetUserPassword(key, newPassword);
+            return Response.ok();
+        } catch (UserNotFoundWithKeyException e) {
+            return Response.withError(e.getMessage());
+        }
+    }
 
     @ResponseBody
     @RequestMapping({"/get-active-sessions"})
@@ -255,42 +278,16 @@ public class ApplicationController {
     }
 
     @ResponseBody
+    @RequestMapping({"/get-activity-spheres"})
+    public Response getActivitySpheres() {
+        return Response.withData(userService.getActivitySpheres());
+    }
+
+    @ResponseBody
     @RequestMapping({"/get-age-ranges"})
     public Response getAgeRanges() {
         return Response.withData(userService.getAgeRanges());
     }
-
-    /*@ResponseBody
-    @RequestMapping({"/test"})
-    public Response test(@RequestParam String uid) {
-       return Response.withData(voteService.checkIsValidUID(uid));
-    }
-*/
-
- /*
-    @ResponseBody
-    @RequestMapping({"/get-sportsmans"})
-    public Response getSportsmans(@RequestParam("sportTypeId") int sportTypeId, @RequestParam("genderId") int genderId, @RequestParam("regionId") int regionId,
-                                  @RequestParam("cityId") int cityId, @RequestParam(required = false) String name, @RequestParam(required = false) String firstLetter,
-                                  @RequestParam("start") int start, @RequestParam("limit") int limit) {
-        return Response.withData(reformService.searchSportsmans(name, firstLetter, sportTypeId, genderId, regionId, cityId, start, limit));
-    }
-
-
-   @ResponseBody
-    @RequestMapping({"/subscribe-event"})
-    public Response subscribeEvent(@RequestParam String email, @RequestParam String sportTypes) {
-        SubscribeEventRequest subscribeEventRequest = new SubscribeEventRequest();
-        subscribeEventRequest.setEmail(email);
-        List<Integer> sportTypeList = new ArrayList();
-        String[] stringArray = sportTypes.split(",");
-        for (String s : stringArray) {
-            sportTypeList.add(Integer.valueOf(Integer.parseInt(s)));
-        }
-        subscribeEventRequest.setSportTypes(sportTypeList);
-        //this.eventSubscriptionService.subscribeEvent(subscribeEventRequest);
-        return Response.ok();
-    }*/
 
 
 }

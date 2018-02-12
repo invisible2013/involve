@@ -4,7 +4,10 @@
 package ge.economy.involve.database.database;
 
 
+import ge.economy.involve.database.database.tables.ActivitySphere;
 import ge.economy.involve.database.database.tables.AgeRange;
+import ge.economy.involve.database.database.tables.EducationLevel;
+import ge.economy.involve.database.database.tables.EnterpriseSize;
 import ge.economy.involve.database.database.tables.FileType;
 import ge.economy.involve.database.database.tables.Gender;
 import ge.economy.involve.database.database.tables.Initiate;
@@ -29,10 +32,14 @@ import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
 import ge.economy.involve.database.database.tables.UserGroup;
 import ge.economy.involve.database.database.tables.UserRegister;
+import ge.economy.involve.database.database.tables.UserResetPassword;
 import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
+import ge.economy.involve.database.database.tables.records.ActivitySphereRecord;
 import ge.economy.involve.database.database.tables.records.AgeRangeRecord;
+import ge.economy.involve.database.database.tables.records.EducationLevelRecord;
+import ge.economy.involve.database.database.tables.records.EnterpriseSizeRecord;
 import ge.economy.involve.database.database.tables.records.FileTypeRecord;
 import ge.economy.involve.database.database.tables.records.GenderRecord;
 import ge.economy.involve.database.database.tables.records.InitiateRecord;
@@ -57,6 +64,7 @@ import ge.economy.involve.database.database.tables.records.TokenRecord;
 import ge.economy.involve.database.database.tables.records.UserApproveRecord;
 import ge.economy.involve.database.database.tables.records.UserGroupRecord;
 import ge.economy.involve.database.database.tables.records.UserRegisterRecord;
+import ge.economy.involve.database.database.tables.records.UserResetPasswordRecord;
 import ge.economy.involve.database.database.tables.records.UserStatusRecord;
 import ge.economy.involve.database.database.tables.records.UserTypeRecord;
 import ge.economy.involve.database.database.tables.records.UsersRecord;
@@ -86,7 +94,10 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<ActivitySphereRecord, Integer> IDENTITY_ACTIVITY_SPHERE = Identities0.IDENTITY_ACTIVITY_SPHERE;
 	public static final Identity<AgeRangeRecord, Integer> IDENTITY_AGE_RANGE = Identities0.IDENTITY_AGE_RANGE;
+	public static final Identity<EducationLevelRecord, Integer> IDENTITY_EDUCATION_LEVEL = Identities0.IDENTITY_EDUCATION_LEVEL;
+	public static final Identity<EnterpriseSizeRecord, Integer> IDENTITY_ENTERPRISE_SIZE = Identities0.IDENTITY_ENTERPRISE_SIZE;
 	public static final Identity<FileTypeRecord, Integer> IDENTITY_FILE_TYPE = Identities0.IDENTITY_FILE_TYPE;
 	public static final Identity<GenderRecord, Integer> IDENTITY_GENDER = Identities0.IDENTITY_GENDER;
 	public static final Identity<InitiateRecord, Integer> IDENTITY_INITIATE = Identities0.IDENTITY_INITIATE;
@@ -111,6 +122,7 @@ public class Keys {
 	public static final Identity<UserApproveRecord, Integer> IDENTITY_USER_APPROVE = Identities0.IDENTITY_USER_APPROVE;
 	public static final Identity<UserGroupRecord, Integer> IDENTITY_USER_GROUP = Identities0.IDENTITY_USER_GROUP;
 	public static final Identity<UserRegisterRecord, Integer> IDENTITY_USER_REGISTER = Identities0.IDENTITY_USER_REGISTER;
+	public static final Identity<UserResetPasswordRecord, Integer> IDENTITY_USER_RESET_PASSWORD = Identities0.IDENTITY_USER_RESET_PASSWORD;
 	public static final Identity<UsersRecord, Integer> IDENTITY_USERS = Identities0.IDENTITY_USERS;
 	public static final Identity<UserStatusRecord, Integer> IDENTITY_USER_STATUS = Identities0.IDENTITY_USER_STATUS;
 	public static final Identity<UserTypeRecord, Integer> IDENTITY_USER_TYPE = Identities0.IDENTITY_USER_TYPE;
@@ -119,7 +131,10 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final UniqueKey<ActivitySphereRecord> ACTIVITY_SPHERE_PKEY = UniqueKeys0.ACTIVITY_SPHERE_PKEY;
 	public static final UniqueKey<AgeRangeRecord> AGE_RANGE_PKEY = UniqueKeys0.AGE_RANGE_PKEY;
+	public static final UniqueKey<EducationLevelRecord> EDUCATION_LEVEL_PKEY = UniqueKeys0.EDUCATION_LEVEL_PKEY;
+	public static final UniqueKey<EnterpriseSizeRecord> ENTERPRISE_SIZE_PKEY = UniqueKeys0.ENTERPRISE_SIZE_PKEY;
 	public static final UniqueKey<FileTypeRecord> FILE_TYPE_PKEY = UniqueKeys0.FILE_TYPE_PKEY;
 	public static final UniqueKey<GenderRecord> GENDER_PKEY = UniqueKeys0.GENDER_PKEY;
 	public static final UniqueKey<InitiateRecord> INITIATE_PKEY = UniqueKeys0.INITIATE_PKEY;
@@ -144,6 +159,7 @@ public class Keys {
 	public static final UniqueKey<UserApproveRecord> USER_APPROVE_PKEY = UniqueKeys0.USER_APPROVE_PKEY;
 	public static final UniqueKey<UserGroupRecord> USER_GROUP_PKEY = UniqueKeys0.USER_GROUP_PKEY;
 	public static final UniqueKey<UserRegisterRecord> USER_REGISTER_PKEY = UniqueKeys0.USER_REGISTER_PKEY;
+	public static final UniqueKey<UserResetPasswordRecord> USER_RESET_PASSWORD_PKEY = UniqueKeys0.USER_RESET_PASSWORD_PKEY;
 	public static final UniqueKey<UsersRecord> USERS_PKEY = UniqueKeys0.USERS_PKEY;
 	public static final UniqueKey<UserStatusRecord> STATUS_PKEY = UniqueKeys0.STATUS_PKEY;
 	public static final UniqueKey<UserTypeRecord> USER_TYPE_PKEY = UniqueKeys0.USER_TYPE_PKEY;
@@ -158,7 +174,10 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	private static class Identities0 extends AbstractKeys {
+		public static Identity<ActivitySphereRecord, Integer> IDENTITY_ACTIVITY_SPHERE = createIdentity(ActivitySphere.ACTIVITY_SPHERE, ActivitySphere.ACTIVITY_SPHERE.ID);
 		public static Identity<AgeRangeRecord, Integer> IDENTITY_AGE_RANGE = createIdentity(AgeRange.AGE_RANGE, AgeRange.AGE_RANGE.ID);
+		public static Identity<EducationLevelRecord, Integer> IDENTITY_EDUCATION_LEVEL = createIdentity(EducationLevel.EDUCATION_LEVEL, EducationLevel.EDUCATION_LEVEL.ID);
+		public static Identity<EnterpriseSizeRecord, Integer> IDENTITY_ENTERPRISE_SIZE = createIdentity(EnterpriseSize.ENTERPRISE_SIZE, EnterpriseSize.ENTERPRISE_SIZE.ID);
 		public static Identity<FileTypeRecord, Integer> IDENTITY_FILE_TYPE = createIdentity(FileType.FILE_TYPE, FileType.FILE_TYPE.ID);
 		public static Identity<GenderRecord, Integer> IDENTITY_GENDER = createIdentity(Gender.GENDER, Gender.GENDER.ID);
 		public static Identity<InitiateRecord, Integer> IDENTITY_INITIATE = createIdentity(Initiate.INITIATE, Initiate.INITIATE.ID);
@@ -183,13 +202,17 @@ public class Keys {
 		public static Identity<UserApproveRecord, Integer> IDENTITY_USER_APPROVE = createIdentity(UserApprove.USER_APPROVE, UserApprove.USER_APPROVE.ID);
 		public static Identity<UserGroupRecord, Integer> IDENTITY_USER_GROUP = createIdentity(UserGroup.USER_GROUP, UserGroup.USER_GROUP.ID);
 		public static Identity<UserRegisterRecord, Integer> IDENTITY_USER_REGISTER = createIdentity(UserRegister.USER_REGISTER, UserRegister.USER_REGISTER.ID);
+		public static Identity<UserResetPasswordRecord, Integer> IDENTITY_USER_RESET_PASSWORD = createIdentity(UserResetPassword.USER_RESET_PASSWORD, UserResetPassword.USER_RESET_PASSWORD.ID);
 		public static Identity<UsersRecord, Integer> IDENTITY_USERS = createIdentity(Users.USERS, Users.USERS.ID);
 		public static Identity<UserStatusRecord, Integer> IDENTITY_USER_STATUS = createIdentity(UserStatus.USER_STATUS, UserStatus.USER_STATUS.ID);
 		public static Identity<UserTypeRecord, Integer> IDENTITY_USER_TYPE = createIdentity(UserType.USER_TYPE, UserType.USER_TYPE.ID);
 	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
+		public static final UniqueKey<ActivitySphereRecord> ACTIVITY_SPHERE_PKEY = createUniqueKey(ActivitySphere.ACTIVITY_SPHERE, ActivitySphere.ACTIVITY_SPHERE.ID);
 		public static final UniqueKey<AgeRangeRecord> AGE_RANGE_PKEY = createUniqueKey(AgeRange.AGE_RANGE, AgeRange.AGE_RANGE.ID);
+		public static final UniqueKey<EducationLevelRecord> EDUCATION_LEVEL_PKEY = createUniqueKey(EducationLevel.EDUCATION_LEVEL, EducationLevel.EDUCATION_LEVEL.ID);
+		public static final UniqueKey<EnterpriseSizeRecord> ENTERPRISE_SIZE_PKEY = createUniqueKey(EnterpriseSize.ENTERPRISE_SIZE, EnterpriseSize.ENTERPRISE_SIZE.ID);
 		public static final UniqueKey<FileTypeRecord> FILE_TYPE_PKEY = createUniqueKey(FileType.FILE_TYPE, FileType.FILE_TYPE.ID);
 		public static final UniqueKey<GenderRecord> GENDER_PKEY = createUniqueKey(Gender.GENDER, Gender.GENDER.ID);
 		public static final UniqueKey<InitiateRecord> INITIATE_PKEY = createUniqueKey(Initiate.INITIATE, Initiate.INITIATE.ID);
@@ -214,6 +237,7 @@ public class Keys {
 		public static final UniqueKey<UserApproveRecord> USER_APPROVE_PKEY = createUniqueKey(UserApprove.USER_APPROVE, UserApprove.USER_APPROVE.ID);
 		public static final UniqueKey<UserGroupRecord> USER_GROUP_PKEY = createUniqueKey(UserGroup.USER_GROUP, UserGroup.USER_GROUP.ID);
 		public static final UniqueKey<UserRegisterRecord> USER_REGISTER_PKEY = createUniqueKey(UserRegister.USER_REGISTER, UserRegister.USER_REGISTER.ID);
+		public static final UniqueKey<UserResetPasswordRecord> USER_RESET_PASSWORD_PKEY = createUniqueKey(UserResetPassword.USER_RESET_PASSWORD, UserResetPassword.USER_RESET_PASSWORD.ID);
 		public static final UniqueKey<UsersRecord> USERS_PKEY = createUniqueKey(Users.USERS, Users.USERS.ID);
 		public static final UniqueKey<UserStatusRecord> STATUS_PKEY = createUniqueKey(UserStatus.USER_STATUS, UserStatus.USER_STATUS.ID);
 		public static final UniqueKey<UserTypeRecord> USER_TYPE_PKEY = createUniqueKey(UserType.USER_TYPE, UserType.USER_TYPE.ID);

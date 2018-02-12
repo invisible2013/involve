@@ -14,6 +14,7 @@ import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.UserRegister;
 import ge.economy.involve.database.database.tables.records.TokenRecord;
 import ge.economy.involve.database.database.tables.records.UserRegisterRecord;
+import ge.economy.involve.database.database.tables.records.UserResetPasswordRecord;
 import ge.economy.involve.database.database.tables.records.UsersRecord;
 import ge.economy.involve.utils.DateTimeUtils;
 import ge.economy.involve.utils.MD5Provider;
@@ -70,27 +71,29 @@ public class UserService {
         request.setGroupId(UserDTO.USER_GROUP_USER);
         request.setStatusId(UserDTO.USER_STATUS_ACTIVE);
         UserDTO user = saveUser(request);
+
         UserRegisterRecord record = dslContext.newRecord(Tables.USER_REGISTER);
         record.setEmail(user.getEmail());
         record.setUserId(user.getId());
         record.setKey(UUID.randomUUID().toString());
         record.setIsExpired(false);
         record.store();
+
         SendEmail mailSender = new SendEmail();
         mailSender.setTo(user.getEmail());
         mailSender.setBody("მოგესალმებით " + user.getName() + "\n" +
-                "ეს არის აქტივაციის ლინკი თქვენი მომხმარებლისთვის საიტზე you.gov.ge \n" +
+                "თქვენ წარმატებით დარეგისტრირდით საიტზე you.gov.ge \n" +
                 "\n" +
                 "თქვენი ანგარიში არის: " + user.getEmail() + "\n" +
                 "                                    \n" +
-                "აქტივაციის ლინკი:\n" +
+                "რეგისტრაციის პროცესის დასასრულებლად გთხოვთ, მიჰყვეთ აქტივაციის ლინკს:\n" +
                 "                                    \n" +
                 "http://www.you.gov.ge/?pg=activate&activateId=" + record.getKey() + "\n" +
                 "                                    \n" +
-                "იმედი გვაქვს რომ მალე გიხილავთ!\n" +
+                "ჩაერთე და დააფიქსირე პოზიცია!\n" +
                 "                                    \n" +
                 "მადლობა,\n" +
-                "ეკონომიკის და მდგრადი განვითარების სამინისტრო\n");
+                "საქართველოს ეკონომიკისა და მდგრადი განვითარების სამინისტრო\n");
         mailSender.send();
     }
 
@@ -101,6 +104,53 @@ public class UserService {
             userDAO.updateUserRegistration(user.getId());
         } else {
             throw new UserNotFoundWithKeyException("აქტივაციის კოდი არ არსებობს, თავიდან გაიარეთ რეგისტრაცია");
+        }
+    }
+
+    public void resetPasswordRequest(String email) throws UserNotFoundWithKeyException {
+        UsersRecord user = userDAO.getUserByMail(email);
+        if (user != null) {
+            UserResetPasswordRecord record = dslContext.newRecord(Tables.USER_RESET_PASSWORD);
+            record.setEmail(user.getEmail());
+            record.setUserId(user.getId());
+            record.setKey(UUID.randomUUID().toString());
+            record.setIsExpired(false);
+            record.store();
+
+            UserDTO dto = UserDTO.translate(user);
+            SendEmail mailSender = new SendEmail();
+            mailSender.setTo(user.getEmail());
+            mailSender.setSubject("YOU.GOV.GE Password Reset");
+            mailSender.setBody("მოგესალმებით " + dto.getName() + "\n" +
+                    "თქვენ მოითხოვეთ  you.gov.ge საიტზე რეგისტრაციის პაროლის აღდგენა  \n" +
+                    "\n" +
+                    "თქვენი ანგარიში არის: " + user.getEmail() + "\n" +
+                    "                                    \n" +
+                    "პაროლის შესაცვლელად გთხოვთ, მიჰყვეთ ლინკს:\n" +
+                    "                                    \n" +
+                    "http://www.you.gov.ge/?pg=resetPassword&resetId=" + record.getKey() + "\n" +
+                    "                                    \n" +
+                    "ჩაერთე და დააფიქსირე პოზიცია!\n" +
+                    "                                    \n" +
+                    "მადლობა,\n" +
+                    "საქართველოს ეკონომიკისა და მდგრადი განვითარების სამინისტრო\n");
+            mailSender.send();
+
+        } else {
+            throw new UserNotFoundWithKeyException("თქვენს მიერ მითითებული ელ-ფოსტა არ არსებობს, გთხოვთ მიუთითოთ სწორად");
+        }
+    }
+
+    public void resetUserPassword(String key, String newPassword) throws UserNotFoundWithKeyException {
+        UserResetPasswordRecord userReset = userDAO.getUserResetPasswordByKey(key);
+        if (userReset != null) {
+            userReset.setIsExpired(true);
+            userReset.update();
+            UsersRecord record = userDAO.getUserRecordById(userReset.getUserId());
+            record.setPassword(MD5Provider.doubleMd5(newPassword));
+            record.update();
+        } else {
+            throw new UserNotFoundWithKeyException("პაროლის შეცვლის კოდი არ არსებობს ან ვადაგასულია, გთხოვთ თავიდან მოითხოვეთ პაროლის შეცვლა");
         }
     }
 
@@ -202,6 +252,10 @@ public class UserService {
 
     public List<GenderDTO> getAgeRanges() {
         return GenderDTO.translateArray(userDAO.getAgeRanges());
+    }
+
+    public List<GenderDTO> getActivitySpheres() {
+        return GenderDTO.translateArray(userDAO.getActivitySpheres());
     }
 
     public void deleteUser(int itemId) {

@@ -24,9 +24,24 @@ import org.jooq.impl.SequenceImpl;
 public class Sequences {
 
 	/**
+	 * The sequence <code>public.activity_sphere_id_seq</code>
+	 */
+	public static final Sequence<Long> ACTIVITY_SPHERE_ID_SEQ = new SequenceImpl<Long>("activity_sphere_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.age_range_id_seq</code>
 	 */
 	public static final Sequence<Long> AGE_RANGE_ID_SEQ = new SequenceImpl<Long>("age_range_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.education_level_id_seq</code>
+	 */
+	public static final Sequence<Long> EDUCATION_LEVEL_ID_SEQ = new SequenceImpl<Long>("education_level_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.enterprise_size_id_seq</code>
+	 */
+	public static final Sequence<Long> ENTERPRISE_SIZE_ID_SEQ = new SequenceImpl<Long>("enterprise_size_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
 	 * The sequence <code>public.file_type_id_seq</code>
@@ -147,6 +162,11 @@ public class Sequences {
 	 * The sequence <code>public.user_register_id_seq</code>
 	 */
 	public static final Sequence<Long> USER_REGISTER_ID_SEQ = new SequenceImpl<Long>("user_register_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
+	 * The sequence <code>public.user_reset_password_id_seq</code>
+	 */
+	public static final Sequence<Long> USER_RESET_PASSWORD_ID_SEQ = new SequenceImpl<Long>("user_reset_password_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
 	 * The sequence <code>public.users_id_seq</code>

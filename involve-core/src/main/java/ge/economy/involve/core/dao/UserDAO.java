@@ -4,6 +4,7 @@ import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.records.TokenRecord;
 import ge.economy.involve.database.database.tables.records.UserRegisterRecord;
+import ge.economy.involve.database.database.tables.records.UserResetPasswordRecord;
 import ge.economy.involve.database.database.tables.records.UsersRecord;
 import org.jooq.Record;
 import org.jooq.SelectConditionStep;
@@ -80,6 +81,14 @@ public class UserDAO extends AbstractDAO {
                 fetch();
     }
 
+    public List<Record> getActivitySpheres() {
+        return dslContext.
+                select().
+                from(Tables.ACTIVITY_SPHERE).
+                orderBy(Tables.ACTIVITY_SPHERE.ID).
+                fetch();
+    }
+
     public List<UsersRecord> search(String userName) {
 
         SelectConditionStep<Record> selectConditionStep =
@@ -123,11 +132,29 @@ public class UserDAO extends AbstractDAO {
         return record == null ? null : record.into(UserRegisterRecord.class);
     }
 
+    public UserResetPasswordRecord getUserResetPasswordByKey(String key) {
+        Record record = dslContext.
+                select().
+                from(Tables.USER_RESET_PASSWORD).
+                where(Tables.USER_RESET_PASSWORD.KEY.eq(key)).and(Tables.USER_RESET_PASSWORD.IS_EXPIRED.eq(false)).
+                fetchAny();
+        return record == null ? null : record.into(UserResetPasswordRecord.class);
+    }
+
     public UsersRecord getUserByMail(String mail) {
         Record record = dslContext.
                 select().
                 from(Tables.USERS).
                 where(Tables.USERS.EMAIL.eq(mail)).
+                fetchAny();
+        return record == null ? null : record.into(UsersRecord.class);
+    }
+
+    public UsersRecord getUserRecordById(int id) {
+        Record record = dslContext.
+                select().
+                from(Tables.USERS).
+                where(Tables.USERS.ID.eq(id)).
                 fetchAny();
         return record == null ? null : record.into(UsersRecord.class);
     }

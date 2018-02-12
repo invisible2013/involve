@@ -4,7 +4,10 @@
 package ge.economy.involve.database.database;
 
 
+import ge.economy.involve.database.database.tables.ActivitySphere;
 import ge.economy.involve.database.database.tables.AgeRange;
+import ge.economy.involve.database.database.tables.EducationLevel;
+import ge.economy.involve.database.database.tables.EnterpriseSize;
 import ge.economy.involve.database.database.tables.FileType;
 import ge.economy.involve.database.database.tables.Gender;
 import ge.economy.involve.database.database.tables.Initiate;
@@ -29,6 +32,7 @@ import ge.economy.involve.database.database.tables.Token;
 import ge.economy.involve.database.database.tables.UserApprove;
 import ge.economy.involve.database.database.tables.UserGroup;
 import ge.economy.involve.database.database.tables.UserRegister;
+import ge.economy.involve.database.database.tables.UserResetPassword;
 import ge.economy.involve.database.database.tables.UserStatus;
 import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
@@ -57,7 +61,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = -1550206419;
+	private static final long serialVersionUID = -1132175245;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -80,7 +84,10 @@ public class Public extends SchemaImpl {
 
 	private final List<Sequence<?>> getSequences0() {
 		return Arrays.<Sequence<?>>asList(
+			Sequences.ACTIVITY_SPHERE_ID_SEQ,
 			Sequences.AGE_RANGE_ID_SEQ,
+			Sequences.EDUCATION_LEVEL_ID_SEQ,
+			Sequences.ENTERPRISE_SIZE_ID_SEQ,
 			Sequences.FILE_TYPE_ID_SEQ,
 			Sequences.GENDER_ID_SEQ,
 			Sequences.INITIATED_ISSUE_ID_SEQ,
@@ -105,6 +112,7 @@ public class Public extends SchemaImpl {
 			Sequences.USER_APPROVE_ID_SEQ,
 			Sequences.USER_GROUP_ID_SEQ,
 			Sequences.USER_REGISTER_ID_SEQ,
+			Sequences.USER_RESET_PASSWORD_ID_SEQ,
 			Sequences.USERS_ID_SEQ,
 			Sequences.USER_STATUS_ID_SEQ,
 			Sequences.USER_TYPE_ID_SEQ);
@@ -119,7 +127,10 @@ public class Public extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
+			ActivitySphere.ACTIVITY_SPHERE,
 			AgeRange.AGE_RANGE,
+			EducationLevel.EDUCATION_LEVEL,
+			EnterpriseSize.ENTERPRISE_SIZE,
 			FileType.FILE_TYPE,
 			Gender.GENDER,
 			Initiate.INITIATE,
@@ -144,6 +155,7 @@ public class Public extends SchemaImpl {
 			UserApprove.USER_APPROVE,
 			UserGroup.USER_GROUP,
 			UserRegister.USER_REGISTER,
+			UserResetPassword.USER_RESET_PASSWORD,
 			Users.USERS,
 			UserStatus.USER_STATUS,
 			UserType.USER_TYPE);
