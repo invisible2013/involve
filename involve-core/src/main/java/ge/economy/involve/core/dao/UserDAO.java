@@ -81,6 +81,14 @@ public class UserDAO extends AbstractDAO {
                 fetch();
     }
 
+    public List<Record> getEducationLevels() {
+        return dslContext.
+                select().
+                from(Tables.EDUCATION_LEVEL).
+                orderBy(Tables.EDUCATION_LEVEL.ID).
+                fetch();
+    }
+
     public List<Record> getActivitySpheres() {
         return dslContext.
                 select().

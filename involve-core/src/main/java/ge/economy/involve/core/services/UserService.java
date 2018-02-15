@@ -254,6 +254,10 @@ public class UserService {
         return GenderDTO.translateArray(userDAO.getAgeRanges());
     }
 
+    public List<GenderDTO> getEducationLevels() {
+        return GenderDTO.translateArray(userDAO.getEducationLevels());
+    }
+
     public List<GenderDTO> getActivitySpheres() {
         return GenderDTO.translateArray(userDAO.getActivitySpheres());
     }

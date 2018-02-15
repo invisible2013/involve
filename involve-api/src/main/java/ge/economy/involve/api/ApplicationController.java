@@ -289,5 +289,11 @@ public class ApplicationController {
         return Response.withData(userService.getAgeRanges());
     }
 
+    @ResponseBody
+    @RequestMapping({"/get-education-levels"})
+    public Response getEducationLevels() {
+        return Response.withData(userService.getEducationLevels());
+    }
+
 
 }
