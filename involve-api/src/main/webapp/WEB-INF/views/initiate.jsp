@@ -151,7 +151,7 @@
                                     <br/>
                                     <small>თარიღი: {{r.createDate}}</small>
                                 </td>
-                                <td>{{r.sphereName}}</td>
+                                <td>{{r.sphereName}} {{r.otherSphereName}}</td>
                                 <td>{{r.name}}</td>
                                 <td>{{r.description}}</td>
                                 <td>{{r.necessity}}</td>

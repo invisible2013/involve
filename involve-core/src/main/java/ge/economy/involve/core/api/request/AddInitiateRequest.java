@@ -20,6 +20,7 @@ public class AddInitiateRequest {
     private String description;
     private String ipAddress;
     private String clientUID;
+    private String otherSphereName;
 
 
     public Integer getId() {
@@ -100,5 +101,13 @@ public class AddInitiateRequest {
 
     public void setAdvantages(String advantages) {
         this.advantages = advantages;
+    }
+
+    public String getOtherSphereName() {
+        return otherSphereName;
+    }
+
+    public void setOtherSphereName(String otherSphereName) {
+        this.otherSphereName = otherSphereName;
     }
 }

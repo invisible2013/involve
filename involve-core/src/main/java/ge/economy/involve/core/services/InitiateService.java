@@ -54,6 +54,7 @@ public class InitiateService {
         record.setSphereId(request.getSphereId());
         record.setIpAddress(request.getIpAddress());
         record.setClientUid(request.getClientUID());
+        record.setOtherSphereName(request.getOtherSphereName());
         if (newRecord) {
             record.setCreateDate(new Date());
             record.store();

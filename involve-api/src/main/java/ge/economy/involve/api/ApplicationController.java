@@ -69,6 +69,7 @@ public class ApplicationController {
         request.setAdvantages(advantages);
         request.setIpAddress(ipAddress);
         request.setClientUID(clientUID);
+        request.setOtherSphereName(otherSphereName);
         return Response.withData(initiateService.saveInitiate(request));
     }
 

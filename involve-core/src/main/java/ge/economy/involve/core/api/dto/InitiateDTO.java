@@ -25,6 +25,7 @@ public class InitiateDTO {
     private String necessity;
     private String advantages;
     private String userName;
+    private String otherSphereName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
     private int yesCount;
@@ -41,6 +42,7 @@ public class InitiateDTO {
         dto.setDescription(record.getValue(Tables.INITIATE.DESCRIPTION));
         dto.setAdvantages(record.getValue(Tables.INITIATE.ADVANTAGES));
         dto.setNecessity(record.getValue(Tables.INITIATE.NECESSITY));
+        dto.setOtherSphereName(record.getValue(Tables.INITIATE.OTHER_SPHERE_NAME));
         if (dto.getUserId() != null && dto.getUserId() != 0 && Tables.USERS != null) {
             dto.setUserName(record.getValue(Tables.USERS.ORG_NAME) == null ? record.getValue(Tables.USERS.FIRST_NAME) + " " + record.getValue(Tables.USERS.LAST_NAME) : record.getValue(Tables.USERS.ORG_NAME));
         }
@@ -151,5 +153,13 @@ public class InitiateDTO {
 
     public void setAdvantages(String advantages) {
         this.advantages = advantages;
+    }
+
+    public String getOtherSphereName() {
+        return otherSphereName;
+    }
+
+    public void setOtherSphereName(String otherSphereName) {
+        this.otherSphereName = otherSphereName;
     }
 }
