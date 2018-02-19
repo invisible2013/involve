@@ -6,6 +6,7 @@
     app.controller("usersCtrl", function ($scope, $http, $filter) {
 
         $scope.users = [];
+        $scope.selectedUser = {};
 
         function getUsers(res) {
             $scope.users = res.data;
@@ -45,8 +46,20 @@
                 $scope.user = selected[0];
             }
         };
+
+        $scope.viewUserItem = function (userId) {
+            function getUser(res) {
+                $scope.selectedUser = res.data;
+                console.log(res.data);
+            }
+
+            ajaxCall($http, "users/get-user-by-id?itemId=" + userId, null, getUser);
+        }
         $scope.deleteUser = function (userId) {
-            ajaxCall($http, "users/delete-user?itemId" + userId, null, reload);
+            if (confirm("დარწმუნებული ხართ რომ გსურთ წაშლა?")) {
+                ajaxCall($http, "users/delete-user?itemId=" + userId, null, reload);
+            }
+            return;
         };
         $scope.groupFilter = function (item) {
             return item.usersGroup.id != 2;
@@ -141,6 +154,67 @@
         </div>
     </div>
 
+    <div class="modal fade" id="userViewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="viewModalLabel">მომხმარებლის ინფორმაცია</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <table class="table table-striped">
+                            <tr>
+                                <th class="col-md-4 text-right">მომხმარებელი :</th>
+                                <td>{{selectedUser.name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">ელ-ფოსტა :</th>
+                                <td>{{selectedUser.email}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">ტელეფონი :</th>
+                                <td>{{selectedUser.phone}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">საიდენთ.N :</th>
+                                <td>{{selectedUser.idNumber}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">სქესი :</th>
+                                <td>{{selectedUser.genderName}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">ასაკობრივი ჯგუფი :</th>
+                                <td>{{selectedUser.ageRangeName}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">სფერო :</th>
+                                <td>{{selectedUser.sphereName}}<br/>
+                                    {{selectedUser.otherSphereName}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">განათლების დონე :</th>
+                                <td>{{selectedUser.educationLevelName}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">საწარმოს ზომა :</th>
+                                <td>{{selectedUser.enterpriseSizeName}}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="page-title">
         <div class="title_left">
@@ -187,7 +261,11 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="i in users">
-                            <td>{{$index + 1}}</td>
+                            <td>
+
+                                <a data-toggle="modal" data-target="#userViewModal" ng-click="viewUserItem(i.id)"
+                                   class="btn btn-link btn-xs">{{$index+1}}</a>
+                            </td>
                             <td>{{i.name}}</td>
                             <td><span class="label label-success" ng-show="i.statusId==1">{{i.statusName}}</span>
                                 <span class="label label-warning" ng-show="i.statusId==2">{{i.statusName}}</span>
@@ -200,6 +278,7 @@
                             <td>{{i.groupName}}</td>
 
                             <td>
+
                                 <a data-toggle="modal" data-target="#itemModal" ng-click="editUser(i.id)"
                                    class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
                                 <a ng-click="deleteUser(i.id)" class="btn btn-danger btn-xs"><i

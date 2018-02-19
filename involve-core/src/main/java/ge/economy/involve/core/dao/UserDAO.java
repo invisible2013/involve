@@ -42,6 +42,10 @@ public class UserDAO extends AbstractDAO {
                 join(Tables.USER_TYPE).on(Tables.USERS.USER_TYPE_ID.eq(Tables.USER_TYPE.ID)).
                 join(Tables.USER_STATUS).on(Tables.USERS.STATUS_ID.eq(Tables.USER_STATUS.ID)).
                 leftJoin(Tables.GENDER).on(Tables.USERS.GENDER_ID.eq(Tables.GENDER.ID)).
+                leftJoin(Tables.AGE_RANGE).on(Tables.USERS.AGE_RANGE_ID.eq(Tables.AGE_RANGE.ID)).
+                leftJoin(Tables.EDUCATION_LEVEL).on(Tables.USERS.EDUCATION_LEVEL_ID.eq(Tables.EDUCATION_LEVEL.ID)).
+                leftJoin(Tables.ENTERPRISE_SIZE).on(Tables.USERS.ENTERPRISE_SIZE_ID.eq(Tables.ENTERPRISE_SIZE.ID)).
+                leftJoin(Tables.ACTIVITY_SPHERE).on(Tables.USERS.SPHERE_ID.eq(Tables.ACTIVITY_SPHERE.ID)).
                 where(Tables.USERS.ID.eq(id)).fetchAny();
     }
 
@@ -86,6 +90,14 @@ public class UserDAO extends AbstractDAO {
                 select().
                 from(Tables.EDUCATION_LEVEL).
                 orderBy(Tables.EDUCATION_LEVEL.ID).
+                fetch();
+    }
+
+    public List<Record> getEnterpriseSizes() {
+        return dslContext.
+                select().
+                from(Tables.ENTERPRISE_SIZE).
+                orderBy(Tables.ENTERPRISE_SIZE.ID).
                 fetch();
     }
 

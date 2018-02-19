@@ -182,6 +182,9 @@ public class UserService {
         record.setUserGroupId(request.getGroupId());
         record.setStatusId(request.getStatusId());
         record.setSphereId(request.getSphereId());
+        record.setOtherSphereName(request.getOtherSphereName());
+        record.setEducationLevelId(request.getEducationLevelId());
+        record.setEnterpriseSizeId(request.getEnterpriseSizeId());
         if (request.getPassword() != null) {
             record.setPassword(MD5Provider.doubleMd5(request.getPassword()));
         }
@@ -256,6 +259,10 @@ public class UserService {
 
     public List<GenderDTO> getEducationLevels() {
         return GenderDTO.translateArray(userDAO.getEducationLevels());
+    }
+
+    public List<GenderDTO> getEnterpriseSizes() {
+        return GenderDTO.translateArray(userDAO.getEnterpriseSizes());
     }
 
     public List<GenderDTO> getActivitySpheres() {

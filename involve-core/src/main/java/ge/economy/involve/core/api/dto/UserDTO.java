@@ -35,6 +35,15 @@ public class UserDTO {
     private String statusName;
     private String name;
     private String token;
+    private String otherSphereName;
+    private Integer enterpriseSizeId;
+    private String enterpriseSizeName;
+    private Integer educationLevelId;
+    private String educationLevelName;
+    private Integer ageRangeId;
+    private String ageRangeName;
+    private Integer sphereId;
+    private String sphereName;
 
     public static Integer TOKEN_VALID_DAY_NUMBER = 365;
 
@@ -64,6 +73,15 @@ public class UserDTO {
         if (record.field(Tables.USER_TYPE.NAME) != null) {
             dto.setTypeName(record.getValue(Tables.USER_TYPE.NAME));
         }
+        dto.setEducationLevelId(record.getValue(Tables.USERS.EDUCATION_LEVEL_ID));
+        if (record.field(Tables.EDUCATION_LEVEL.NAME) != null) {
+            dto.setEducationLevelName(record.getValue(Tables.EDUCATION_LEVEL.NAME));
+        }
+        dto.setEnterpriseSizeId(record.getValue(Tables.USERS.ENTERPRISE_SIZE_ID));
+        if (record.field(Tables.ENTERPRISE_SIZE.NAME) != null) {
+            dto.setEnterpriseSizeName(record.getValue(Tables.ENTERPRISE_SIZE.NAME));
+        }
+        dto.setOtherSphereName(record.getValue(Tables.USERS.OTHER_SPHERE_NAME));
         dto.setApproved(record.getValue(Tables.USERS.IS_APPROVED));
         dto.setGroupId(record.getValue(Tables.USERS.USER_GROUP_ID));
         if (record.field(Tables.USER_GROUP.NAME) != null) {
@@ -73,6 +91,14 @@ public class UserDTO {
         dto.setStatusId(record.getValue(Tables.USERS.STATUS_ID));
         if (record.field(Tables.USER_STATUS.NAME) != null) {
             dto.setStatusName(record.getValue(Tables.USER_STATUS.NAME));
+        }
+        dto.setAgeRangeId(record.getValue(Tables.USERS.AGE_RANGE_ID));
+        if (record.field(Tables.AGE_RANGE.NAME) != null) {
+            dto.setAgeRangeName(record.getValue(Tables.AGE_RANGE.NAME));
+        }
+        dto.setSphereId(record.getValue(Tables.USERS.SPHERE_ID));
+        if (record.field(Tables.ACTIVITY_SPHERE.NAME) != null) {
+            dto.setSphereName(record.getValue(Tables.ACTIVITY_SPHERE.NAME));
         }
         if (dto.getTypeId() == USER_PHISICAL) {
             dto.setName(dto.getFirstName() + " " + dto.getLastName());
@@ -241,6 +267,78 @@ public class UserDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getOtherSphereName() {
+        return otherSphereName;
+    }
+
+    public void setOtherSphereName(String otherSphereName) {
+        this.otherSphereName = otherSphereName;
+    }
+
+    public Integer getEnterpriseSizeId() {
+        return enterpriseSizeId;
+    }
+
+    public void setEnterpriseSizeId(Integer enterpriseSizeId) {
+        this.enterpriseSizeId = enterpriseSizeId;
+    }
+
+    public Integer getEducationLevelId() {
+        return educationLevelId;
+    }
+
+    public void setEducationLevelId(Integer educationLevelId) {
+        this.educationLevelId = educationLevelId;
+    }
+
+    public String getEnterpriseSizeName() {
+        return enterpriseSizeName;
+    }
+
+    public void setEnterpriseSizeName(String enterpriseSizeName) {
+        this.enterpriseSizeName = enterpriseSizeName;
+    }
+
+    public String getEducationLevelName() {
+        return educationLevelName;
+    }
+
+    public void setEducationLevelName(String educationLevelName) {
+        this.educationLevelName = educationLevelName;
+    }
+
+    public Integer getAgeRangeId() {
+        return ageRangeId;
+    }
+
+    public void setAgeRangeId(Integer ageRangeId) {
+        this.ageRangeId = ageRangeId;
+    }
+
+    public String getAgeRangeName() {
+        return ageRangeName;
+    }
+
+    public void setAgeRangeName(String ageRangeName) {
+        this.ageRangeName = ageRangeName;
+    }
+
+    public Integer getSphereId() {
+        return sphereId;
+    }
+
+    public void setSphereId(Integer sphereId) {
+        this.sphereId = sphereId;
+    }
+
+    public String getSphereName() {
+        return sphereName;
+    }
+
+    public void setSphereName(String sphereName) {
+        this.sphereName = sphereName;
     }
 }
 

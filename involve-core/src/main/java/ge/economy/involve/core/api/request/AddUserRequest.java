@@ -24,6 +24,9 @@ public class AddUserRequest {
     private int genderId;
     private int ageRangeId;
     private int sphereId;
+    private Integer enterpriseSizeId;
+    private Integer educationLevelId;
+    private String otherSphereName;
     private boolean isApproved;
 
     public Integer getId() {
@@ -144,5 +147,29 @@ public class AddUserRequest {
 
     public void setSphereId(int sphereId) {
         this.sphereId = sphereId;
+    }
+
+    public Integer getEnterpriseSizeId() {
+        return enterpriseSizeId;
+    }
+
+    public void setEnterpriseSizeId(Integer enterpriseSizeId) {
+        this.enterpriseSizeId = enterpriseSizeId;
+    }
+
+    public Integer getEducationLevelId() {
+        return educationLevelId;
+    }
+
+    public void setEducationLevelId(Integer educationLevelId) {
+        this.educationLevelId = educationLevelId;
+    }
+
+    public String getOtherSphereName() {
+        return otherSphereName;
+    }
+
+    public void setOtherSphereName(String otherSphereName) {
+        this.otherSphereName = otherSphereName;
     }
 }

@@ -130,6 +130,7 @@ public class ApplicationController {
     public Response registration(@RequestParam Integer userTypeId, @RequestParam String firstName, @RequestParam String lastName, @RequestParam Integer genderId,
                                  @RequestParam Integer ageRangeId, @RequestParam Integer sphereId, @RequestParam String orgName,
                                  @RequestParam String idNumber, @RequestParam String phone, @RequestParam String email, @RequestParam String password,
+                                 @RequestParam(required = false, defaultValue = "") Integer enterpriseSizeId,
                                  @RequestParam(required = false, defaultValue = "") String otherSphereName, @RequestParam(required = false, defaultValue = "") Integer educationLevelId) {
         AddUserRequest request = new AddUserRequest();
         request.setFirstName(firstName);
@@ -143,6 +144,9 @@ public class ApplicationController {
         request.setPhone(phone);
         request.setEmail(email);
         request.setPassword(password);
+        request.setEnterpriseSizeId(enterpriseSizeId);
+        request.setEducationLevelId(educationLevelId);
+        request.setOtherSphereName(otherSphereName);
         try {
             userService.registrationUser(request);
         } catch (EmailNotSentException ex) {
@@ -295,5 +299,9 @@ public class ApplicationController {
         return Response.withData(userService.getEducationLevels());
     }
 
-
+    @ResponseBody
+    @RequestMapping({"/get-enterprise-sizes"})
+    public Response getEnterpriseSizes() {
+        return Response.withData(userService.getEnterpriseSizes());
+    }
 }
