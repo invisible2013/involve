@@ -13,6 +13,8 @@ import ge.economy.involve.database.database.tables.records.InitiateRecord;
 import ge.economy.involve.database.database.tables.records.InitiatedIssueRecord;
 import ge.economy.involve.database.database.tables.records.InitiativeVoteRecord;
 import ge.economy.involve.database.database.tables.records.PriorityVoteRecord;
+import ge.economy.involve.utils.email.SendEmail;
+import ge.economy.involve.utils.email.SendEmailWithAttachment;
 import javafx.scene.shape.Sphere;
 import org.apache.log4j.Logger;
 import org.jooq.DSLContext;
@@ -20,6 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.util.ByteArrayDataSource;
+import javax.sql.DataSource;
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +34,10 @@ import java.util.List;
 public class InitiateService {
     @Autowired
     private InitiateDAO initiateDAO;
+    @Autowired
+    private PDFService pdfService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private DSLContext dslContext;
 
@@ -61,7 +71,25 @@ public class InitiateService {
         } else {
             record.update();
         }
+        try {
+            InitiateDTO initiateDTO = getInitiateById(record.getId());
+            UserDTO user = userService.getUserById(initiateDTO.getUserId());
+            if (user != null) {
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                pdfService.writePdf(outputStream, getInitiateById(initiateDTO.getId()));
+                SendEmail mailSender = new SendEmail();
+                mailSender.setTo(user.getEmail());
+                mailSender.setSubject("YOU.GOV.GE საკითხის ინიცირება");
+                mailSender.setBody("ძვირფასო " + initiateDTO.getUserName() + ", \n\n" +
+                        "„მადლობას გიხდით საკითხის დაინიცირებისთვის!\n\n" +
+                        "ეკონომიკისა და მდგრადი განვითარების სამინისტრო განიხილავს თქვენს წინადადებას“\n\n\n" +
+                        "\n");
+                mailSender.sendWithPdf(outputStream);
+            }
 
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+        }
         return null;
     }
 
@@ -73,6 +101,27 @@ public class InitiateService {
         resultMap.put("list", items);
         resultMap.put("size", map.get("size"));
         return resultMap;
+    }
+
+    public InitiateDTO getInitiateById(int initiateId) {
+        return InitiateDTO.translate(initiateDAO.getInitiateById(initiateId));
+    }
+
+    public void test() throws Exception {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        pdfService.writePdf(outputStream, getInitiateById(8));
+        SendEmail mailSender = new SendEmail();
+        mailSender.setTo("nino.lomineisvili@gmail.com");
+        mailSender.setSubject("YOU.GOV.GE საკითხის ინიცირება");
+        mailSender.setBody("ძვირფასო ანა ჩხაიძე, \n" +
+                "\n" +
+                "\n" +
+                "„მადლობას გიხდით საკითხის დაინიცირებისთვის!\n" +
+                "\n" +
+                "\n" +
+                "ეკონომიკისა და მდგრადი განვითარების სამინისტრო განიხილავს თქვენს წინადადებას“\n\n\n\n" +
+                "\n");
+        mailSender.sendWithPdf(outputStream);
     }
 
     public void deleteInitiate(int itemId) {

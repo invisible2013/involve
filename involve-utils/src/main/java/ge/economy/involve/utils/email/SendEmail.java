@@ -11,6 +11,9 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.mail.util.ByteArrayDataSource;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +36,8 @@ public class SendEmail {
     //private String password = "chaertege@";
     private String username = "info@you.gov.ge";
     private String password = "4rfv%TGB";
-
+    public static final String LOGO_PATH = "/usr/share/glassfish4/glassfish/domains/domain1/applications/involve/resources/imgs/logoMail.png";
+    public static final String LOGO_PATH2 = "C:\\upload\\logoMail.png";
     private static final Logger logger = Logger.getLogger(SendEmail.class);
 
 
@@ -71,6 +75,69 @@ public class SendEmail {
             System.out.println("Sent message successfully....");
         } catch (Exception mex) {
             System.err.println(mex.getMessage());
+        }
+
+    }
+
+    public void sendWithPdf(ByteArrayOutputStream outputStream) {
+
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.user", from);
+        properties.put("mail.smtp.password", password);
+        properties.put("mail.smtp.auth", auth);
+
+        Session session = Session.getDefaultInstance(properties);
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            if (to.contains(",")) {
+                String[] recipients = to.split(",");
+                message.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress(recipients[0]));
+                for (int i = 1; i < recipients.length; i++) {
+                    message.addRecipient(Message.RecipientType.BCC, new InternetAddress(recipients[i].trim()));
+                }
+            } else {
+                message.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress(to));
+            }
+
+            byte[] bytes = outputStream.toByteArray();
+
+            DataSource dataSource = new ByteArrayDataSource(bytes, "application/pdf");
+            BodyPart filePart = new MimeBodyPart();
+            filePart.setDataHandler(new DataHandler(dataSource));
+            filePart.setFileName("Initiative.pdf");
+
+
+           /*
+            attachment for logo
+            MimeBodyPart attachLogo = new MimeBodyPart();
+            String attachFile = LOGO_PATH;
+            DataSource source = new FileDataSource(attachFile);
+            attachLogo.setDataHandler(new DataHandler(source));
+            attachLogo.setFileName(new File(attachFile).getName());*/
+
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(body, "text/plain; charset=UTF-8");
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(filePart);
+
+            message.setContent(multipart);
+
+            message.setSubject(MimeUtility.encodeText(subject, "utf-8", "B"));
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, password);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+
+            logger.info("Sent message with pdf successfully....");
+        } catch (Exception mex) {
+            logger.error(mex.getMessage());
         }
 
     }

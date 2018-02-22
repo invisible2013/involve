@@ -47,6 +47,7 @@ public class PriorityDAO extends AbstractDAO {
                 from(Tables.PRIORITY_VOTE).
                 where(Tables.PRIORITY_VOTE.PRIORITY_ID.eq(priorityId)).
                 groupBy(Tables.PRIORITY_VOTE.ANSWER_ID).
+                orderBy(Tables.PRIORITY_VOTE.ANSWER_ID).
                 fetch().into(PriorityVotePojo.class);
     }
 

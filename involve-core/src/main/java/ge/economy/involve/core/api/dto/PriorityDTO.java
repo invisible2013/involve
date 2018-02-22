@@ -17,6 +17,7 @@ public class PriorityDTO {
     private Integer id;
     private Integer userId;
     private Integer answerId;
+    private Integer answerCount;
     private String name;
     private String userName;
     private String description;
@@ -116,5 +117,13 @@ public class PriorityDTO {
 
     public void setPriorityVotes(List<PriorityVoteDTO> priorityVotes) {
         this.priorityVotes = priorityVotes;
+    }
+
+    public Integer getAnswerCount() {
+        return answerCount;
+    }
+
+    public void setAnswerCount(Integer answerCount) {
+        this.answerCount = answerCount;
     }
 }

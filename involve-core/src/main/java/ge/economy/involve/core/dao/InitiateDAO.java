@@ -38,6 +38,14 @@ public class InitiateDAO extends AbstractDAO {
         return dslContext.fetchOne(Tables.INITIATE, Tables.INITIATE.ID.eq(id));
     }
 
+    public Record getInitiateById(int id) {
+        return dslContext.select()
+                .from(Tables.INITIATE)
+                .join(Tables.SPHERE).on(Tables.INITIATE.SPHERE_ID.eq(Tables.SPHERE.ID))
+                .join(Tables.USERS).on(Tables.INITIATE.USER_ID.eq(Tables.USERS.ID))
+                .where(Tables.INITIATE.ID.eq(id)).fetchOne();
+    }
+
     public void deleteInitiate(int itemId) {
         dslContext.deleteFrom(Tables.INITIATE).where(Tables.INITIATE.ID.eq(itemId)).execute();
     }

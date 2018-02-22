@@ -47,10 +47,12 @@ public class PriorityService {
 
     public void getPriorityVoteResult(List<PriorityDTO> items) {
         for (PriorityDTO item : items) {
-            List<PriorityVotePojo> votes = priorityDAO.getPriorityVoteResult(item.getId());
+            item.setPriorityVoteResult(priorityDAO.getPriorityVoteResult(item.getId()));
+            List<PriorityVoteDTO> allVote = PriorityVoteDTO.translateArray(priorityDAO.getPriorityVotes(item.getId()));
+            item.setAnswerCount(allVote != null ? allVote.size() : 0);
             double sumScores = 0;
             double sumVotes = 0;
-            for (PriorityVotePojo pojo : votes) {
+            for (PriorityVotePojo pojo : item.getPriorityVoteResult()) {
                 sumScores += pojo.getAnswerId() * pojo.getAnswerCount();
                 sumVotes += pojo.getAnswerCount();
             }

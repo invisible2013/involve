@@ -1,19 +1,14 @@
 package ge.economy.involve.api;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ge.economy.involve.core.api.dto.QuestionAnswer;
-import ge.economy.involve.core.api.dto.UserDTO;
 import ge.economy.involve.core.api.request.*;
-import ge.economy.involve.core.api.request.eventsubscription.SubscribeEventRequest;
 import ge.economy.involve.core.execptions.*;
 import ge.economy.involve.core.response.Response;
 import ge.economy.involve.core.services.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import ge.economy.involve.utils.email.EmailNotSentException;
@@ -124,6 +119,18 @@ public class ApplicationController {
     public void getFile(HttpServletResponse response, @RequestParam String identifier)
             throws IOException {
         response.getOutputStream().write(fileService.readFile(identifier.split("\\.")[0]));
+    }
+
+    @RequestMapping({"/test"})
+    @ResponseBody
+    public Response test(HttpServletResponse response) {
+        try {
+            initiateService.test();
+            return Response.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.withError("errorrrr");
+        }
     }
 
     @ResponseBody
