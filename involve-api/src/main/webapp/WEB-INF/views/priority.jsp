@@ -226,7 +226,7 @@
                                 <th>ადმინისტრატორი</th>
                                 <th>დასახელება</th>
                                 <th>აღწერა</th>
-                                <th style="width: 23%">#Edit</th>
+                                <th style="width:220px">#Edit</th>
                             </tr>
                             </thead>
                             <tbody>

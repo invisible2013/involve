@@ -15,7 +15,7 @@
         $scope.limit = 20;
         $scope.size = 0;
         $scope.loadCount = 0;
-
+        $scope.selectedItem = {};
 
         function getSuccessSportsmans(res) {
             $scope.items = $scope.items.concat(res.data.list);
@@ -53,7 +53,12 @@
         };
 
 
-
+        $scope.viewItem = function (itemId) {
+            if (itemId != undefined) {
+                var selected = $filter('filter')($scope.items, {id: itemId});
+                $scope.selectedItem = selected[0];
+            }
+        };
 
 
         $scope.deleteItem = function (itemId) {
@@ -85,6 +90,59 @@
 <!-- page content -->
 <div class="right_col" ng-controller="homeCtrl">
 
+    <div class="modal fade" id="initiateViewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="viewModalLabel">ინიციატივის ინფორმაცია</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <table class="table table-striped">
+                            <tr>
+                                <th class="col-md-4 text-right">მომხმარებელი :</th>
+                                <td>{{selectedItem.userName}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">სფერო :</th>
+                                <td>{{selectedItem.sphereName}}<br>
+                                    {{selectedItem.otherSphereName}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">დასახელება :</th>
+                                <td>{{selectedItem.name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">აღწერა :</th>
+                                <td>{{selectedItem.description}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">საჭიროება :</th>
+                                <td>{{selectedItem.necessity}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">დადებითი და უარყოფითი შედეგები :</th>
+                                <td>{{selectedItem.advantages}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">დამატების თარიღი :</th>
+                                <td>{{selectedItem.createDate}}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">დახურვა</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="">
@@ -134,16 +192,16 @@
                                 <th>მომხმარებელი</th>
                                 <th>სფერო</th>
                                 <th>დასახელება</th>
-                                <th>აღწერა</th>
+                               <%-- <th>აღწერა</th>
                                 <th>საჭიროება</th>
-                                <th>დადებითი/უარყოფითი შედეგები</th>
-                                <th >#Edit</th>
+                                <th>დადებითი/უარყოფითი შედეგები</th>--%>
+                                <th>#Edit</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="r in items">
                                 <td>
-                                    <a data-toggle="modal" data-target="#reformViewModal" ng-click="editItem(r.id)"
+                                    <a data-toggle="modal"
                                        class="btn btn-link btn-xs">{{$index+1}}</a>
                                 </td>
                                 <td>
@@ -153,14 +211,13 @@
                                 </td>
                                 <td>{{r.sphereName}} {{r.otherSphereName}}</td>
                                 <td>{{r.name}}</td>
-                                <td>{{r.description}}</td>
+                               <%-- <td>{{r.description}}</td>
                                 <td>{{r.necessity}}</td>
-                                <td>{{r.advantages}}</td>
-                                <td ng-click="editItem(r.id)">
-                                    <%--  <a data-toggle="modal" data-target="#reformViewModal" ng-click="editItem(r.id)"
-                                         class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> ნახვა</a>--%>
-                                    <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
-                                            class="fa fa-trash-o"></i> წაშლა</a>
+                                <td>{{r.advantages}}</td>--%>
+                                <td width="200px">
+                                    <a data-toggle="modal" data-target="#initiateViewModal" ng-click="viewItem(r.id)"
+                                       class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> ნახვა</a>
+                                    <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> წაშლა</a>
                                 </td>
                             </tr>
                             </tbody>

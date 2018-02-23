@@ -48,44 +48,13 @@ public class PDFService {
 
         Paragraph paragraph = new Paragraph();
         paragraph.setFont(boldFont);
-        paragraph.add("დასახელება : ");
+        paragraph.add("ინიციატივის დასახელება : ");
         document.add(paragraph);
 
         paragraph = new Paragraph();
         paragraph.setFont(font);
         paragraph.add(initiate.getName());
         document.add(paragraph);
-
-        paragraph = new Paragraph();
-        paragraph.setFont(boldFont);
-        paragraph.add("აღწერა : ");
-        document.add(paragraph);
-
-        paragraph = new Paragraph();
-        paragraph.setFont(font);
-        paragraph.add(initiate.getDescription());
-        document.add(paragraph);
-
-        paragraph = new Paragraph();
-        paragraph.setFont(boldFont);
-        paragraph.add("საჭიროება : ");
-        document.add(paragraph);
-
-        paragraph = new Paragraph();
-        paragraph.setFont(font);
-        paragraph.add(initiate.getNecessity());
-        document.add(paragraph);
-
-        paragraph = new Paragraph();
-        paragraph.setFont(boldFont);
-        paragraph.add("უპირატესობები : ");
-        document.add(paragraph);
-
-        paragraph = new Paragraph();
-        paragraph.setFont(font);
-        paragraph.add(initiate.getAdvantages());
-        document.add(paragraph);
-
 
         paragraph = new Paragraph();
         paragraph.setFont(boldFont);
@@ -96,6 +65,37 @@ public class PDFService {
         paragraph.setFont(font);
         paragraph.add(initiate.getOtherSphereName() != null ? initiate.getSphereName() + " " + initiate.getOtherSphereName() : initiate.getSphereName());
         document.add(paragraph);
+
+        paragraph = new Paragraph();
+        paragraph.setFont(boldFont);
+        paragraph.add("ინიციატივის მოკლე აღწერა : ");
+        document.add(paragraph);
+
+        paragraph = new Paragraph();
+        paragraph.setFont(font);
+        paragraph.add(initiate.getDescription());
+        document.add(paragraph);
+
+        paragraph = new Paragraph();
+        paragraph.setFont(boldFont);
+        paragraph.add("ინიციატივის საჭიროება : ");
+        document.add(paragraph);
+
+        paragraph = new Paragraph();
+        paragraph.setFont(font);
+        paragraph.add(initiate.getNecessity());
+        document.add(paragraph);
+
+        paragraph = new Paragraph();
+        paragraph.setFont(boldFont);
+        paragraph.add("შესაძლო დადებითი და უარყოფითი შედეგები : ");
+        document.add(paragraph);
+
+        paragraph = new Paragraph();
+        paragraph.setFont(font);
+        paragraph.add(initiate.getAdvantages());
+        document.add(paragraph);
+
 
         document.close();
     }
