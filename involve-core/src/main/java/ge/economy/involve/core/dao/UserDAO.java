@@ -101,6 +101,14 @@ public class UserDAO extends AbstractDAO {
                 fetch();
     }
 
+    public List<Record> getEconomyActivityStatus() {
+        return dslContext.
+                select().
+                from(Tables.ECONOMY_ACTIVITY_STATUS).
+                orderBy(Tables.ECONOMY_ACTIVITY_STATUS.ID).
+                fetch();
+    }
+
     public List<Record> getActivitySpheres() {
         return dslContext.
                 select().

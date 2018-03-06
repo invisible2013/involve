@@ -113,14 +113,14 @@ public class InitiateService {
         SendEmail mailSender = new SendEmail();
         mailSender.setTo("nino.lomineisvili@gmail.com");
         mailSender.setSubject("YOU.GOV.GE საკითხის ინიცირება");
-        mailSender.setBody("ძვირფასო ანა ჩხაიძე, \n" +
-                "\n" +
-                "\n" +
-                "„მადლობას გიხდით საკითხის დაინიცირებისთვის!\n" +
-                "\n" +
-                "\n" +
-                "ეკონომიკისა და მდგრადი განვითარების სამინისტრო განიხილავს თქვენს წინადადებას“\n\n\n\n" +
-                "\n");
+        mailSender.setBody("ძვირფასო ანა ჩხაიძე, <br/>" +
+                "<br/>" +
+                "<br/>" +
+                "მადლობას გიხდით საკითხის დაინიცირებისთვის!<br/>" +
+                "<br/>" +
+                "<br/>" +
+                "ეკონომიკისა და მდგრადი განვითარების სამინისტრო განიხილავს თქვენს წინადადებას <br/>" +
+                "<br/>");
         mailSender.sendWithPdf(outputStream);
     }
 

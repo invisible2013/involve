@@ -6,6 +6,22 @@
     });
 
     var app = angular.module("app", []);
+    app.directive('ckEditor', [function () {
+        return {
+            require: '?ngModel',
+            link: function ($scope, elm, attr, ngModel) {
+                var ck = CKEDITOR.replace(elm[0]);
+                ck.on('pasteState', function () {
+                    $scope.$apply(function () {
+                        ngModel.$setViewValue(ck.getData());
+                    });
+                });
+                ngModel.$render = function (value) {
+                    ck.setData(ngModel.$modelValue);
+                };
+            }
+        };
+    }]);
     app.controller("homeCtrl", function ($scope, $http, $filter) {
         $scope.items = [];
         $scope.reformTypes = [];
@@ -103,8 +119,9 @@
                         </div>
                         <div class="form-group col-sm-12">
                             <label class="control-label">აღწერა</label>
-                            <textarea rows="4" ng-model="item.description" class="form-control ng-pristine ng-valid">
-                            </textarea>
+                            <textarea data-ng-model="item.description" rows="2"
+                                      placeholder="აღწერა" data-ck-editor
+                                      class="form-control"></textarea>
                         </div>
                     </div>
                 </div>

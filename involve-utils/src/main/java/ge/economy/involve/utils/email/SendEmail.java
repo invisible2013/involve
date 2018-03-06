@@ -120,10 +120,27 @@ public class SendEmail {
             attachLogo.setDataHandler(new DataHandler(source));
             attachLogo.setFileName(new File(attachFile).getName());*/
 
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(body, "text/plain; charset=UTF-8");
+            String cid = "abcdd";
+            BodyPart logoBodyPart = new MimeBodyPart();
+            String htmlText = "<img src=\"cid:" + cid + "\"> <br><br><br><br>";
+            logoBodyPart.setContent(htmlText, "text/html");
 
-            Multipart multipart = new MimeMultipart();
+
+            /*MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(body, "text/plain; charset=UTF-8");*/
+
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent("<html><body>" + body + "<br/>" +
+                    "<div ><img src=\"http://www.you.gov.ge/images/logoMail2.png\" /></div>" +
+                    "<br/><br/><br/></body></html>", "text/html; charset=UTF-8");
+
+           /* MimeBodyPart imagePart = new MimeBodyPart();
+            imagePart.attachFile(LOGO_PATH2);
+            imagePart.setContentID("<" + cid + ">");
+            imagePart.setDisposition(MimeBodyPart.INLINE);*/
+
+
+            Multipart multipart = new MimeMultipart("related");
             multipart.addBodyPart(messageBodyPart);
             multipart.addBodyPart(filePart);
 

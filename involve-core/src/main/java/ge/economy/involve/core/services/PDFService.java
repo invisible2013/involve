@@ -24,7 +24,7 @@ public class PDFService {
 
 
     public static final String FONT_PATH = "/usr/share/glassfish4/glassfish/domains/domain1/applications/involve/resources/fonts/bpg_dejavu_sans.ttf";
-    public static final String FONT2 = "C:\\upload\\bpg_dejavu_sans.ttf";
+    public static final String FONT_PATH2 = "C:\\upload\\bpg_dejavu_sans.ttf";
 
 
     public void writePdf(OutputStream outputStream, InitiateDTO initiate) throws Exception {

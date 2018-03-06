@@ -34,6 +34,11 @@ public class Sequences {
 	public static final Sequence<Long> AGE_RANGE_ID_SEQ = new SequenceImpl<Long>("age_range_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
 	/**
+	 * The sequence <code>public.economy_activity_status_id_seq</code>
+	 */
+	public static final Sequence<Long> ECONOMY_ACTIVITY_STATUS_ID_SEQ = new SequenceImpl<Long>("economy_activity_status_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+	/**
 	 * The sequence <code>public.education_level_id_seq</code>
 	 */
 	public static final Sequence<Long> EDUCATION_LEVEL_ID_SEQ = new SequenceImpl<Long>("education_level_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));

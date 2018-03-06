@@ -110,7 +110,8 @@
 <div class="col-md-12" ng-controller="refereeCtrl">
 
     <button class="btn btn-primary btn-xs pull-right margin5" ng-click="addNewSportsman();">დამატება</button>
-
+<img src="http://www.you.gov.ge/images/logo.png" />
+    <br/>
     <form name="sportsmanForm" class="hidden" id="sportsmanPanel">
         <div class="col-md-12 text-center"><h4>შედეგი</h4></div>
 

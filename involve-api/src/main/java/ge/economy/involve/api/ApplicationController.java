@@ -312,4 +312,10 @@ public class ApplicationController {
     public Response getEnterpriseSizes() {
         return Response.withData(userService.getEnterpriseSizes());
     }
+
+    @ResponseBody
+    @RequestMapping({"/get-economy-activity-status"})
+    public Response getEconomyActivityStatus() {
+        return Response.withData(userService.getEconomyActivityStatus());
+    }
 }

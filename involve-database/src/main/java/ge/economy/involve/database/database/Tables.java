@@ -6,6 +6,7 @@ package ge.economy.involve.database.database;
 
 import ge.economy.involve.database.database.tables.ActivitySphere;
 import ge.economy.involve.database.database.tables.AgeRange;
+import ge.economy.involve.database.database.tables.EconomyActivityStatus;
 import ge.economy.involve.database.database.tables.EducationLevel;
 import ge.economy.involve.database.database.tables.EnterpriseSize;
 import ge.economy.involve.database.database.tables.FileType;
@@ -62,6 +63,11 @@ public class Tables {
 	 * The table public.age_range
 	 */
 	public static final AgeRange AGE_RANGE = ge.economy.involve.database.database.tables.AgeRange.AGE_RANGE;
+
+	/**
+	 * The table public.economy_activity_status
+	 */
+	public static final EconomyActivityStatus ECONOMY_ACTIVITY_STATUS = ge.economy.involve.database.database.tables.EconomyActivityStatus.ECONOMY_ACTIVITY_STATUS;
 
 	/**
 	 * The table public.education_level

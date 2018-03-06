@@ -269,6 +269,10 @@ public class UserService {
         return GenderDTO.translateArray(userDAO.getActivitySpheres());
     }
 
+    public List<GenderDTO> getEconomyActivityStatus() {
+        return GenderDTO.translateArray(userDAO.getEconomyActivityStatus());
+    }
+
     public void deleteUser(int itemId) {
         userDAO.deleteUser(itemId);
     }

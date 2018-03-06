@@ -6,6 +6,7 @@ package ge.economy.involve.database.database;
 
 import ge.economy.involve.database.database.tables.ActivitySphere;
 import ge.economy.involve.database.database.tables.AgeRange;
+import ge.economy.involve.database.database.tables.EconomyActivityStatus;
 import ge.economy.involve.database.database.tables.EducationLevel;
 import ge.economy.involve.database.database.tables.EnterpriseSize;
 import ge.economy.involve.database.database.tables.FileType;
@@ -38,6 +39,7 @@ import ge.economy.involve.database.database.tables.UserType;
 import ge.economy.involve.database.database.tables.Users;
 import ge.economy.involve.database.database.tables.records.ActivitySphereRecord;
 import ge.economy.involve.database.database.tables.records.AgeRangeRecord;
+import ge.economy.involve.database.database.tables.records.EconomyActivityStatusRecord;
 import ge.economy.involve.database.database.tables.records.EducationLevelRecord;
 import ge.economy.involve.database.database.tables.records.EnterpriseSizeRecord;
 import ge.economy.involve.database.database.tables.records.FileTypeRecord;
@@ -96,6 +98,7 @@ public class Keys {
 
 	public static final Identity<ActivitySphereRecord, Integer> IDENTITY_ACTIVITY_SPHERE = Identities0.IDENTITY_ACTIVITY_SPHERE;
 	public static final Identity<AgeRangeRecord, Integer> IDENTITY_AGE_RANGE = Identities0.IDENTITY_AGE_RANGE;
+	public static final Identity<EconomyActivityStatusRecord, Integer> IDENTITY_ECONOMY_ACTIVITY_STATUS = Identities0.IDENTITY_ECONOMY_ACTIVITY_STATUS;
 	public static final Identity<EducationLevelRecord, Integer> IDENTITY_EDUCATION_LEVEL = Identities0.IDENTITY_EDUCATION_LEVEL;
 	public static final Identity<EnterpriseSizeRecord, Integer> IDENTITY_ENTERPRISE_SIZE = Identities0.IDENTITY_ENTERPRISE_SIZE;
 	public static final Identity<FileTypeRecord, Integer> IDENTITY_FILE_TYPE = Identities0.IDENTITY_FILE_TYPE;
@@ -133,6 +136,7 @@ public class Keys {
 
 	public static final UniqueKey<ActivitySphereRecord> ACTIVITY_SPHERE_PKEY = UniqueKeys0.ACTIVITY_SPHERE_PKEY;
 	public static final UniqueKey<AgeRangeRecord> AGE_RANGE_PKEY = UniqueKeys0.AGE_RANGE_PKEY;
+	public static final UniqueKey<EconomyActivityStatusRecord> ECONOMY_ACTIVITY_STATUS_PKEY = UniqueKeys0.ECONOMY_ACTIVITY_STATUS_PKEY;
 	public static final UniqueKey<EducationLevelRecord> EDUCATION_LEVEL_PKEY = UniqueKeys0.EDUCATION_LEVEL_PKEY;
 	public static final UniqueKey<EnterpriseSizeRecord> ENTERPRISE_SIZE_PKEY = UniqueKeys0.ENTERPRISE_SIZE_PKEY;
 	public static final UniqueKey<FileTypeRecord> FILE_TYPE_PKEY = UniqueKeys0.FILE_TYPE_PKEY;
@@ -176,6 +180,7 @@ public class Keys {
 	private static class Identities0 extends AbstractKeys {
 		public static Identity<ActivitySphereRecord, Integer> IDENTITY_ACTIVITY_SPHERE = createIdentity(ActivitySphere.ACTIVITY_SPHERE, ActivitySphere.ACTIVITY_SPHERE.ID);
 		public static Identity<AgeRangeRecord, Integer> IDENTITY_AGE_RANGE = createIdentity(AgeRange.AGE_RANGE, AgeRange.AGE_RANGE.ID);
+		public static Identity<EconomyActivityStatusRecord, Integer> IDENTITY_ECONOMY_ACTIVITY_STATUS = createIdentity(EconomyActivityStatus.ECONOMY_ACTIVITY_STATUS, EconomyActivityStatus.ECONOMY_ACTIVITY_STATUS.ID);
 		public static Identity<EducationLevelRecord, Integer> IDENTITY_EDUCATION_LEVEL = createIdentity(EducationLevel.EDUCATION_LEVEL, EducationLevel.EDUCATION_LEVEL.ID);
 		public static Identity<EnterpriseSizeRecord, Integer> IDENTITY_ENTERPRISE_SIZE = createIdentity(EnterpriseSize.ENTERPRISE_SIZE, EnterpriseSize.ENTERPRISE_SIZE.ID);
 		public static Identity<FileTypeRecord, Integer> IDENTITY_FILE_TYPE = createIdentity(FileType.FILE_TYPE, FileType.FILE_TYPE.ID);
@@ -211,6 +216,7 @@ public class Keys {
 	private static class UniqueKeys0 extends AbstractKeys {
 		public static final UniqueKey<ActivitySphereRecord> ACTIVITY_SPHERE_PKEY = createUniqueKey(ActivitySphere.ACTIVITY_SPHERE, ActivitySphere.ACTIVITY_SPHERE.ID);
 		public static final UniqueKey<AgeRangeRecord> AGE_RANGE_PKEY = createUniqueKey(AgeRange.AGE_RANGE, AgeRange.AGE_RANGE.ID);
+		public static final UniqueKey<EconomyActivityStatusRecord> ECONOMY_ACTIVITY_STATUS_PKEY = createUniqueKey(EconomyActivityStatus.ECONOMY_ACTIVITY_STATUS, EconomyActivityStatus.ECONOMY_ACTIVITY_STATUS.ID);
 		public static final UniqueKey<EducationLevelRecord> EDUCATION_LEVEL_PKEY = createUniqueKey(EducationLevel.EDUCATION_LEVEL, EducationLevel.EDUCATION_LEVEL.ID);
 		public static final UniqueKey<EnterpriseSizeRecord> ENTERPRISE_SIZE_PKEY = createUniqueKey(EnterpriseSize.ENTERPRISE_SIZE, EnterpriseSize.ENTERPRISE_SIZE.ID);
 		public static final UniqueKey<FileTypeRecord> FILE_TYPE_PKEY = createUniqueKey(FileType.FILE_TYPE, FileType.FILE_TYPE.ID);
