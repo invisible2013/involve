@@ -185,6 +185,7 @@ public class UserService {
         record.setOtherSphereName(request.getOtherSphereName());
         record.setEducationLevelId(request.getEducationLevelId());
         record.setEnterpriseSizeId(request.getEnterpriseSizeId());
+        record.setEconomyActivityStatusId(request.getEconomyActivityStatusId());
         if (request.getPassword() != null) {
             record.setPassword(MD5Provider.doubleMd5(request.getPassword()));
         }

@@ -26,6 +26,7 @@ public class AddUserRequest {
     private int sphereId;
     private Integer enterpriseSizeId;
     private Integer educationLevelId;
+    private Integer economyActivityStatusId;
     private String otherSphereName;
     private boolean isApproved;
 
@@ -171,5 +172,13 @@ public class AddUserRequest {
 
     public void setOtherSphereName(String otherSphereName) {
         this.otherSphereName = otherSphereName;
+    }
+
+    public Integer getEconomyActivityStatusId() {
+        return economyActivityStatusId;
+    }
+
+    public void setEconomyActivityStatusId(Integer economyActivityStatusId) {
+        this.economyActivityStatusId = economyActivityStatusId;
     }
 }

@@ -84,14 +84,18 @@ public class ApplicationController {
     @ResponseBody
     @RequestMapping({"/save-initiate-issue"})
     public Response saveInitiateIssue(@RequestParam int initiateIssueId, @RequestParam boolean agreed, @RequestParam String ipAddress,
-                                      @RequestParam String clientUID, @RequestParam(required = false, defaultValue = "0") int userId) {
-        AddInitiativeVoteRequest request = new AddInitiativeVoteRequest();
-        request.setUserId(userId);
-        request.setInitiatedIssueId(initiateIssueId);
-        request.setAgreed(agreed);
-        request.setIpAddress(ipAddress);
-        request.setClientUID(clientUID);
-        return Response.withData(initiateService.saveInitiativeIssueVote(request));
+                                      @RequestParam(required = false, defaultValue = "") String clientUID, @RequestParam int userId) {
+        try {
+            AddInitiativeVoteRequest request = new AddInitiativeVoteRequest();
+            request.setUserId(userId);
+            request.setInitiatedIssueId(initiateIssueId);
+            request.setAgreed(agreed);
+            request.setIpAddress(ipAddress);
+            request.setClientUID(clientUID);
+            return Response.withData(initiateService.saveInitiativeIssueVote(request));
+        } catch (Exception e) {
+            return Response.withError(e.getMessage());
+        }
     }
 
 
@@ -105,6 +109,18 @@ public class ApplicationController {
     @RequestMapping({"/get-initiate-issues"})
     public Response getInitiateIssues(@RequestParam(required = false, defaultValue = "0") int start, @RequestParam int limit) {
         return Response.withData(initiateService.getIssues(start, limit));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-initiate-issue-by-id"})
+    public Response getInitiateIssueById(@RequestParam int initiateIssueId) {
+        return Response.withData(initiateService.getInitiateIssueById(initiateIssueId));
+    }
+
+    @ResponseBody
+    @RequestMapping({"/get-initiate-issue-vote-by-user"})
+    public Response getInitiateIssueVoteById(@RequestParam int initiateIssueId, @RequestParam int userId) {
+        return Response.withData(initiateService.getUserInitiateVote(initiateIssueId, userId));
     }
 
     @ResponseBody
@@ -139,7 +155,9 @@ public class ApplicationController {
                                  @RequestParam Integer ageRangeId, @RequestParam Integer sphereId, @RequestParam String orgName,
                                  @RequestParam String idNumber, @RequestParam String phone, @RequestParam String email, @RequestParam String password,
                                  @RequestParam(required = false, defaultValue = "") Integer enterpriseSizeId,
-                                 @RequestParam(required = false, defaultValue = "") String otherSphereName, @RequestParam(required = false, defaultValue = "") Integer educationLevelId) {
+                                 @RequestParam(required = false, defaultValue = "") String otherSphereName,
+                                 @RequestParam(required = false, defaultValue = "") Integer educationLevelId,
+                                 @RequestParam(required = false, defaultValue = "") Integer economyActivityStatusId) {
         AddUserRequest request = new AddUserRequest();
         request.setFirstName(firstName);
         request.setLastName(lastName);
@@ -154,6 +172,7 @@ public class ApplicationController {
         request.setPassword(password);
         request.setEnterpriseSizeId(enterpriseSizeId);
         request.setEducationLevelId(educationLevelId);
+        request.setEconomyActivityStatusId(economyActivityStatusId);
         request.setOtherSphereName(otherSphereName);
         try {
             userService.registrationUser(request);

@@ -205,6 +205,10 @@
                                 <th class="col-md-4 text-right">საწარმოს ზომა :</th>
                                 <td>{{selectedUser.enterpriseSizeName}}</td>
                             </tr>
+                            <tr>
+                            <th class="col-md-4 text-right">ეკონომიკური აქტიურობის სტატუსი :</th>
+                            <td>{{selectedUser.economyActivityStatusName}}</td>
+                            </tr>
                         </table>
 
                     </div>

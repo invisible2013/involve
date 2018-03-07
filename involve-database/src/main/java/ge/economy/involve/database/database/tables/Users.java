@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-	private static final long serialVersionUID = 930346864;
+	private static final long serialVersionUID = -47871076;
 
 	/**
 	 * The reference instance of <code>public.users</code>
@@ -150,6 +150,11 @@ public class Users extends TableImpl<UsersRecord> {
 	 * The column <code>public.users.enterprise_size_id</code>.
 	 */
 	public final TableField<UsersRecord, Integer> ENTERPRISE_SIZE_ID = createField("enterprise_size_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>public.users.economy_activity_status_id</code>.
+	 */
+	public final TableField<UsersRecord, Integer> ECONOMY_ACTIVITY_STATUS_ID = createField("economy_activity_status_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>public.users</code> table reference

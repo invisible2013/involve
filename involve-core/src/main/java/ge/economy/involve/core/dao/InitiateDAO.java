@@ -2,6 +2,7 @@ package ge.economy.involve.core.dao;
 
 import ge.economy.involve.database.database.Tables;
 import ge.economy.involve.database.database.tables.records.*;
+import javafx.scene.control.Tab;
 import org.jooq.Condition;
 import org.jooq.Record;
 import org.jooq.SelectOnConditionStep;
@@ -46,6 +47,13 @@ public class InitiateDAO extends AbstractDAO {
                 .where(Tables.INITIATE.ID.eq(id)).fetchOne();
     }
 
+    public Record getInitiateIssueById(int id) {
+        return dslContext.select()
+                .from(Tables.INITIATED_ISSUE)
+                .join(Tables.USERS).on(Tables.INITIATED_ISSUE.CREATOR_ID.eq(Tables.USERS.ID))
+                .where(Tables.INITIATED_ISSUE.ID.eq(id)).fetchOne();
+    }
+
     public void deleteInitiate(int itemId) {
         dslContext.deleteFrom(Tables.INITIATE).where(Tables.INITIATE.ID.eq(itemId)).execute();
     }
@@ -76,6 +84,14 @@ public class InitiateDAO extends AbstractDAO {
                 fetchOne().into(Integer.class);
     }
 
+    public int getUserInitiatedVote(int initiatedIssueId, int userId) {
+        return dslContext.selectCount().
+                from(Tables.INITIATIVE_VOTE).
+                where(Tables.INITIATIVE_VOTE.INITIATED_ISSUE_ID.eq(initiatedIssueId)).
+                and(Tables.INITIATIVE_VOTE.USER_ID.eq(userId)).
+                fetchOne().into(Integer.class);
+    }
+
     public InitiatedIssueRecord getInitiatedIssueObjectById(int id) {
         return dslContext.fetchOne(Tables.INITIATED_ISSUE, Tables.INITIATED_ISSUE.ID.eq(id));
     }
@@ -86,6 +102,18 @@ public class InitiateDAO extends AbstractDAO {
 
     public PriorityVoteRecord getPriorityVoteObjectById(int id) {
         return dslContext.fetchOne(Tables.PRIORITY_VOTE, Tables.PRIORITY_VOTE.ID.eq(id));
+    }
+
+    public PriorityVoteRecord getPriorityVoteObjectByUserId(int priorityId, int userId) {
+        return dslContext.fetchOne(Tables.PRIORITY_VOTE,
+                Tables.PRIORITY_VOTE.PRIORITY_ID.eq(priorityId).
+                        and(Tables.PRIORITY_VOTE.USER_ID.eq(userId)));
+    }
+
+    public PriorityVoteRecord getPriorityVoteObjectByClientUID(int priorityId, String clientUID) {
+        return dslContext.fetchOne(Tables.PRIORITY_VOTE,
+                Tables.PRIORITY_VOTE.PRIORITY_ID.eq(priorityId).
+                        and(Tables.PRIORITY_VOTE.CLIENT_UID.eq(clientUID)));
     }
 
     public void deleteIssue(int itemId) {

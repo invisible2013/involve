@@ -44,6 +44,8 @@ public class UserDTO {
     private String ageRangeName;
     private Integer sphereId;
     private String sphereName;
+    private Integer economyActivityStatusId;
+    private String economyActivityStatusName;
 
     public static Integer TOKEN_VALID_DAY_NUMBER = 365;
 
@@ -100,6 +102,11 @@ public class UserDTO {
         if (record.field(Tables.ACTIVITY_SPHERE.NAME) != null) {
             dto.setSphereName(record.getValue(Tables.ACTIVITY_SPHERE.NAME));
         }
+        dto.setEconomyActivityStatusId(record.getValue(Tables.USERS.ECONOMY_ACTIVITY_STATUS_ID));
+        if (record.field(Tables.ECONOMY_ACTIVITY_STATUS.NAME) != null) {
+            dto.setEconomyActivityStatusName(record.getValue(Tables.ECONOMY_ACTIVITY_STATUS.NAME));
+        }
+
         if (dto.getTypeId() == USER_PHISICAL) {
             dto.setName(dto.getFirstName() + " " + dto.getLastName());
         } else {
@@ -339,6 +346,22 @@ public class UserDTO {
 
     public void setSphereName(String sphereName) {
         this.sphereName = sphereName;
+    }
+
+    public Integer getEconomyActivityStatusId() {
+        return economyActivityStatusId;
+    }
+
+    public void setEconomyActivityStatusId(Integer economyActivityStatusId) {
+        this.economyActivityStatusId = economyActivityStatusId;
+    }
+
+    public String getEconomyActivityStatusName() {
+        return economyActivityStatusName;
+    }
+
+    public void setEconomyActivityStatusName(String economyActivityStatusName) {
+        this.economyActivityStatusName = economyActivityStatusName;
     }
 }
 

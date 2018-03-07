@@ -107,6 +107,7 @@ public class InitiateService {
         return InitiateDTO.translate(initiateDAO.getInitiateById(initiateId));
     }
 
+
     public void test() throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         pdfService.writePdf(outputStream, getInitiateById(8));
@@ -155,6 +156,11 @@ public class InitiateService {
         return null;
     }
 
+    public InitiatedIssueDTO getInitiateIssueById(int initiateIssueId) {
+        InitiatedIssueDTO item = InitiatedIssueDTO.translate(initiateDAO.getInitiateIssueById(initiateIssueId));
+        item.setVoteCount(initiateDAO.getInitiatedIssueVoteCount(item.getId()));
+        return item;
+    }
 
     public HashMap<String, Object> getIssues(int start, int limit) {
         new HashMap();
@@ -178,7 +184,11 @@ public class InitiateService {
     }
 
 
-    public InitiatedIssueDTO saveInitiativeIssueVote(AddInitiativeVoteRequest request) {
+    public InitiativeVoteDTO saveInitiativeIssueVote(AddInitiativeVoteRequest request) throws Exception {
+        if (checkUserInitiateVote(request.getInitiatedIssueId(), request.getUserId())) {
+            throw new Exception("მომხმარებელს უკვე მიცემული აქვს ხმა");
+        }
+
         boolean newRecord = false;
         InitiativeVoteRecord record = null;
         if (request.getId() != null) {
@@ -202,15 +212,31 @@ public class InitiateService {
         } else {
             record.update();
         }
-        InitiatedIssueDTO dto = InitiatedIssueDTO.translate(record);
+        InitiativeVoteDTO dto = InitiativeVoteDTO.translate(record);
         dto.setVoteCount(initiateDAO.getInitiatedIssueVoteCount(dto.getId()));
         return dto;
     }
 
+    public HashMap<String, String> getUserInitiateVote(int initiateIssueId, int userId) {
+        HashMap<String, String> result = new HashMap<>();
+        result.put("result", checkUserInitiateVote(initiateIssueId, userId) ? "true" : "false");
+        return result;
+    }
+
+    public boolean checkUserInitiateVote(int initiateIssueId, int userId) {
+        int voteCount = initiateDAO.getUserInitiatedVote(initiateIssueId, userId);
+        return voteCount > 0 ? true : false;
+    }
+
     public InitiatedIssueDTO savePriorityVote(AddPriorityVoteRequest request) {
         PriorityVoteRecord record = null;
+
         if (request.getId() != null) {
             record = initiateDAO.getPriorityVoteObjectById(request.getId());
+        } else if (request.getUserId() != null && request.getUserId() != 0) {
+            record = initiateDAO.getPriorityVoteObjectByUserId(request.getPriorityId(), request.getUserId());
+        } else if (request.getClientUID().length() > 0) {
+            record = initiateDAO.getPriorityVoteObjectByClientUID(request.getPriorityId(), request.getClientUID());
         }
 
         if (record == null) {

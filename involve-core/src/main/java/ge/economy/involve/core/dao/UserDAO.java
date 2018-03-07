@@ -46,6 +46,7 @@ public class UserDAO extends AbstractDAO {
                 leftJoin(Tables.EDUCATION_LEVEL).on(Tables.USERS.EDUCATION_LEVEL_ID.eq(Tables.EDUCATION_LEVEL.ID)).
                 leftJoin(Tables.ENTERPRISE_SIZE).on(Tables.USERS.ENTERPRISE_SIZE_ID.eq(Tables.ENTERPRISE_SIZE.ID)).
                 leftJoin(Tables.ACTIVITY_SPHERE).on(Tables.USERS.SPHERE_ID.eq(Tables.ACTIVITY_SPHERE.ID)).
+                leftJoin(Tables.ECONOMY_ACTIVITY_STATUS).on(Tables.USERS.ECONOMY_ACTIVITY_STATUS_ID.eq(Tables.ECONOMY_ACTIVITY_STATUS.ID)).
                 where(Tables.USERS.ID.eq(id)).fetchAny();
     }
 
