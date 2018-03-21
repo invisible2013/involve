@@ -80,10 +80,14 @@ public class InitiateService {
                 SendEmail mailSender = new SendEmail();
                 mailSender.setTo(user.getEmail());
                 mailSender.setSubject("YOU.GOV.GE საკითხის ინიცირება");
-                mailSender.setBody("ძვირფასო " + initiateDTO.getUserName() + ", \n\n" +
-                        "„მადლობას გიხდით საკითხის დაინიცირებისთვის!\n\n" +
-                        "ეკონომიკისა და მდგრადი განვითარების სამინისტრო განიხილავს თქვენს წინადადებას“\n\n\n" +
-                        "\n");
+                mailSender.setBody("ძვირფასო " + initiateDTO.getUserName() + ",  <br/>" +
+                        "<br/>" +
+                        "<br/>" +
+                        "მადლობას გიხდით საკითხის დაინიცირებისთვის! <br/>" +
+                        "<br/>" +
+                        "<br/>" +
+                        "ეკონომიკისა და მდგრადი განვითარების სამინისტრო განიხილავს თქვენს წინადადებას <br/>" +
+                        "<br/>");
                 mailSender.sendWithPdf(outputStream);
             }
 
