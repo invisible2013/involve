@@ -19,6 +19,7 @@ public class SessionFileDTO {
     private Integer fileTypeId;
     private String fileTypeName;
     private String fileName;
+    private String name;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
 
@@ -29,6 +30,7 @@ public class SessionFileDTO {
         dto.setSessionId(record.getValue(Tables.SESSION_FILE.SESSION_ID));
         dto.setFileTypeId(record.getValue(Tables.SESSION_FILE.FILE_TYPE_ID));
         dto.setFileName(record.getValue(Tables.SESSION_FILE.FILE_NAME));
+        dto.setName(record.getValue(Tables.SESSION_FILE.NAME));
         dto.setCreateDate(record.getValue(Tables.SESSION_FILE.CREATE_DATE));
         return dto;
     }
@@ -88,5 +90,13 @@ public class SessionFileDTO {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -113,6 +113,7 @@
                                 <th>მომხმარებელი</th>
                                 <th>კითხვა</th>
                                 <th>პასუხი</th>
+                                <th>კომენტარი</th>
                                 <th style="width: 165px;">#Edit</th>
                             </tr>
                             </thead>
@@ -125,7 +126,8 @@
                                     {{r.createDate}}
                                 </td>
                                 <td>
-                                    {{r.clientUID}}
+                                    <div ng-show="r.userId!=0">{{r.firstName}} {{r.lastName}} {{r.orgName}}</div>
+                                    <div ng-show="r.userId==0">{{r.clientUID}}</div>
                                 </td>
                                 <td>
                                     {{r.questionName}}
@@ -134,8 +136,11 @@
                                     {{r.answerName}}
                                 </td>
                                 <td>
-                                   <%-- <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
-                                            class="fa fa-trash-o"></i> წაშლა</a>--%>
+                                    {{r.answerNote}}
+                                </td>
+                                <td>
+                                    <%-- <a ng-click="deleteItem(r.id)" class="btn btn-danger btn-xs"><i
+                                             class="fa fa-trash-o"></i> წაშლა</a>--%>
                                 </td>
                             </tr>
                             </tbody>

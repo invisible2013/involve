@@ -29,6 +29,7 @@ public class SessionDTO {
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
     private List<SessionPollDTO> polls;
+    private List<SessionFileDTO> files;
     private ReformDTO reform;
     private int yesPercent;
     private int noPercent;
@@ -182,5 +183,13 @@ public class SessionDTO {
 
     public void setStatusId(int statusId) {
         this.statusId = statusId;
+    }
+
+    public List<SessionFileDTO> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<SessionFileDTO> files) {
+        this.files = files;
     }
 }

@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SessionPoll extends TableImpl<SessionPollRecord> {
 
-	private static final long serialVersionUID = -615258742;
+	private static final long serialVersionUID = 228902978;
 
 	/**
 	 * The reference instance of <code>public.session_poll</code>
@@ -68,6 +68,11 @@ public class SessionPoll extends TableImpl<SessionPollRecord> {
 	 * The column <code>public.session_poll.description</code>.
 	 */
 	public final TableField<SessionPollRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+	/**
+	 * The column <code>public.session_poll.order_by_number</code>.
+	 */
+	public final TableField<SessionPollRecord, Integer> ORDER_BY_NUMBER = createField("order_by_number", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>public.session_poll</code> table reference

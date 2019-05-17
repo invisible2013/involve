@@ -19,6 +19,7 @@ public class ReformFileDTO {
     private Integer fileTypeId;
     private String fileTypeName;
     private String fileName;
+    private String name;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
 
@@ -28,6 +29,7 @@ public class ReformFileDTO {
         dto.setId(record.getValue(Tables.REFORM_FILE.ID));
         dto.setFileTypeId(record.getValue(Tables.REFORM_FILE.FILE_TYPE_ID));
         dto.setFileName(record.getValue(Tables.REFORM_FILE.FILE_NAME));
+        dto.setName(record.getValue(Tables.REFORM_FILE.NAME));
         dto.setCreateDate(record.getValue(Tables.REFORM_FILE.CREATE_DATE));
         return dto;
     }
@@ -87,5 +89,13 @@ public class ReformFileDTO {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

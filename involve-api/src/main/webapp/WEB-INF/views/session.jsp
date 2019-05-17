@@ -43,6 +43,22 @@
     });
 
     var app = angular.module("app", []);
+    app.directive('ckEditor', [function () {
+        return {
+            require: '?ngModel',
+            link: function ($scope, elm, attr, ngModel) {
+                var ck = CKEDITOR.replace(elm[0]);
+                ck.on('pasteState', function () {
+                    $scope.$apply(function () {
+                        ngModel.$setViewValue(ck.getData());
+                    });
+                });
+                ngModel.$render = function (value) {
+                    ck.setData(ngModel.$modelValue);
+                };
+            }
+        };
+    }]);
     app.controller("homeCtrl", function ($scope, $http, $filter, $location) {
         $scope.items = [];
         $scope.sessionPolls = [];
@@ -151,6 +167,21 @@
                 $scope.item = item;
             }
         };
+        $scope.editPollItem = function (itemId) {
+            if (itemId != undefined) {
+                $scope.selectedPollItemId = itemId;
+                var selected = $filter('filter')($scope.sessionPolls, {id: itemId}, true);
+                var item = selected[0];
+                $scope.poll = item;
+                $scope.pollRows = [];
+                angular.forEach($scope.poll.answers, function (value, key) {
+                    var size = $scope.pollRows.length;
+                    $scope.pollRows.push(size + 1);
+                });
+
+            }
+        };
+
 
         $scope.questionItem = function (itemId) {
             if (itemId != undefined) {
@@ -243,9 +274,8 @@
                         </div>
                         <div class="form-group col-sm-12">
                             <label class="control-label">აღწერა</label>
-                            <textarea rows="4" ng-model="item.note"
-                                      class="form-control ng-pristine ng-valid">
-                            </textarea>
+                            <textarea rows="4" data-ng-model="item.note" data-ck-editor
+                                      class="form-control"></textarea>
                         </div>
                         <div class="form-group col-sm-6" has-feedback>
                             <label class="control-label">დაწყება</label>
@@ -317,6 +347,11 @@
                                    class="form-control ng-pristine ng-valid">
                         </div>
                         <div class="form-group col-sm-12">
+                            <label class="control-label">რიგითობა</label>
+                            <input type="text" ng-model="poll.orderByNumber"
+                                   class="form-control ng-pristine ng-valid">
+                        </div>
+                        <div class="form-group col-sm-12">
                             <label class="control-label col-sm-12">პასუხები</label>
                             <div class="row">
                                 <div ng-repeat="d in pollRows">
@@ -350,8 +385,9 @@
                                 <tr>
                                     <th style="width: 1%">#</th>
                                     <th style="width: 20%">კითხვა</th>
+                                    <th>N</th>
                                     <th>პასუხები</th>
-                                    <th>#Edit</th>
+                                    <th width="90">#Edit</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -360,12 +396,15 @@
                                     <td>
                                         {{r.name}}
                                     </td>
+                                    <td>{{r.orderByNumber}}</td>
                                     <td>
                                         <ul ng-repeat="s in r.answers">
                                             <li>{{s.value}}</li>
                                         </ul>
                                     </td>
                                     <td>
+                                        <a ng-click="editPollItem(r.id)" class="btn btn-info btn-xs"><i
+                                                class="fa fa-pencil"></i> შეცვლა</a>
                                         <a ng-click="deletePollItem(r.id)" class="btn btn-danger btn-xs"><i
                                                 class="fa fa-trash-o"></i> წაშლა</a>
                                     </td>

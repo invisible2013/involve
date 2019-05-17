@@ -35,7 +35,7 @@ public class PDFService {
         document.open();
 
         document.addTitle("Your Initiative PDF");
-        BaseFont baseFont = BaseFont.createFont(FONT_PATH, BaseFont.IDENTITY_H, true);
+        BaseFont baseFont = BaseFont.createFont(FONT_PATH2, BaseFont.IDENTITY_H, true);
         Font font = new Font(baseFont);
         Font boldFont = new Font(baseFont, 11f, Font.BOLD);
 

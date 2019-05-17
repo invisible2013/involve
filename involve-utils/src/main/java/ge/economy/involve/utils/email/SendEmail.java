@@ -29,9 +29,9 @@ public class SendEmail {
     private String body = "";
     private String auth = "true";
     //private String host = "smtp.gmail.com";
-    private String host = "mail.economy.ge";
+    private String host = "mail.economy.ge"; //10.20.21.38
     //private String port = "587";
-    private String port = "443";
+    private String port = "25"; //443
     //private String username = "chaertege@gmail.com";
     //private String password = "chaertege@";
     private String username = "info@you.gov.ge";
@@ -49,6 +49,56 @@ public class SendEmail {
         properties.put("mail.smtp.password", password);
         properties.put("mail.smtp.auth", auth);
 
+       /* properties.put("mail.smtps.starttls.enable", "true");
+        properties.put("mail.smtp.socketFactory.port", "25");
+        properties.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.socketFactory.fallback", "false");
+
+
+        properties.put("mail.smtp.auth", auth);
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.password", password);
+        properties.put("mail.smtp.port", port);
+        properties.put("mail.smtp.socketFactory.port", port);
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.socketFactory.fallback", "false");
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "mail.economy.ge");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.socketFactory.port", "25");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.fallback", "false");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "25");
+
+        */
+
+        /*
+        Session session = Session.getDefaultInstance(props,
+                new javax.mail.Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username,password);
+                    }
+                });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse("nino.lomineisvili@gmail.com"));
+            message.setSubject("Testing Subject");
+            message.setText("Test Mail");
+            Transport.send(message);
+            System.out.println("Done");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+*/
         Session session = Session.getDefaultInstance(properties);
 
         try {

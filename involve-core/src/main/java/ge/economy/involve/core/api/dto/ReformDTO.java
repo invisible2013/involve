@@ -21,6 +21,7 @@ public class ReformDTO {
     private String note;
     private String imageName;
     private Integer reformTypeId;
+    private Integer orderByNumber;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
     private String progressBarName1;
@@ -45,6 +46,7 @@ public class ReformDTO {
         ReformDTO dto = new ReformDTO();
         dto.setId(record.getValue(Tables.REFORM.ID));
         dto.setName(record.getValue(Tables.REFORM.NAME));
+        dto.setOrderByNumber(record.getValue(Tables.REFORM.ORDER_BY_NUMBER));
         dto.setImageName(record.getValue(Tables.REFORM.IMAGE_NAME));
         dto.setGeneralInfo(record.getValue(Tables.REFORM.GENERAL_INFO));
         dto.setExperience(record.getValue(Tables.REFORM.EXPERIENCE));
@@ -245,5 +247,13 @@ public class ReformDTO {
 
     public void setStatusId(Integer statusId) {
         this.statusId = statusId;
+    }
+
+    public Integer getOrderByNumber() {
+        return orderByNumber;
+    }
+
+    public void setOrderByNumber(Integer orderByNumber) {
+        this.orderByNumber = orderByNumber;
     }
 }

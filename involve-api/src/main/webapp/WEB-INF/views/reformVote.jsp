@@ -121,7 +121,8 @@
                                     {{r.createDate}}
                                 </td>
                                 <td>
-                                    {{r.clientUid}}
+                                    <div ng-show="r.userId!=0">{{r.firstName}} {{r.lastName}} {{r.orgName}}</div>
+                                    <div ng-show="r.userId==0">{{r.clientUid}}</div>
                                 </td>
                                 <td>
                                     {{r.agreed==true ? "კი" : "არა"}}

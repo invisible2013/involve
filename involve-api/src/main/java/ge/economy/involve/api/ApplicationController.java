@@ -151,12 +151,16 @@ public class ApplicationController {
 
     @ResponseBody
     @RequestMapping({"/registration"})
-    public Response registration(@RequestParam Integer userTypeId, @RequestParam String firstName, @RequestParam String lastName, @RequestParam Integer genderId,
-                                 @RequestParam Integer ageRangeId, @RequestParam Integer sphereId, @RequestParam String orgName,
+    public Response registration(@RequestParam Integer userTypeId, @RequestParam(required = false, defaultValue = "") String firstName,
+                                 @RequestParam(required = false, defaultValue = "") String lastName, @RequestParam(required = false, defaultValue = "") Integer genderId,
+                                 @RequestParam(required = false, defaultValue = "") Integer ageRangeId, @RequestParam(required = false, defaultValue = "") Integer sphereId,
+                                 @RequestParam(required = false, defaultValue = "") Integer activitySphereId,
+                                 @RequestParam(required = false, defaultValue = "") String orgName,
                                  @RequestParam String idNumber, @RequestParam String phone, @RequestParam String email, @RequestParam String password,
                                  @RequestParam(required = false, defaultValue = "") Integer enterpriseSizeId,
                                  @RequestParam(required = false, defaultValue = "") String otherSphereName,
                                  @RequestParam(required = false, defaultValue = "") Integer educationLevelId,
+                                 @RequestParam(required = false, defaultValue = "") String profession,
                                  @RequestParam(required = false, defaultValue = "") Integer economyActivityStatusId) {
         AddUserRequest request = new AddUserRequest();
         request.setFirstName(firstName);
@@ -165,6 +169,7 @@ public class ApplicationController {
         request.setGenderId(genderId);
         request.setAgeRangeId(ageRangeId);
         request.setSphereId(sphereId);
+        request.setActivitySphereId(activitySphereId);
         request.setOrgName(orgName);
         request.setIdNumber(idNumber);
         request.setPhone(phone);
@@ -174,6 +179,7 @@ public class ApplicationController {
         request.setEducationLevelId(educationLevelId);
         request.setEconomyActivityStatusId(economyActivityStatusId);
         request.setOtherSphereName(otherSphereName);
+        request.setProfession(profession);
         try {
             userService.registrationUser(request);
         } catch (EmailNotSentException ex) {

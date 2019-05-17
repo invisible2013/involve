@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReformFile extends TableImpl<ReformFileRecord> {
 
-	private static final long serialVersionUID = 176960123;
+	private static final long serialVersionUID = -543023188;
 
 	/**
 	 * The reference instance of <code>public.reform_file</code>
@@ -75,6 +75,11 @@ public class ReformFile extends TableImpl<ReformFileRecord> {
 	 * The column <code>public.reform_file.create_date</code>.
 	 */
 	public final TableField<ReformFileRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
+
+	/**
+	 * The column <code>public.reform_file.name</code>.
+	 */
+	public final TableField<ReformFileRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * Create a <code>public.reform_file</code> table reference

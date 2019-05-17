@@ -23,6 +23,9 @@ public class ReformVoteDTO {
     private String profession;
     private String fieldOfActivity;
     private String clientUid;
+    private String firstName;
+    private String lastName;
+    private String orgName;
     private String reformName;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
     private Date createDate;
@@ -55,6 +58,11 @@ public class ReformVoteDTO {
         dto.setFieldOfActivity(record.getValue(Tables.REFORM_VOTE.FIELD_OF_ACTIVITY));
         dto.setCreateDate(record.getValue(Tables.REFORM_VOTE.CREATE_DATE));
         dto.setReformName(record.getValue(Tables.REFORM.NAME));
+        if (dto.getUserId() != null && dto.getUserId() != 0) {
+            dto.setFirstName(record.getValue(Tables.USERS.FIRST_NAME));
+            dto.setLastName(record.getValue(Tables.USERS.LAST_NAME));
+            dto.setOrgName(record.getValue(Tables.USERS.ORG_NAME));
+        }
         return dto;
     }
 
@@ -161,5 +169,29 @@ public class ReformVoteDTO {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

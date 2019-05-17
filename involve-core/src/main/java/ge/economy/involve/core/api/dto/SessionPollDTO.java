@@ -13,6 +13,7 @@ public class SessionPollDTO {
 
     private Integer id;
     private Integer sessionId;
+    private Integer orderByNumber;
     private String name;
     private List<PollAnswerDTO> answers;
 
@@ -22,6 +23,7 @@ public class SessionPollDTO {
         dto.setId(record.getValue(Tables.SESSION_POLL.ID));
         dto.setSessionId(record.getValue(Tables.SESSION_POLL.SESSION_ID));
         dto.setName(record.getValue(Tables.SESSION_POLL.NAME));
+        dto.setOrderByNumber(record.getValue(Tables.SESSION_POLL.ORDER_BY_NUMBER));
         return dto;
     }
 
@@ -64,5 +66,13 @@ public class SessionPollDTO {
 
     public void setAnswers(List<PollAnswerDTO> answers) {
         this.answers = answers;
+    }
+
+    public Integer getOrderByNumber() {
+        return orderByNumber;
+    }
+
+    public void setOrderByNumber(Integer orderByNumber) {
+        this.orderByNumber = orderByNumber;
     }
 }

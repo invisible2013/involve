@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.scene.control.Tab;
 import org.jooq.*;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,7 @@ public class ReformDAO extends AbstractDAO {
         selectConditionStep.where(new Condition[0]);
         SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
         int recordSize = selectConditionStepSize.fetch().size();
-        selectConditionStep.orderBy(Tables.REFORM.ID.desc()).limit(limit).offset(start);
+        selectConditionStep.orderBy(Tables.REFORM.ORDER_BY_NUMBER.asc(), Tables.REFORM.ID.desc()).limit(limit).offset(start);
         HashMap<String, Object> map = new HashMap();
         map.put("list", selectConditionStep.fetch());
         map.put("size", Integer.valueOf(recordSize));
@@ -106,7 +107,8 @@ public class ReformDAO extends AbstractDAO {
     public HashMap<String, Object> getReformVotes(int reformId, int start, int limit) {
         SelectOnConditionStep<Record> selectConditionStep = this.dslContext.select()
                 .from(Tables.REFORM_VOTE)
-                .join(Tables.REFORM).on(Tables.REFORM.ID.eq(Tables.REFORM_VOTE.REFORM_ID));
+                .join(Tables.REFORM).on(Tables.REFORM.ID.eq(Tables.REFORM_VOTE.REFORM_ID))
+                .leftJoin(Tables.USERS).on(Tables.USERS.ID.eq(Tables.REFORM_VOTE.USER_ID));
         selectConditionStep.where(Tables.REFORM_VOTE.REFORM_ID.eq(reformId));
         SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
         int recordSize = selectConditionStepSize.fetch().size();
@@ -123,6 +125,7 @@ public class ReformDAO extends AbstractDAO {
                         .from(Tables.SESSION_POLL_VOTE)
                         .join(Tables.SESSION_POLL).on(Tables.SESSION_POLL_VOTE.QUESTION_ID.eq(Tables.SESSION_POLL.ID))
                         .join(Tables.POLL_ANSWER).on(Tables.SESSION_POLL_VOTE.ANSWER_ID.eq(Tables.POLL_ANSWER.ID))
+                        .leftJoin(Tables.USERS).on(Tables.SESSION_POLL_VOTE.USER_ID.eq(Tables.USERS.ID))
                         .where(Tables.SESSION_POLL_VOTE.SESSION_ID.eq(sessionId));
 
         SelectOnConditionStep<Record> selectConditionStepSize = selectConditionStep;
@@ -155,7 +158,9 @@ public class ReformDAO extends AbstractDAO {
     public List<Record> getSessionPolls(int sessionId) {
         return dslContext.select()
                 .from(Tables.SESSION_POLL)
-                .where(Tables.SESSION_POLL.SESSION_ID.eq(sessionId)).fetch();
+                .where(Tables.SESSION_POLL.SESSION_ID.eq(sessionId))
+                .orderBy(Tables.SESSION_POLL.ORDER_BY_NUMBER.asc(), Tables.SESSION_POLL.ID.asc())
+                .fetch();
     }
 
     public List<Record> getPollAnswers(int pollId) {

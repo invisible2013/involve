@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SessionFile extends TableImpl<SessionFileRecord> {
 
-	private static final long serialVersionUID = 891578388;
+	private static final long serialVersionUID = 212490307;
 
 	/**
 	 * The reference instance of <code>public.session_file</code>
@@ -75,6 +75,11 @@ public class SessionFile extends TableImpl<SessionFileRecord> {
 	 * The column <code>public.session_file.create_date</code>.
 	 */
 	public final TableField<SessionFileRecord, Date> CREATE_DATE = createField("create_date", org.jooq.impl.SQLDataType.TIMESTAMP, this, "", new TimestampConverter());
+
+	/**
+	 * The column <code>public.session_file.name</code>.
+	 */
+	public final TableField<SessionFileRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
 	/**
 	 * Create a <code>public.session_file</code> table reference

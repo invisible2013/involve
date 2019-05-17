@@ -21,13 +21,15 @@ public class AddUserRequest {
     private int typeId;
     private int statusId;
     private int groupId;
-    private int genderId;
-    private int ageRangeId;
-    private int sphereId;
+    private Integer genderId;
+    private Integer ageRangeId;
+    private Integer sphereId;
+    private Integer activitySphereId;
     private Integer enterpriseSizeId;
     private Integer educationLevelId;
     private Integer economyActivityStatusId;
     private String otherSphereName;
+    private String profession;
     private boolean isApproved;
 
     public Integer getId() {
@@ -86,6 +88,14 @@ public class AddUserRequest {
         this.phone = phone;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public int getTypeId() {
         return typeId;
     }
@@ -110,44 +120,36 @@ public class AddUserRequest {
         this.groupId = groupId;
     }
 
-    public int getGenderId() {
+    public Integer getGenderId() {
         return genderId;
     }
 
-    public void setGenderId(int genderId) {
+    public void setGenderId(Integer genderId) {
         this.genderId = genderId;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isApproved() {
-        return isApproved;
-    }
-
-    public void setApproved(boolean approved) {
-        isApproved = approved;
-    }
-
-    public int getAgeRangeId() {
+    public Integer getAgeRangeId() {
         return ageRangeId;
     }
 
-    public void setAgeRangeId(int ageRangeId) {
+    public void setAgeRangeId(Integer ageRangeId) {
         this.ageRangeId = ageRangeId;
     }
 
-    public int getSphereId() {
+    public Integer getSphereId() {
         return sphereId;
     }
 
-    public void setSphereId(int sphereId) {
+    public void setSphereId(Integer sphereId) {
         this.sphereId = sphereId;
+    }
+
+    public Integer getActivitySphereId() {
+        return activitySphereId;
+    }
+
+    public void setActivitySphereId(Integer activitySphereId) {
+        this.activitySphereId = activitySphereId;
     }
 
     public Integer getEnterpriseSizeId() {
@@ -166,6 +168,14 @@ public class AddUserRequest {
         this.educationLevelId = educationLevelId;
     }
 
+    public Integer getEconomyActivityStatusId() {
+        return economyActivityStatusId;
+    }
+
+    public void setEconomyActivityStatusId(Integer economyActivityStatusId) {
+        this.economyActivityStatusId = economyActivityStatusId;
+    }
+
     public String getOtherSphereName() {
         return otherSphereName;
     }
@@ -174,11 +184,19 @@ public class AddUserRequest {
         this.otherSphereName = otherSphereName;
     }
 
-    public Integer getEconomyActivityStatusId() {
-        return economyActivityStatusId;
+    public String getProfession() {
+        return profession;
     }
 
-    public void setEconomyActivityStatusId(Integer economyActivityStatusId) {
-        this.economyActivityStatusId = economyActivityStatusId;
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
     }
 }

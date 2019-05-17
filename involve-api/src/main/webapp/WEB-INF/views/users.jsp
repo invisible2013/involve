@@ -192,14 +192,24 @@
                                 <td>{{selectedUser.ageRangeName}}</td>
                             </tr>
                             <tr>
-                                <th class="col-md-4 text-right">სფერო :</th>
+                                <th class="col-md-4 text-right">დასაქმების სფერო(ფიზ) :</th>
+                                <td>{{selectedUser.activitySphereName}}<br/>
+                                    {{selectedUser.otherSphereName}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">საქმიანობის სფერო :</th>
                                 <td>{{selectedUser.sphereName}}<br/>
                                     {{selectedUser.otherSphereName}}
                                 </td>
                             </tr>
                             <tr>
-                                <th class="col-md-4 text-right">განათლების დონე :</th>
+                                <th class="col-md-4 text-right">განათლება :</th>
                                 <td>{{selectedUser.educationLevelName}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col-md-4 text-right">პროფესია :</th>
+                                <td>{{selectedUser.profession}}</td>
                             </tr>
                             <tr>
                                 <th class="col-md-4 text-right">საწარმოს ზომა :</th>
@@ -256,11 +266,10 @@
                             <th>ელ-ფოსტა</th>
                             <th>ტელეფონი</th>
                             <th>საიდენთ. N</th>
-                            <th>სქესი</th>
                             <th>ტიპი</th>
                             <th>ჯგუფი</th>
 
-                            <th style="width: 165px;">#Edit</th>
+                            <th style="width: 215px;">#Edit</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -277,12 +286,12 @@
                             <td><i class="fa fa-envelope"> </i> {{i.email}}</td>
                             <td><i class="fa fa-phone"> </i> {{i.phone}}</td>
                             <td>{{i.idNumber}}</td>
-                            <td>{{i.genderName}}</td>
                             <td>{{i.typeName}}</td>
                             <td>{{i.groupName}}</td>
 
                             <td>
-
+                                <a data-toggle="modal" data-target="#userViewModal" ng-click="viewUserItem(i.id)"
+                                   class="btn btn-default btn-xs"><i class="fa fa-info"></i> ინფო</a>
                                 <a data-toggle="modal" data-target="#itemModal" ng-click="editUser(i.id)"
                                    class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> შეცვლა</a>
                                 <a ng-click="deleteUser(i.id)" class="btn btn-danger btn-xs"><i

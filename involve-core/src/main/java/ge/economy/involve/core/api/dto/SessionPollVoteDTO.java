@@ -24,6 +24,9 @@ public class SessionPollVoteDTO {
     private String answerNote;
     private Integer sessionVoteId;
     private Integer userId;
+    private String firstName;
+    private String lastName;
+    private String orgName;
     private String ipAddress;
     private String clientUID;
     @JsonSerialize(using = JsonDateSerializeSupport.class)
@@ -41,6 +44,11 @@ public class SessionPollVoteDTO {
         dto.setAnswerName(record.getValue(Tables.POLL_ANSWER.VALUE));
         dto.setAnswerNote(record.getValue(Tables.SESSION_POLL_VOTE.ANSWER_NOTE));
         dto.setUserId(record.getValue(Tables.SESSION_POLL_VOTE.USER_ID));
+        if (dto.getUserId() != null && dto.getUserId() != 0) {
+            dto.setFirstName(record.getValue(Tables.USERS.FIRST_NAME));
+            dto.setLastName(record.getValue(Tables.USERS.LAST_NAME));
+            dto.setOrgName(record.getValue(Tables.USERS.ORG_NAME));
+        }
         dto.setIpAddress(record.getValue(Tables.SESSION_POLL_VOTE.IP_ADDRESS));
         dto.setClientUID(record.getValue(Tables.SESSION_POLL_VOTE.CLIENT_UID));
         dto.setCreateDate(record.getValue(Tables.SESSION_POLL_VOTE.CREATE_DATE));
@@ -158,5 +166,29 @@ public class SessionPollVoteDTO {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

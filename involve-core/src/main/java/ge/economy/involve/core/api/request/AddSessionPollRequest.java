@@ -15,6 +15,7 @@ public class AddSessionPollRequest {
 
     private Integer id;
     private Integer sessionId;
+    private Integer orderByNumber;
     private String name;
     private List<PollAnswerDTO> answers;
 
@@ -48,5 +49,13 @@ public class AddSessionPollRequest {
 
     public void setAnswers(List<PollAnswerDTO> answers) {
         this.answers = answers;
+    }
+
+    public Integer getOrderByNumber() {
+        return orderByNumber;
+    }
+
+    public void setOrderByNumber(Integer orderByNumber) {
+        this.orderByNumber = orderByNumber;
     }
 }

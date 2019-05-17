@@ -51,6 +51,7 @@ public class ReformService {
         }
 
         record.setName(request.getName());
+        record.setOrderByNumber(request.getOrderByNumber());
         record.setReformTypeId(request.getReformTypeId());
         record.setExperience(request.getExperience());
         record.setGeneralInfo(request.getGeneralInfo());
@@ -121,15 +122,17 @@ public class ReformService {
 
     public SessionPollDTO saveSessionPoll(AddSessionPollRequest request) {
 
+        if (request.getId() != null) {
+            deleteSessionPoll(request.getId());
+        }
+
         SessionPollRecord record = dslContext.newRecord(Tables.SESSION_POLL);
-
-
         record.setName(request.getName());
         record.setSessionId(request.getSessionId());
-
+        record.setOrderByNumber(request.getOrderByNumber());
         record.store();
-        if (request.getAnswers().size() > 0) {
 
+        if (request.getAnswers().size() > 0) {
             for (PollAnswerDTO d : request.getAnswers()) {
                 PollAnswerRecord pollAnswerRecord = dslContext.newRecord(Tables.POLL_ANSWER);
                 pollAnswerRecord.setPollId(record.getId());
@@ -293,6 +296,7 @@ public class ReformService {
         SessionDTO session = SessionDTO.translate(reformDAO.getSessionById(sessionId));
         if (session != null) {
             session.setPolls(SessionPollDTO.translateArray(reformDAO.getSessionPolls(sessionId)));
+            session.setFiles(SessionFileDTO.translateArray(reformDAO.getSessionFiles(sessionId)));
             float allCount = reformDAO.getReformAllVoteCount(session.getReformId());
             if (allCount > 0) {
                 float yesCount = reformDAO.getReformVoting(session.getReformId(), true);
@@ -364,17 +368,17 @@ public class ReformService {
     }
 
 
-    public void addReformFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
+    public void addReformFile(int itemId, int fileTypeId, String originalFileName, String name, MultipartFile file) {
         String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
             fileName = fileService.saveFile(file, itemId + "_1");
         }
-
         try {
             if (fileName != null && !fileName.isEmpty() || fileTypeId == FileTypes.VIDEO.id()) {
                 ReformFileRecord record = (ReformFileRecord) dslContext.newRecord(Tables.REFORM_FILE);
                 record.setReformId(itemId);
                 record.setFileName(fileName);
+                record.setName(name);
                 record.setFileTypeId(fileTypeId);
                 record.store();
             }
@@ -383,10 +387,12 @@ public class ReformService {
         }
     }
 
-    public void addSessionFile(int itemId, int fileTypeId, String originalFileName, MultipartFile file) {
+    public void addSessionFile(int itemId, int fileTypeId, String originalFileName, String name, MultipartFile file) {
         String fileName = originalFileName;
         if (fileTypeId != FileTypes.VIDEO.id()) {
-            fileName = fileService.saveFile(file, itemId + "_11");
+            if (fileName.isEmpty()) {
+                fileName = fileService.saveFile(file, itemId + "_11");
+            }
         }
 
         try {
@@ -394,6 +400,7 @@ public class ReformService {
                 SessionFileRecord record = (SessionFileRecord) dslContext.newRecord(Tables.SESSION_FILE);
                 record.setSessionId(itemId);
                 record.setFileName(fileName);
+                record.setName(name);
                 record.setFileTypeId(fileTypeId);
                 record.store();
             }

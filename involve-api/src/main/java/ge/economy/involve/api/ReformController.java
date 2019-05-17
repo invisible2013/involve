@@ -155,9 +155,9 @@ public class ReformController {
 
     @RequestMapping({"/add-image"})
     @ResponseBody
-    private Response addReformImage(@RequestParam int itemId, @RequestParam int fileTypeId, @RequestParam String fileName, @RequestParam("file")
+    private Response addReformImage(@RequestParam int itemId, @RequestParam int fileTypeId, @RequestParam String fileName, @RequestParam String name, @RequestParam("file")
             MultipartFile multipartFile) {
-        reformService.addReformFile(itemId, fileTypeId, fileName, multipartFile);
+        reformService.addReformFile(itemId, fileTypeId, fileName, name, multipartFile);
         return Response.withData(true);
     }
 
@@ -175,16 +175,16 @@ public class ReformController {
 
     @RequestMapping({"/add-session-file"})
     @ResponseBody
-    private Response addSessionFile(@RequestParam int itemId, @RequestParam int fileTypeId, @RequestParam String fileName, @RequestParam("file")
+    private Response addSessionFile(@RequestParam int itemId, @RequestParam int fileTypeId, @RequestParam String fileName, @RequestParam String name, @RequestParam("file")
             MultipartFile multipartFile) {
-        reformService.addSessionFile(itemId, fileTypeId, fileName, multipartFile);
+        reformService.addSessionFile(itemId, fileTypeId, fileName, name, multipartFile);
         return Response.withData(true);
     }
 
     @RequestMapping({"/save-file-name"})
     @ResponseBody
     private Response saveFileUrl(@RequestBody AddReformFileRequest addReformFileRequest) {
-        reformService.addReformFile(addReformFileRequest.getItemId(), addReformFileRequest.getFileTypeId(), addReformFileRequest.getFileName(), null);
+        reformService.addReformFile(addReformFileRequest.getItemId(), addReformFileRequest.getFileTypeId(), addReformFileRequest.getFileName(), addReformFileRequest.getName(), null);
         return Response.withData(true);
     }
 

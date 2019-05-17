@@ -8,6 +8,7 @@ public class AddReformFileRequest {
     private Integer itemId;
     private Integer fileTypeId;
     private String fileName;
+    private String name;
 
 
     public Integer getItemId() {
@@ -32,5 +33,13 @@ public class AddReformFileRequest {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -365,6 +365,7 @@
                             <tr>
                                 <th style="width: 1%">#</th>
                                 <th style="width: 20%">დასახელება</th>
+                                <th>რიგი</th>
                                 <th>ლოგო</th>
                                 <th>ტიპი</th>
                                 <th>1 პროგრეს ბარი</th>
@@ -384,6 +385,7 @@
                                     <br/>
                                     <small>თარიღი: {{r.createDate}}</small>
                                 </td>
+                                <td>{{r.orderByNumber}}</td>
                                 <td>
                                     <a class="btn btn-xs" ng-click="open(r.imageName);" ng-show="r.imageName.length>0">
                                         <img src="upload/get-file?identifier={{r.imageName}}" class="img-thumbnail"

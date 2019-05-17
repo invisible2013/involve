@@ -82,6 +82,8 @@
         $scope.poll.answers = [];
         $scope.selectedSessionId = 0;
         $scope.sessionFileTypeId = 0;
+        $scope.sessionFileName = "";
+        $scope.reformFileName = "";
 
         $scope.reform = {
             'reformTypeId': 1,
@@ -227,6 +229,7 @@
                 oMyForm.append("itemId", $scope.selectedItemId);
                 oMyForm.append("fileTypeId", $scope.fileTypeId);
                 oMyForm.append("fileName", "");
+                oMyForm.append("name", $scope.reformFileName);
                 oMyForm.append("file", $('#reformfileId')[0].files[0]);
                 $.ajax({
                     url: 'reform/add-image',
@@ -302,6 +305,7 @@
                 sessionFileForm.append("itemId", $scope.selectedSessionId);
                 sessionFileForm.append("fileTypeId", $scope.sessionFileTypeId);
                 sessionFileForm.append("fileName", "");
+                sessionFileForm.append("name", $scope.sessionFileName);
                 sessionFileForm.append("file", $('#sessionfileId')[0].files[0]);
                 $.ajax({
                     url: 'reform/add-session-file',
@@ -448,9 +452,8 @@
                         </div>
                         <div class="form-group col-sm-12">
                             <label class="control-label">აღწერა</label>
-                            <textarea rows="4" ng-model="item.note"
-                                      class="form-control ng-pristine ng-valid">
-                            </textarea>
+                            <textarea rows="4" data-ng-model="item.note" data-ck-editor
+                                      class="form-control"></textarea>
                         </div>
                         <div class="form-group col-sm-6" has-feedback>
 
@@ -616,6 +619,11 @@
                             </div>
                             <div class="clear"></div>
                             <div class="form-group col-sm-8">
+                                <label class="control-label">დასახელება</label>
+                                <input type="text" ng-model="sessionFileName"
+                                       class="form-control ng-pristine ng-valid">
+                            </div>
+                            <div class="form-group col-sm-8">
                                 <label class="control-label">აირჩიეთ</label>
                                 <input type="file" id="sessionfileId" name="file"
                                        class="form-control upload-file">
@@ -632,8 +640,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>ტიპი</th>
+                                    <th>სახელი</th>
                                     <th>ფაილი</th>
-                                    <th style="width: 50%">მისამართი</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -641,17 +649,13 @@
                                     <td>{{$index+1}}</td>
                                     <td>{{s.fileTypeId==1? "სურათი":(s.fileTypeId==2?"ვიდეო":"დოკუმენტი")}}
                                     </td>
+                                    <td><a  ng-click="open(s.fileName);">{{s.name}}</a></td>
                                     <td><a class="btn btn-xs" ng-click="open(s.fileName);"
                                            ng-show="s.fileTypeId==1">
                                         <img src="upload/get-file?identifier={{s.fileName}}"
                                              class="img-thumbnail"
                                              style="height: 60px;" height="60">
                                     </a></td>
-                                    <td><span ng-show="s.fileTypeId==1">{{s.fileName}}</span>
-                                        <a ng-show="s.fileTypeId==2" href="{{s.fileName}}" target="_blank">{{s.fileName}}</a>
-                                        <a ng-show="s.fileTypeId==3" class="btn btn-xs" ng-click="open(s.fileName);">
-                                            {{s.fileName}}</a>
-                                    </td>
                                     <td style="min-width: 75px;">
                                         <a ng-click="deleteSessionFile(s.id,s.sessionId)"
                                            class="btn btn-danger btn-xs"><i
@@ -734,6 +738,11 @@
                                                class="form-control ng-pristine ng-valid">
                                     </div>
                                     <div class="form-group col-sm-10">
+                                        <label class="control-label">რიგითობა</label>
+                                        <input type="text" id="orderBy" ng-model="reform.orderByNumber"
+                                               class="form-control ng-pristine ng-valid">
+                                    </div>
+                                    <div class="form-group col-sm-10">
                                         <label class="control-label">ლოგო</label>
                                         <input type="file" id="reformLogoId" name="file"
                                                class="form-control upload-file">
@@ -747,8 +756,8 @@
                                     </div>
                                     <div class="form-group col-sm-10">
                                         <label class="control-label">აღწერა</label>
-                                        <textarea rows="4" ng-model="reform.note"
-                                                  class="form-control ng-pristine ng-valid">
+                                        <textarea rows="4" data-ng-model="reform.note" data-ck-editor
+                                                  class="form-control">
                             </textarea>
                                     </div>
                                     <div class="form-group col-sm-10">
@@ -850,6 +859,12 @@
                                             <input type="file" id="reformfileId" name="file"
                                                    class="form-control upload-file">
                                         </div>
+                                        <div class="clear"></div>
+                                        <div class="form-group col-md-6" ng-show="fileTypeId==1||fileTypeId==3">
+                                            <label class="control-label">სახელი</label>
+                                            <input type="text" ng-model="reformFileName" class="form-control "
+                                                   placeholder="სახელი">
+                                        </div>
                                         <div class="form-group col-md-6" ng-show="fileTypeId==2">
                                             <label class="control-label">ვიდეოს ლინკი</label>
                                             <input type="text" ng-model="fileName" class="form-control "
@@ -867,6 +882,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>ტიპი</th>
+                                                <th>სახელი</th>
                                                 <th>ფაილი</th>
                                                 <th style="width: 50%">მისამართი</th>
                                                 <th></th>
@@ -876,6 +892,7 @@
                                                 <td>{{$index+1}}</td>
                                                 <td>{{s.fileTypeId==1? "სურათი":(s.fileTypeId==2?"ვიდეო":"დოკუმენტი")}}
                                                 </td>
+                                                <td>{{s.name}}</td>
                                                 <td><a class="btn btn-xs" ng-click="open(s.fileName);"
                                                        ng-show="s.fileTypeId==1">
                                                     <img src="upload/get-file?identifier={{s.fileName}}"

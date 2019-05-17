@@ -15,6 +15,7 @@ public class AddReformRequest {
     private Integer id;
     private String name;
     private Integer reformTypeId;
+    private Integer orderByNumber;
     @JsonDeserialize(using = JsonDateDeSerializeSupport.class)
     private Date createDate;
     private String progressBarName1;
@@ -138,5 +139,13 @@ public class AddReformRequest {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Integer getOrderByNumber() {
+        return orderByNumber;
+    }
+
+    public void setOrderByNumber(Integer orderByNumber) {
+        this.orderByNumber = orderByNumber;
     }
 }

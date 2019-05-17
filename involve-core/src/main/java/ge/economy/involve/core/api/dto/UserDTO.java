@@ -44,8 +44,11 @@ public class UserDTO {
     private String ageRangeName;
     private Integer sphereId;
     private String sphereName;
+    private Integer activitySphereId;
+    private String activitySphereName;
     private Integer economyActivityStatusId;
     private String economyActivityStatusName;
+    private String profession;
 
     public static Integer TOKEN_VALID_DAY_NUMBER = 365;
 
@@ -68,6 +71,7 @@ public class UserDTO {
         dto.setIdNumber(record.getValue(Tables.USERS.ID_NUMBER));
         dto.setPhone(record.getValue(Tables.USERS.PHONE));
         dto.setGenderId(record.getValue(Tables.USERS.GENDER_ID));
+        dto.setProfession(record.getValue(Tables.USERS.PROFESSION));
         if (dto.getGenderId() != null && record.field(Tables.GENDER.NAME) != null) {
             dto.setGenderName(record.getValue(Tables.GENDER.NAME));
         }
@@ -99,8 +103,12 @@ public class UserDTO {
             dto.setAgeRangeName(record.getValue(Tables.AGE_RANGE.NAME));
         }
         dto.setSphereId(record.getValue(Tables.USERS.SPHERE_ID));
+        if (record.field(Tables.SPHERE.NAME) != null) {
+            dto.setSphereName(record.getValue(Tables.SPHERE.NAME));
+        }
+        dto.setActivitySphereId(record.getValue(Tables.USERS.ACTIVITY_SPHERE_ID));
         if (record.field(Tables.ACTIVITY_SPHERE.NAME) != null) {
-            dto.setSphereName(record.getValue(Tables.ACTIVITY_SPHERE.NAME));
+            dto.setActivitySphereName(record.getValue(Tables.ACTIVITY_SPHERE.NAME));
         }
         dto.setEconomyActivityStatusId(record.getValue(Tables.USERS.ECONOMY_ACTIVITY_STATUS_ID));
         if (record.field(Tables.ECONOMY_ACTIVITY_STATUS.NAME) != null) {
@@ -362,6 +370,30 @@ public class UserDTO {
 
     public void setEconomyActivityStatusName(String economyActivityStatusName) {
         this.economyActivityStatusName = economyActivityStatusName;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public Integer getActivitySphereId() {
+        return activitySphereId;
+    }
+
+    public void setActivitySphereId(Integer activitySphereId) {
+        this.activitySphereId = activitySphereId;
+    }
+
+    public String getActivitySphereName() {
+        return activitySphereName;
+    }
+
+    public void setActivitySphereName(String activitySphereName) {
+        this.activitySphereName = activitySphereName;
     }
 }
 

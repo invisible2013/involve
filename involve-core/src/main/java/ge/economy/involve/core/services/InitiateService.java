@@ -126,7 +126,8 @@ public class InitiateService {
                 "<br/>" +
                 "ეკონომიკისა და მდგრადი განვითარების სამინისტრო განიხილავს თქვენს წინადადებას <br/>" +
                 "<br/>");
-        mailSender.sendWithPdf(outputStream);
+        mailSender.send();
+        //mailSender.sendWithPdf(outputStream);
     }
 
     public void deleteInitiate(int itemId) {
